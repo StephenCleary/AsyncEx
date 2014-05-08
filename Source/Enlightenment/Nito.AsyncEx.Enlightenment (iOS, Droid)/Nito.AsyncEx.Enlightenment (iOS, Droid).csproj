@@ -74,6 +74,9 @@
     <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET45%29\Internal\PlatformEnlightenment\ExceptionEnlightenment.cs">
       <Link>Internal\PlatformEnlightenment\ExceptionEnlightenment.cs</Link>
     </Compile>
+    <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET45%29\Internal\PlatformEnlightenment\SynchronizationContextEnlightenment.cs">
+      <Link>Internal\PlatformEnlightenment\SynchronizationContextEnlightenment.cs</Link>
+    </Compile>
     <Compile Include="..\Nito.AsyncEx.Enlightenment %28Win8%29\Internal\PlatformEnlightenment\EnlightenmentProvider.SingleThreadedApartmentEnlightenment.cs">
       <Link>Internal\PlatformEnlightenment\EnlightenmentProvider.SingleThreadedApartmentEnlightenment.cs</Link>
     </Compile>
