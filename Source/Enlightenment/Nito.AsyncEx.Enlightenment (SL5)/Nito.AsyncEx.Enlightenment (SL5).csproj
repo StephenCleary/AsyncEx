@@ -38,6 +38,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <NoWarn>1591</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -50,6 +52,8 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>Bin\Release\Nito.AsyncEx.Enlightenment.xml</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
+    <NoWarn>1591</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -90,6 +94,9 @@
     </Compile>
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET40%29\Internal\PlatformEnlightenment\AsyncEnlightenment.cs">
+      <Link>Internal\PlatformEnlightenment\AsyncEnlightenment.cs</Link>
     </Compile>
     <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET40%29\Internal\PlatformEnlightenment\EnlightenmentProvider.ThreadIdentityEnlightenment.cs">
       <Link>Internal\PlatformEnlightenment\EnlightenmentProvider.ThreadIdentityEnlightenment.cs</Link>

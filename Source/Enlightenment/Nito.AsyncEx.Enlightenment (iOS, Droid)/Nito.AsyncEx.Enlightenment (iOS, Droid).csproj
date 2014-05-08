@@ -23,6 +23,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,6 +34,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\Nito.AsyncEx.Enlightenment.xml</DocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -45,6 +49,9 @@
     </Compile>
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET45%29\Internal\PlatformEnlightenment\AsyncEnlightenment.cs">
+      <Link>Internal\PlatformEnlightenment\AsyncEnlightenment.cs</Link>
     </Compile>
     <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET45%29\Internal\PlatformEnlightenment\EnlightenmentProvider.AsyncEnlightenment.cs">
       <Link>Internal\PlatformEnlightenment\EnlightenmentProvider.AsyncEnlightenment.cs</Link>
