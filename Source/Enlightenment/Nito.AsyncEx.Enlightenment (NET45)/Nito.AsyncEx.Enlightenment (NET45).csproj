@@ -59,6 +59,7 @@
     <Compile Include="EnlightenmentVerification.cs" />
     <Compile Include="Internal\PlatformEnlightenment\AsyncEnlightenment.cs" />
     <Compile Include="Internal\PlatformEnlightenment\BlockingQueue.cs" />
+    <Compile Include="Internal\PlatformEnlightenment\SingleThreadedApartmentThread.cs" />
     <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.SingleThreadedApartmentEnlightenment.cs" />
     <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.AsyncEnlightenment.cs" />
     <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.ConcurrentCollectionsEnlightenment.cs" />
