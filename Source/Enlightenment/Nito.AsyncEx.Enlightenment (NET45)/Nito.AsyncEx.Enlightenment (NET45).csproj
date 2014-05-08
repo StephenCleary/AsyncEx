@@ -68,7 +68,6 @@
     <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.SynchronizationContextEnlightenment.cs" />
     <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.ThreadPoolEnlightenment.cs" />
     <Compile Include="Internal\PlatformEnlightenment\ExceptionEnlightenment.cs" />
-    <Compile Include="Internal\PlatformEnlightenment\Lazy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
