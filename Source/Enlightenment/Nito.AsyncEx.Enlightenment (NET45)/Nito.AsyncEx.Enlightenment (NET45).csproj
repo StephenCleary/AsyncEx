@@ -70,6 +70,7 @@
     <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.ThreadPoolEnlightenment.cs" />
     <Compile Include="Internal\PlatformEnlightenment\ExceptionEnlightenment.cs" />
     <Compile Include="Internal\PlatformEnlightenment\SynchronizationContextEnlightenment.cs" />
+    <Compile Include="Internal\PlatformEnlightenment\ThreadPoolEnlightenment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
