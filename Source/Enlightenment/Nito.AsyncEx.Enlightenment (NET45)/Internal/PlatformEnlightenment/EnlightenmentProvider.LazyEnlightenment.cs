@@ -11,7 +11,7 @@ namespace Nito.AsyncEx.Internal.PlatformEnlightenment
                 return new PlatformLazy<T>(factory);
             }
 
-            private sealed class PlatformLazy<T> : Lazy<T>, ILazy<T>
+            private sealed class PlatformLazy<T> : System.Lazy<T>, ILazy<T>
             {
                 public PlatformLazy(Func<T> factory)
                     : base(factory)
