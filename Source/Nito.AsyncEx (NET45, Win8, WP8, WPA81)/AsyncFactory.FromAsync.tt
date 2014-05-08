@@ -1,0 +1,42 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<# int maxNumberOfFuncParameters = 16; #>
+using Nito.AsyncEx.Internal;
+using System;
+using System.Threading.Tasks;
+
+namespace Nito.AsyncEx
+{
+    public static partial class AsyncFactory
+    {
+<# for (int i = 0; i != maxNumberOfFuncParameters - 2; ++i)
+{
+    var range = Enumerable.Range(0, i + 1);
+    var tArgList = string.Join(", ", range.Select(j => "TArg" + j));
+    var paramList = string.Join(", ", range.Select(j => "TArg" + j + " arg" + j));
+    var argList = string.Join(", ", range.Select(j => "arg" + j));
+#>
+        /// <summary>
+        /// Wraps a begin/end asynchronous method.
+        /// </summary>
+<# for (int j = 0; j != i + 1; ++j) { #>
+        /// <typeparam name="TArg<#= j #>">The type of argument <#= j #>.</typeparam>
+<# } #>
+        /// <param name="beginMethod">The begin method.</param>
+        /// <param name="endMethod">The end method.</param>
+<# for (int j = 0; j != i + 1; ++j) { #>
+        /// <param name="arg<#= j #>">Argument <#= j #>.</param>
+<# } #>
+        /// <returns></returns>
+        public static Task FromApm<<#= tArgList #>>(Func<<#= tArgList #>, AsyncCallback, object, IAsyncResult> beginMethod, Action<IAsyncResult> endMethod, <#= paramList #>)
+        {
+            TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
+            beginMethod(<#= argList #>, Callback(endMethod, tcs), null);
+            return tcs.Task;
+        }
+
+<# } #>
+    }
+}

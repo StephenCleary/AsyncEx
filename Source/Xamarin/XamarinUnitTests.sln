@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IosUnitTests", "IosUnitTests\IosUnitTests.csproj", "{84CC3114-07B1-4DCC-90F3-EF5B4844E24E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndroidUnitTests", "AndroidUnitTests\AndroidUnitTests.csproj", "{6AB8F67F-3762-48B5-9498-EF2E63B0C33B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+		Release|iPhone = Release|iPhone
+		Ad-Hoc|iPhone = Ad-Hoc|iPhone
+		AppStore|iPhone = AppStore|iPhone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6AB8F67F-3762-48B5-9498-EF2E63B0C33B}.Ad-Hoc|iPhone.ActiveCfg = Release|Any CPU
+		{6AB8F67F-3762-48B5-9498-EF2E63B0C33B}.Ad-Hoc|iPhone.Build.0 = Release|Any CPU
+		{6AB8F67F-3762-48B5-9498-EF2E63B0C33B}.AppStore|iPhone.ActiveCfg = Release|Any CPU
+		{6AB8F67F-3762-48B5-9498-EF2E63B0C33B}.AppStore|iPhone.Build.0 = Release|Any CPU
+		{6AB8F67F-3762-48B5-9498-EF2E63B0C33B}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{6AB8F67F-3762-48B5-9498-EF2E63B0C33B}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{6AB8F67F-3762-48B5-9498-EF2E63B0C33B}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{6AB8F67F-3762-48B5-9498-EF2E63B0C33B}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{6AB8F67F-3762-48B5-9498-EF2E63B0C33B}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{6AB8F67F-3762-48B5-9498-EF2E63B0C33B}.Release|iPhone.Build.0 = Release|Any CPU
+		{6AB8F67F-3762-48B5-9498-EF2E63B0C33B}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{6AB8F67F-3762-48B5-9498-EF2E63B0C33B}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{84CC3114-07B1-4DCC-90F3-EF5B4844E24E}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
+		{84CC3114-07B1-4DCC-90F3-EF5B4844E24E}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
+		{84CC3114-07B1-4DCC-90F3-EF5B4844E24E}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
+		{84CC3114-07B1-4DCC-90F3-EF5B4844E24E}.AppStore|iPhone.Build.0 = AppStore|iPhone
+		{84CC3114-07B1-4DCC-90F3-EF5B4844E24E}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{84CC3114-07B1-4DCC-90F3-EF5B4844E24E}.Debug|iPhone.Build.0 = Debug|iPhone
+		{84CC3114-07B1-4DCC-90F3-EF5B4844E24E}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{84CC3114-07B1-4DCC-90F3-EF5B4844E24E}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{84CC3114-07B1-4DCC-90F3-EF5B4844E24E}.Release|iPhone.ActiveCfg = Release|iPhone
+		{84CC3114-07B1-4DCC-90F3-EF5B4844E24E}.Release|iPhone.Build.0 = Release|iPhone
+		{84CC3114-07B1-4DCC-90F3-EF5B4844E24E}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{84CC3114-07B1-4DCC-90F3-EF5B4844E24E}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = AndroidUnitTests\AndroidUnitTests.csproj
+	EndGlobalSection
+EndGlobal

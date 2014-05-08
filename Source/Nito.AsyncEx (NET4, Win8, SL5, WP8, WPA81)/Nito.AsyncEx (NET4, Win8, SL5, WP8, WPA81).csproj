@@ -1,0 +1,356 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4B8C613E-9ED8-4159-BEFD-662C826560F9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Nito.AsyncEx</RootNamespace>
+    <AssemblyName>Nito.AsyncEx</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile328</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <CodeContractsAssemblyMode>1</CodeContractsAssemblyMode>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>True</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>False</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>False</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsInferRequires>False</CodeContractsInferRequires>
+    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
+    <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
+    <CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
+    <CodeContractsSuggestRequires>True</CodeContractsSuggestRequires>
+    <CodeContractsSuggestEnsures>False</CodeContractsSuggestEnsures>
+    <CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>True</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>True</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsBaseLineFile />
+    <CodeContractsCacheAnalysisResults>True</CodeContractsCacheAnalysisResults>
+    <CodeContractsRuntimeCheckingLevel>Preconditions</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>DoNotBuild</CodeContractsReferenceAssembly>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Nito.AsyncEx.xml</DocumentationFile>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>True</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>False</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>False</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsInferRequires>False</CodeContractsInferRequires>
+    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
+    <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
+    <CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
+    <CodeContractsSuggestRequires>True</CodeContractsSuggestRequires>
+    <CodeContractsSuggestEnsures>False</CodeContractsSuggestEnsures>
+    <CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>True</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>True</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsBaseLineFile />
+    <CodeContractsCacheAnalysisResults>True</CodeContractsCacheAnalysisResults>
+    <CodeContractsRuntimeCheckingLevel>Preconditions</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>DoNotBuild</CodeContractsReferenceAssembly>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\Nito.AsyncEx.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\AssemblyVersion.cs">
+      <Link>Properties\AssemblyVersion.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\AsyncAutoResetEvent.cs">
+      <Link>AsyncAutoResetEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\AsyncBarrier.cs">
+      <Link>AsyncBarrier.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\AsyncConditionVariable.cs">
+      <Link>AsyncConditionVariable.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\AsyncContext.cs">
+      <Link>AsyncContext.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\AsyncContext.SynchronizationContext.cs">
+      <Link>AsyncContext.SynchronizationContext.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\AsyncContext.TaskQueue.cs">
+      <Link>AsyncContext.TaskQueue.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\AsyncContext.TaskScheduler.cs">
+      <Link>AsyncContext.TaskScheduler.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\AsyncContextThread.cs">
+      <Link>AsyncContextThread.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\AsyncCountdownEvent.cs">
+      <Link>AsyncCountdownEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\AsyncFactory %28of TResult%29.cs">
+      <Link>AsyncFactory %28of TResult%29.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\AsyncFactory %28of TResult%29.FromAsync.cs">
+      <Link>AsyncFactory %28of TResult%29.FromAsync.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\AsyncFactory.cs">
+      <Link>AsyncFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\AsyncFactory.FromAsync.cs">
+      <Link>AsyncFactory.FromAsync.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\AsyncLazy.cs">
+      <Link>AsyncLazy.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\AsyncLock.cs">
+      <Link>AsyncLock.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\AsyncManualResetEvent.cs">
+      <Link>AsyncManualResetEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\AsyncMonitor.cs">
+      <Link>AsyncMonitor.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\AsyncProducerConsumerQueue.cs">
+      <Link>AsyncProducerConsumerQueue.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\AsyncReaderWriterLock.cs">
+      <Link>AsyncReaderWriterLock.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\AsyncSemaphore.cs">
+      <Link>AsyncSemaphore.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\AsyncWaitQueue.cs">
+      <Link>AsyncWaitQueue.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\CancellationTokenExtensions.cs">
+      <Link>CancellationTokenExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\CancellationTokenHelpers.cs">
+      <Link>CancellationTokenHelpers.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\DeferralManager.cs">
+      <Link>DeferralManager.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Deque.cs">
+      <Link>Deque.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\ExceptionHelpers.cs">
+      <Link>ExceptionHelpers.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\IdManager.cs">
+      <Link>Internal\IdManager.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.ConcurrentCollectionsEnlightenment.cs">
+      <Link>Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.ConcurrentCollectionsEnlightenment.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.SingleThreadedApartmentEnlightenment.cs">
+      <Link>Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.SingleThreadedApartmentEnlightenment.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.ThreadPoolEnlightenment.cs">
+      <Link>Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.ThreadPoolEnlightenment.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.TraceEnlightenment.cs">
+      <Link>Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.TraceEnlightenment.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\Enlightenment.cs">
+      <Link>Internal\PlatformEnlightenment\Enlightenment.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\IAsyncEnlightenment.cs">
+      <Link>Internal\PlatformEnlightenment\IAsyncEnlightenment.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\IConcurrentCollectionsEnlightenment.cs">
+      <Link>Internal\PlatformEnlightenment\IConcurrentCollectionsEnlightenment.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\IEnlightenmentProvider.cs">
+      <Link>Internal\PlatformEnlightenment\IEnlightenmentProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\IExceptionEnlightenment.cs">
+      <Link>Internal\PlatformEnlightenment\IExceptionEnlightenment.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\ILazyEnlightenment.cs">
+      <Link>Internal\PlatformEnlightenment\ILazyEnlightenment.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\ISingleThreadedApartmentEnlightenment.cs">
+      <Link>Internal\PlatformEnlightenment\ISingleThreadedApartmentEnlightenment.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\ISynchronizationContextEnlightenment.cs">
+      <Link>Internal\PlatformEnlightenment\ISynchronizationContextEnlightenment.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\IThreadIdentityEnlightenment.cs">
+      <Link>Internal\PlatformEnlightenment\IThreadIdentityEnlightenment.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\IThreadPoolEnlightenment.cs">
+      <Link>Internal\PlatformEnlightenment\IThreadPoolEnlightenment.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\ITraceEnlightenment.cs">
+      <Link>Internal\PlatformEnlightenment\ITraceEnlightenment.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\NormalizedCancellationToken.cs">
+      <Link>NormalizedCancellationToken.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\NotifyTaskCompletion.cs">
+      <Link>NotifyTaskCompletion.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\PropertyProgress.cs">
+      <Link>PropertyProgress.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\SynchronizationContextHelpers.cs">
+      <Link>SynchronizationContextHelpers.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Synchronous\TaskExtensions.cs">
+      <Link>Synchronous\TaskExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\TaskCompletionSource.cs">
+      <Link>TaskCompletionSource.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\TaskCompletionSourceExtensions.cs">
+      <Link>TaskCompletionSourceExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\TaskConstants.cs">
+      <Link>TaskConstants.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\TaskExtensions.cs">
+      <Link>TaskExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\TaskFactoryExtensions.cs">
+      <Link>TaskFactoryExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.ThreadIdentityEnlightenment.cs" />
+    <Compile Include="Internal\PlatformEnlightenment\ReflectionExpressionProvider.cs" />
+    <Compile Include="Internal\ReflectionShim.cs" />
+    <Compile Include="Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.LazyEnlightenment.cs" />
+    <Compile Include="Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.SynchronizationContextEnlightenment.cs" />
+    <Compile Include="Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.AsyncEnlightenment.cs" />
+    <Compile Include="Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.ExceptionEnlightenment.cs" />
+    <Compile Include="Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.cs" />
+    <Compile Include="Internal\TaskShim.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Nito.AsyncEx.snk">
+      <Link>Nito.AsyncEx.snk</Link>
+    </None>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.166\lib\portable-net40+sl4+win8+wp71+wpa81\Microsoft.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.166\lib\portable-net40+sl4+win8+wp71+wpa81\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.7\lib\portable-net40+sl5+win8+wp8+wpa81\System.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.7\lib\portable-net40+sl5+win8+wp8+wpa81\System.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.7\lib\portable-net40+sl5+win8+wp8+wpa81\System.Threading.Tasks.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{30E97644-A1CD-44A4-BE47-4E79E850F4BC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Tests__NET40_</RootNamespace>
+    <AssemblyName>Tests %28NET40%29</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NET40</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;NET40</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Threading.Tasks">
+      <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.166\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions">
+      <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.166\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop">
+      <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.166\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.IO">
+      <HintPath>..\..\packages\Microsoft.Bcl.1.1.7\lib\net40\System.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Runtime">
+      <HintPath>..\..\packages\Microsoft.Bcl.1.1.7\lib\net40\System.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks">
+      <HintPath>..\..\packages\Microsoft.Bcl.1.1.7\lib\net40\System.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Dataflow, Version=4.5.9.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Dataflow\NET40\System.Threading.Tasks.Dataflow.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Enlightenment\Nito.AsyncEx.Enlightenment %28NET40%29\Nito.AsyncEx.Enlightenment %28NET40%29.csproj">
+      <Project>{f90505c6-d608-4e2a-b92e-025240eb3ec9}</Project>
+      <Name>Nito.AsyncEx.Enlightenment %28NET40%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Nito.AsyncEx %28NET4, Win8, SL5, WP8, WPA81%29\Nito.AsyncEx %28NET4, Win8, SL5, WP8, WPA81%29.csproj">
+      <Project>{4b8c613e-9ed8-4159-befd-662c826560f9}</Project>
+      <Name>Nito.AsyncEx %28NET4, Win8, SL5, WP8, WPA81%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Nito.AsyncEx.Concurrent %28NET4, Win8%29\Nito.AsyncEx.Concurrent %28NET4, Win8%29.csproj">
+      <Project>{5b9c3bb4-6a56-4a88-8394-7451cb03ddec}</Project>
+      <Name>Nito.AsyncEx.Concurrent %28NET4, Win8%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Nito.AsyncEx.Dataflow %28NET40%29\Nito.AsyncEx.Dataflow %28NET40%29.csproj">
+      <Project>{23403b7b-d5db-4bef-a6b8-64eed2725e3e}</Project>
+      <Name>Nito.AsyncEx.Dataflow %28NET40%29</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Tests\AsyncAutoResetEventUnitTests.cs">
+      <Link>AsyncAutoResetEventUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\AsyncBarrierUnitTests.cs">
+      <Link>AsyncBarrierUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\AsyncConditionVariableUnitTests.cs">
+      <Link>AsyncConditionVariableUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\AsyncContextThreadUnitTests.cs">
+      <Link>AsyncContextThreadUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\AsyncContextUnitTests.cs">
+      <Link>AsyncContextUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\AsyncCountdownEventUnitTests.cs">
+      <Link>AsyncCountdownEventUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\AsyncFactoryUnitTests.cs">
+      <Link>AsyncFactoryUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\AsyncLazyUnitTests.cs">
+      <Link>AsyncLazyUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\AsyncLockUnitTests.cs">
+      <Link>AsyncLockUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\AsyncManualResetEventUnitTests.cs">
+      <Link>AsyncManualResetEventUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\AsyncMonitorUnitTests.cs">
+      <Link>AsyncMonitorUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\AsyncProducerConsumerQueueUnitTests.cs">
+      <Link>AsyncProducerConsumerQueueUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\AsyncReaderWriterLockUnitTests.cs">
+      <Link>AsyncReaderWriterLockUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\AsyncSemaphoreUnitTests.cs">
+      <Link>AsyncSemaphoreUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\AsyncWaitQueueUnitTests.cs">
+      <Link>AsyncWaitQueueUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\CancellationTokenExtensionsUnitTests.cs">
+      <Link>CancellationTokenExtensionsUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\CancellationTokenHelpersUnitTests.cs">
+      <Link>CancellationTokenHelpersUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\DataflowProgressUnitTests.cs">
+      <Link>DataflowProgressUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\DeferralManagerUnitTests.cs">
+      <Link>DeferralManagerUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\ExceptionHelpersUnitTests.cs">
+      <Link>ExceptionHelpersUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\FuncBlockUnitTests.cs">
+      <Link>FuncBlockUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\Internal\AssertEx.cs">
+      <Link>Internal\AssertEx.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\Internal\TestAsync.cs">
+      <Link>Internal\TestAsync.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\ProducerProgressUnitTests.cs">
+      <Link>ProducerProgressUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\PropertyProgressUnitTests.cs">
+      <Link>PropertyProgressUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\SynchronizationContextHelpersUnitTests.cs">
+      <Link>SynchronizationContextHelpersUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\TaskCompletionNotifierUnitTests.cs">
+      <Link>TaskCompletionNotifierUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\TaskCompletionSourceExtensionsUnitTests.cs">
+      <Link>TaskCompletionSourceExtensionsUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\TaskCompletionSourceUnitTests.cs">
+      <Link>TaskCompletionSourceUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\TaskConstantsUnitTests.cs">
+      <Link>TaskConstantsUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\TaskExtensionsUnitTests.cs">
+      <Link>TaskExtensionsUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\TaskFactoryExtensionsUnitTests.cs">
+      <Link>TaskFactoryExtensionsUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="Internal\TaskShim.cs" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise />
+  </Choose>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

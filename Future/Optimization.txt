@@ -1,0 +1,1 @@
+Some types have dedicated lock objects when they could use another field.

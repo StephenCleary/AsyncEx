@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F90505C6-D608-4E2A-B92E-025240EB3EC9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Nito.AsyncEx</RootNamespace>
+    <AssemblyName>Nito.AsyncEx.Enlightenment</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Nito.AsyncEx.Enlightenment.xml</DocumentationFile>
+    <NoWarn>
+    </NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\..\Nito.AsyncEx.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Threading.Tasks">
+      <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.166\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions">
+      <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.166\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop">
+      <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.166\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO">
+      <HintPath>..\..\packages\Microsoft.Bcl.1.1.7\lib\net40\System.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Runtime">
+      <HintPath>..\..\packages\Microsoft.Bcl.1.1.7\lib\net40\System.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks">
+      <HintPath>..\..\packages\Microsoft.Bcl.1.1.7\lib\net40\System.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\AssemblyVersion.cs">
+      <Link>Properties\AssemblyVersion.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET45%29\EnlightenmentVerification.cs">
+      <Link>EnlightenmentVerification.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET45%29\Internal\PlatformEnlightenment\EnlightenmentProvider.ConcurrentCollectionsEnlightenment.cs">
+      <Link>Internal\PlatformEnlightenment\EnlightenmentProvider.ConcurrentCollectionsEnlightenment.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET45%29\Internal\PlatformEnlightenment\EnlightenmentProvider.LazyEnlightenment.cs">
+      <Link>Internal\PlatformEnlightenment\EnlightenmentProvider.LazyEnlightenment.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET45%29\Internal\PlatformEnlightenment\EnlightenmentProvider.SingleThreadedApartmentEnlightenment.cs">
+      <Link>Internal\PlatformEnlightenment\EnlightenmentProvider.SingleThreadedApartmentEnlightenment.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET45%29\Internal\PlatformEnlightenment\EnlightenmentProvider.SynchronizationContextEnlightenment.cs">
+      <Link>Internal\PlatformEnlightenment\EnlightenmentProvider.SynchronizationContextEnlightenment.cs</Link>
+    </Compile>
+    <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET45%29\Internal\PlatformEnlightenment\EnlightenmentProvider.ThreadPoolEnlightenment.cs">
+      <Link>Internal\PlatformEnlightenment\EnlightenmentProvider.ThreadPoolEnlightenment.cs</Link>
+    </Compile>
+    <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.ThreadIdentityEnlightenment.cs" />
+    <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.cs" />
+    <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.TraceEnlightenment.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Nito.AsyncEx.snk">
+      <Link>Nito.AsyncEx.snk</Link>
+    </None>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Nito.AsyncEx %28NET4, Win8, SL5, WP8, WPA81%29\Nito.AsyncEx %28NET4, Win8, SL5, WP8, WPA81%29.csproj">
+      <Project>{4b8c613e-9ed8-4159-befd-662c826560f9}</Project>
+      <Name>Nito.AsyncEx %28NET4, Win8, SL5, WP8, WPA81%29</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
