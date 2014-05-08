@@ -58,6 +58,7 @@
     </Compile>
     <Compile Include="EnlightenmentVerification.cs" />
     <Compile Include="Internal\PlatformEnlightenment\AsyncEnlightenment.cs" />
+    <Compile Include="Internal\PlatformEnlightenment\BlockingQueue.cs" />
     <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.SingleThreadedApartmentEnlightenment.cs" />
     <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.AsyncEnlightenment.cs" />
     <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.ConcurrentCollectionsEnlightenment.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.LazyEnlightenment.cs" />
     <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.SynchronizationContextEnlightenment.cs" />
     <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.ThreadPoolEnlightenment.cs" />
+    <Compile Include="Internal\PlatformEnlightenment\ExceptionEnlightenment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

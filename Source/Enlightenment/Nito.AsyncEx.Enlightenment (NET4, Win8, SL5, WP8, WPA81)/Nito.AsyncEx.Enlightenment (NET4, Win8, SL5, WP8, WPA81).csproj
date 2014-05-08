@@ -52,7 +52,7 @@
     <Compile Include="EnlightenmentVerification.cs" />
     <Compile Include="Internal\PlatformEnlightenment\AsyncEnlightenment.cs" />
     <Compile Include="Internal\PlatformEnlightenment\Enlightenment.cs" />
-    <Compile Include="Internal\PlatformEnlightenment\ConcurrentCollectionsEnlightenment.cs" />
+    <Compile Include="Internal\PlatformEnlightenment\BlockingQueue.cs" />
     <Compile Include="Internal\PlatformEnlightenment\ExceptionEnlightenment.cs" />
     <Compile Include="Internal\PlatformEnlightenment\LazyEnlightenment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -80,6 +80,9 @@
     <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET45%29\EnlightenmentVerification.cs">
       <Link>EnlightenmentVerification.cs</Link>
     </Compile>
+    <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET45%29\Internal\PlatformEnlightenment\BlockingQueue.cs">
+      <Link>Internal\PlatformEnlightenment\BlockingQueue.cs</Link>
+    </Compile>
     <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET45%29\Internal\PlatformEnlightenment\EnlightenmentProvider.ConcurrentCollectionsEnlightenment.cs">
       <Link>Internal\PlatformEnlightenment\EnlightenmentProvider.ConcurrentCollectionsEnlightenment.cs</Link>
     </Compile>
@@ -96,6 +99,7 @@
       <Link>Internal\PlatformEnlightenment\EnlightenmentProvider.ThreadPoolEnlightenment.cs</Link>
     </Compile>
     <Compile Include="Internal\PlatformEnlightenment\AsyncEnlightenment.cs" />
+    <Compile Include="Internal\PlatformEnlightenment\ExceptionEnlightenment.cs" />
     <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.ThreadIdentityEnlightenment.cs" />
     <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.cs" />
     <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.TraceEnlightenment.cs" />
