@@ -92,8 +92,9 @@ namespace Nito.AsyncEx
             //Enlightenment.Trace.AsyncContext_TaskScheduled(this, task);
             OperationStarted();
             task.ContinueWith(_ => OperationCompleted(), CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
-            if (!_queue.TryAdd(task, propagateExceptions))
-                ;//Enlightenment.Trace.AsyncContext_TaskQueueFailed(this, task);
+            _queue.TryAdd(task, propagateExceptions);
+            //if (!_queue.TryAdd(task, propagateExceptions))
+            //    Enlightenment.Trace.AsyncContext_TaskQueueFailed(this, task);
 
             // If we fail to add to the queue, just drop the Task. This is the same behavior as the TaskScheduler.FromCurrentSynchronizationContext(WinFormsSynchronizationContext).
         }

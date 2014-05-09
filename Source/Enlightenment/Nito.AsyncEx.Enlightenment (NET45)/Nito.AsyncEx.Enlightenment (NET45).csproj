@@ -60,24 +60,10 @@
     <Compile Include="Internal\PlatformEnlightenment\AsyncEnlightenment.cs" />
     <Compile Include="Internal\PlatformEnlightenment\BlockingQueue.cs" />
     <Compile Include="Internal\PlatformEnlightenment\SingleThreadedApartmentThread.cs" />
-    <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.SingleThreadedApartmentEnlightenment.cs" />
-    <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.AsyncEnlightenment.cs" />
-    <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.ConcurrentCollectionsEnlightenment.cs" />
-    <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.cs" />
-    <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.ExceptionEnlightenment.cs" />
-    <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.LazyEnlightenment.cs" />
-    <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.SynchronizationContextEnlightenment.cs" />
-    <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.ThreadPoolEnlightenment.cs" />
     <Compile Include="Internal\PlatformEnlightenment\ExceptionEnlightenment.cs" />
     <Compile Include="Internal\PlatformEnlightenment\SynchronizationContextEnlightenment.cs" />
     <Compile Include="Internal\PlatformEnlightenment\ThreadPoolEnlightenment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29.csproj">
-      <Project>{fcf85b9c-f6b3-4afe-83d0-83c2caa76d24}</Project>
-      <Name>Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

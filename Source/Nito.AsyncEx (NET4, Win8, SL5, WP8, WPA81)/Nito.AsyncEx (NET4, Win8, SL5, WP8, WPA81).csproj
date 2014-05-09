@@ -212,51 +212,6 @@
     <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\IdManager.cs">
       <Link>Internal\IdManager.cs</Link>
     </Compile>
-    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.ConcurrentCollectionsEnlightenment.cs">
-      <Link>Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.ConcurrentCollectionsEnlightenment.cs</Link>
-    </Compile>
-    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.SingleThreadedApartmentEnlightenment.cs">
-      <Link>Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.SingleThreadedApartmentEnlightenment.cs</Link>
-    </Compile>
-    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.ThreadPoolEnlightenment.cs">
-      <Link>Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.ThreadPoolEnlightenment.cs</Link>
-    </Compile>
-    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.TraceEnlightenment.cs">
-      <Link>Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.TraceEnlightenment.cs</Link>
-    </Compile>
-    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\Enlightenment.cs">
-      <Link>Internal\PlatformEnlightenment\Enlightenment.cs</Link>
-    </Compile>
-    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\IAsyncEnlightenment.cs">
-      <Link>Internal\PlatformEnlightenment\IAsyncEnlightenment.cs</Link>
-    </Compile>
-    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\IConcurrentCollectionsEnlightenment.cs">
-      <Link>Internal\PlatformEnlightenment\IConcurrentCollectionsEnlightenment.cs</Link>
-    </Compile>
-    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\IEnlightenmentProvider.cs">
-      <Link>Internal\PlatformEnlightenment\IEnlightenmentProvider.cs</Link>
-    </Compile>
-    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\IExceptionEnlightenment.cs">
-      <Link>Internal\PlatformEnlightenment\IExceptionEnlightenment.cs</Link>
-    </Compile>
-    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\ILazyEnlightenment.cs">
-      <Link>Internal\PlatformEnlightenment\ILazyEnlightenment.cs</Link>
-    </Compile>
-    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\ISingleThreadedApartmentEnlightenment.cs">
-      <Link>Internal\PlatformEnlightenment\ISingleThreadedApartmentEnlightenment.cs</Link>
-    </Compile>
-    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\ISynchronizationContextEnlightenment.cs">
-      <Link>Internal\PlatformEnlightenment\ISynchronizationContextEnlightenment.cs</Link>
-    </Compile>
-    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\IThreadIdentityEnlightenment.cs">
-      <Link>Internal\PlatformEnlightenment\IThreadIdentityEnlightenment.cs</Link>
-    </Compile>
-    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\IThreadPoolEnlightenment.cs">
-      <Link>Internal\PlatformEnlightenment\IThreadPoolEnlightenment.cs</Link>
-    </Compile>
-    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Internal\PlatformEnlightenment\ITraceEnlightenment.cs">
-      <Link>Internal\PlatformEnlightenment\ITraceEnlightenment.cs</Link>
-    </Compile>
     <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\NormalizedCancellationToken.cs">
       <Link>NormalizedCancellationToken.cs</Link>
     </Compile>
@@ -290,14 +245,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.ThreadIdentityEnlightenment.cs" />
-    <Compile Include="Internal\PlatformEnlightenment\ReflectionExpressionProvider.cs" />
     <Compile Include="Internal\ReflectionShim.cs" />
-    <Compile Include="Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.LazyEnlightenment.cs" />
-    <Compile Include="Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.SynchronizationContextEnlightenment.cs" />
-    <Compile Include="Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.AsyncEnlightenment.cs" />
-    <Compile Include="Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.ExceptionEnlightenment.cs" />
-    <Compile Include="Internal\PlatformEnlightenment\DefaultEnlightenmentProvider.cs" />
     <Compile Include="Internal\TaskShim.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

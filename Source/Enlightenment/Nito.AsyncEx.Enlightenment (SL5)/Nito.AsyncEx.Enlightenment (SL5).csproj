@@ -98,9 +98,6 @@
     <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET40%29\Internal\PlatformEnlightenment\AsyncEnlightenment.cs">
       <Link>Internal\PlatformEnlightenment\AsyncEnlightenment.cs</Link>
     </Compile>
-    <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET40%29\Internal\PlatformEnlightenment\EnlightenmentProvider.ThreadIdentityEnlightenment.cs">
-      <Link>Internal\PlatformEnlightenment\EnlightenmentProvider.ThreadIdentityEnlightenment.cs</Link>
-    </Compile>
     <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET40%29\Internal\PlatformEnlightenment\ExceptionEnlightenment.cs">
       <Link>Internal\PlatformEnlightenment\ExceptionEnlightenment.cs</Link>
     </Compile>
@@ -110,20 +107,11 @@
     <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET45%29\EnlightenmentVerification.cs">
       <Link>EnlightenmentVerification.cs</Link>
     </Compile>
-    <Compile Include="..\nito.asyncex.enlightenment %28net45%29\internal\platformenlightenment\EnlightenmentProvider.LazyEnlightenment.cs">
-      <Link>Internal\PlatformEnlightenment\EnlightenmentProvider.LazyEnlightenment.cs</Link>
-    </Compile>
-    <Compile Include="..\nito.asyncex.enlightenment %28net45%29\internal\platformenlightenment\EnlightenmentProvider.ThreadPoolEnlightenment.cs">
-      <Link>Internal\PlatformEnlightenment\EnlightenmentProvider.ThreadPoolEnlightenment.cs</Link>
-    </Compile>
     <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET45%29\Internal\PlatformEnlightenment\SynchronizationContextEnlightenment.cs">
       <Link>Internal\PlatformEnlightenment\SynchronizationContextEnlightenment.cs</Link>
     </Compile>
     <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET45%29\Internal\PlatformEnlightenment\ThreadPoolEnlightenment.cs">
       <Link>Internal\PlatformEnlightenment\ThreadPoolEnlightenment.cs</Link>
-    </Compile>
-    <Compile Include="..\Nito.AsyncEx.Enlightenment %28Win8%29\Internal\PlatformEnlightenment\EnlightenmentProvider.SingleThreadedApartmentEnlightenment.cs">
-      <Link>Internal\PlatformEnlightenment\EnlightenmentProvider.SingleThreadedApartmentEnlightenment.cs</Link>
     </Compile>
     <Compile Include="..\Nito.AsyncEx.Enlightenment %28Win8%29\Internal\PlatformEnlightenment\SingleThreadedApartmentThread.cs">
       <Link>Internal\PlatformEnlightenment\SingleThreadedApartmentThread.cs</Link>
@@ -131,18 +119,11 @@
     <Compile Include="..\Nito.AsyncEx.Enlightenment %28WP8%29\Internal\PlatformEnlightenment\BlockingQueue.cs">
       <Link>Internal\PlatformEnlightenment\BlockingQueue.cs</Link>
     </Compile>
-    <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Nito.AsyncEx %28NET4, Win8, SL5, WP8, WPA81%29\Nito.AsyncEx %28NET4, Win8, SL5, WP8, WPA81%29.csproj">
-      <Project>{4b8c613e-9ed8-4159-befd-662c826560f9}</Project>
-      <Name>Nito.AsyncEx %28NET4, Win8, SL5, WP8, WPA81%29</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

@@ -12,7 +12,7 @@ namespace Nito.AsyncEx
         /// </summary>
         public static bool EnsureLoaded()
         {
-            return Enlightenment.Platform is EnlightenmentProvider;
+            return true;
         }
     }
 }

@@ -23,12 +23,12 @@ namespace Nito.AsyncEx.Internal.PlatformEnlightenment
 
         private sealed class ThreadTask
         {
-            private readonly TaskCompletionSource _tcs;
+            private readonly TaskCompletionSource<object> _tcs;
             private readonly Thread _thread;
 
             public ThreadTask(Action execute)
             {
-                _tcs = new TaskCompletionSource();
+                _tcs = new TaskCompletionSource<object>();
                 _thread = new Thread(() =>
                 {
                     try
@@ -37,7 +37,7 @@ namespace Nito.AsyncEx.Internal.PlatformEnlightenment
                     }
                     finally
                     {
-                        _tcs.TrySetResultWithBackgroundContinuations();
+                        _tcs.TrySetResult(null);
                     }
                 });
                 _thread.SetApartmentState(ApartmentState.STA);
