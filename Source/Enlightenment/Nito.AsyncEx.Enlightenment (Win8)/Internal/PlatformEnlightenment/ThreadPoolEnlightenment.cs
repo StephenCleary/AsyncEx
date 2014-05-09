@@ -14,7 +14,7 @@ namespace Nito.AsyncEx.Internal.PlatformEnlightenment
             Task.Run(() =>
             {
                 var result = WaitHandle.WaitAny(new[] { handle, ret.WaitHandle }, timeout);
-                ret.SetCallbackThreadId(Enlightenment.ThreadIdentity.CurrentManagedThreadId);
+                ret.SetCallbackThreadId(Environment.CurrentManagedThreadId);
                 if (result == WaitHandle.WaitTimeout)
                     callback(state, true);
                 else if (result == 0)
@@ -40,7 +40,7 @@ namespace Nito.AsyncEx.Internal.PlatformEnlightenment
                 {
                     callbackThreadId = _callbackThreadId;
                 }
-                if (callbackThreadId != Enlightenment.ThreadIdentity.CurrentManagedThreadId)
+                if (callbackThreadId != Environment.CurrentManagedThreadId)
                     _completed.WaitOne();
             }
 

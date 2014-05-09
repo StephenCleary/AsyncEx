@@ -16,14 +16,14 @@ namespace Nito.AsyncEx
             /// <summary>
             /// The underlying blocking collection.
             /// </summary>
-            private readonly IBlockingQueue<Tuple<Task, bool>> _queue;
+            private readonly BlockingQueue<Tuple<Task, bool>> _queue;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="TaskQueue"/> class.
             /// </summary>
             public TaskQueue()
             {
-                _queue = Enlightenment.ConcurrentCollections.CreateBlockingQueue<Tuple<Task, bool>>();
+                _queue = new BlockingQueue<Tuple<Task, bool>>();
             }
 
             /// <summary>

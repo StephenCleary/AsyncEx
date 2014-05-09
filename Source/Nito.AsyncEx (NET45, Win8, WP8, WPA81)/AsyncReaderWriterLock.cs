@@ -161,7 +161,7 @@ namespace Nito.AsyncEx
                     // Wait for the lock to become available or cancellation.
                     ret = _readerQueue.Enqueue(cancellationToken);
                 }
-                Enlightenment.Trace.AsyncReaderWriterLock_TrackLock(this, AsyncReaderWriterLockLockType.Reader, ret);
+                //Enlightenment.Trace.AsyncReaderWriterLock_TrackLock(this, AsyncReaderWriterLockLockType.Reader, ret);
             }
 
             return ret;
@@ -230,7 +230,7 @@ namespace Nito.AsyncEx
                     // Wait for the lock to become available or cancellation.
                     ret = _writerQueue.Enqueue(cancellationToken);
                 }
-                Enlightenment.Trace.AsyncReaderWriterLock_TrackLock(this, AsyncReaderWriterLockLockType.Writer, ret);
+                //Enlightenment.Trace.AsyncReaderWriterLock_TrackLock(this, AsyncReaderWriterLockLockType.Writer, ret);
             }
 
             ReleaseWaitersWhenCanceled(ret);
@@ -302,7 +302,7 @@ namespace Nito.AsyncEx
                     // Wait for the lock to become available or cancellation.
                     ret = _upgradeableReaderQueue.Enqueue(cancellationToken);
                 }
-                Enlightenment.Trace.AsyncReaderWriterLock_TrackLock(this, AsyncReaderWriterLockLockType.UpgradeableReader, ret);
+                //Enlightenment.Trace.AsyncReaderWriterLock_TrackLock(this, AsyncReaderWriterLockLockType.UpgradeableReader, ret);
             }
 
             ReleaseWaitersWhenCanceled(ret);
@@ -372,7 +372,7 @@ namespace Nito.AsyncEx
                 ret = _upgradeReaderQueue.Enqueue(cancellationToken);
             }
 
-            Enlightenment.Trace.AsyncReaderWriterLock_TrackLock(this, AsyncReaderWriterLockLockType.UpgradingToWriter, ret);
+            //Enlightenment.Trace.AsyncReaderWriterLock_TrackLock(this, AsyncReaderWriterLockLockType.UpgradingToWriter, ret);
             return ret;
         }
 
@@ -382,7 +382,7 @@ namespace Nito.AsyncEx
         internal List<IDisposable> Downgrade()
         {
             _locksHeld = 1;
-            Enlightenment.Trace.AsyncReaderWriterLock_LockReleased(this, AsyncReaderWriterLockLockType.UpgradingToWriter);
+            //Enlightenment.Trace.AsyncReaderWriterLock_LockReleased(this, AsyncReaderWriterLockLockType.UpgradingToWriter);
             return ReleaseWaiters();
         }
 
@@ -457,7 +457,7 @@ namespace Nito.AsyncEx
             lock (SyncObject)
             {
                 --_locksHeld;
-                Enlightenment.Trace.AsyncReaderWriterLock_LockReleased(this, AsyncReaderWriterLockLockType.Reader);
+                //Enlightenment.Trace.AsyncReaderWriterLock_LockReleased(this, AsyncReaderWriterLockLockType.Reader);
                 finishes = ReleaseWaiters();
             }
             foreach (var finish in finishes)
@@ -473,7 +473,7 @@ namespace Nito.AsyncEx
             lock (SyncObject)
             {
                 _locksHeld = 0;
-                Enlightenment.Trace.AsyncReaderWriterLock_LockReleased(this, AsyncReaderWriterLockLockType.Writer);
+                //Enlightenment.Trace.AsyncReaderWriterLock_LockReleased(this, AsyncReaderWriterLockLockType.Writer);
                 finishes = ReleaseWaiters();
             }
             foreach (var finish in finishes)
@@ -492,7 +492,7 @@ namespace Nito.AsyncEx
                 if (upgrade != null)
                     cancelFinish = _upgradeReaderQueue.TryCancel(upgrade);
                 _upgradeableReaderKey = null;
-                Enlightenment.Trace.AsyncReaderWriterLock_LockReleased(this, AsyncReaderWriterLockLockType.UpgradeableReader);
+                //Enlightenment.Trace.AsyncReaderWriterLock_LockReleased(this, AsyncReaderWriterLockLockType.UpgradeableReader);
                 --_locksHeld;
                 finishes = ReleaseWaiters();
             }

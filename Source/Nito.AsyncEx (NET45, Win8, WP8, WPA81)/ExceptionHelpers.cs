@@ -15,7 +15,7 @@ namespace Nito.AsyncEx
         /// <returns>The <see cref="Exception"/> that was passed into this method.</returns>
         public static Exception PrepareForRethrow(Exception exception)
         {
-            return Enlightenment.Exception.PrepareForRethrow(exception);
+            return ExceptionEnlightenment.PrepareForRethrow(exception);
         }
     }
 }

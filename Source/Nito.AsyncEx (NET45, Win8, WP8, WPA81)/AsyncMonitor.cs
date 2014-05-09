@@ -29,7 +29,7 @@ namespace Nito.AsyncEx
         {
             _asyncLock = new AsyncLock(lockQueue);
             _conditionVariable = new AsyncConditionVariable(_asyncLock, conditionVariableQueue);
-            Enlightenment.Trace.AsyncMonitor_Created(_asyncLock, _conditionVariable);
+            //Enlightenment.Trace.AsyncMonitor_Created(_asyncLock, _conditionVariable);
         }
 
         /// <summary>

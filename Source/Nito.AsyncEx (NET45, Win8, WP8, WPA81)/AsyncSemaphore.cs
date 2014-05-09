@@ -48,7 +48,7 @@ namespace Nito.AsyncEx
             _queue = queue;
             _count = initialCount;
             _mutex = new object();
-            Enlightenment.Trace.AsyncSemaphore_CountChanged(this, initialCount);
+            //Enlightenment.Trace.AsyncSemaphore_CountChanged(this, initialCount);
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Nito.AsyncEx
                 if (_count != 0)
                 {
                     --_count;
-                    Enlightenment.Trace.AsyncSemaphore_CountChanged(this, _count);
+                    //Enlightenment.Trace.AsyncSemaphore_CountChanged(this, _count);
                     ret = TaskConstants.Completed;
                 }
                 else
@@ -97,7 +97,7 @@ namespace Nito.AsyncEx
                     // Wait for the semaphore to become available or cancellation.
                     ret = _queue.Enqueue(cancellationToken);
                 }
-                Enlightenment.Trace.AsyncSemaphore_TrackWait(this, ret);
+                //Enlightenment.Trace.AsyncSemaphore_TrackWait(this, ret);
             }
 
             return ret;
@@ -151,8 +151,8 @@ namespace Nito.AsyncEx
                     --releaseCount;
                 }
 
-                if (_count != oldCount)
-                    Enlightenment.Trace.AsyncSemaphore_CountChanged(this, _count);
+                //if (_count != oldCount)
+                //    Enlightenment.Trace.AsyncSemaphore_CountChanged(this, _count);
             }
             foreach (var finish in finishes)
                 finish.Dispose();

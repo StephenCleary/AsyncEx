@@ -22,7 +22,7 @@ namespace Nito.AsyncEx
         /// <summary>
         /// The underlying lazy task.
         /// </summary>
-        private readonly ILazy<Task<T>> _instance;
+        private readonly Lazy<Task<T>> _instance;
 
         /// <summary>
         /// The semi-unique identifier for this instance. This is 0 if the id has not yet been created.
@@ -48,10 +48,10 @@ namespace Nito.AsyncEx
         /// <param name="factory">The delegate that is invoked on a background thread to produce the value when it is needed. May not be <c>null</c>.</param>
         public AsyncLazy(Func<T> factory)
         {
-            _instance = Enlightenment.Lazy.CreateLazy(() =>
+            _instance = new Lazy<Task<T>>(() =>
             {
                 var ret = TaskShim.Run(factory);
-                Enlightenment.Trace.AsyncLazy_Started(this, ret);
+                //Enlightenment.Trace.AsyncLazy_Started(this, ret);
                 return ret;
             });
         }
@@ -62,10 +62,10 @@ namespace Nito.AsyncEx
         /// <param name="factory">The asynchronous delegate that is invoked on a background thread to produce the value when it is needed. May not be <c>null</c>.</param>
         public AsyncLazy(Func<Task<T>> factory)
         {
-            _instance = Enlightenment.Lazy.CreateLazy(() =>
+            _instance = new Lazy<Task<T>>(() =>
             {
                 var ret = TaskShim.Run(factory);
-                Enlightenment.Trace.AsyncLazy_Started(this, ret);
+                //Enlightenment.Trace.AsyncLazy_Started(this, ret);
                 return ret;
             });
         }

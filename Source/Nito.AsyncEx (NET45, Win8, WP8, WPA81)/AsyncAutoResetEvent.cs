@@ -47,8 +47,8 @@ namespace Nito.AsyncEx
             _queue = queue;
             _set = set;
             _mutex = new object();
-            if (set)
-                Enlightenment.Trace.AsyncAutoResetEvent_Set(this);
+            //if (set)
+            //    Enlightenment.Trace.AsyncAutoResetEvent_Set(this);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Nito.AsyncEx
                 {
                     ret = _queue.Enqueue(cancellationToken);
                 }
-                Enlightenment.Trace.AsyncAutoResetEvent_TrackWait(this, ret);
+                //Enlightenment.Trace.AsyncAutoResetEvent_TrackWait(this, ret);
             }
 
             return ret;
@@ -145,7 +145,7 @@ namespace Nito.AsyncEx
             IDisposable finish = null;
             lock (_mutex)
             {
-                Enlightenment.Trace.AsyncAutoResetEvent_Set(this);
+                //Enlightenment.Trace.AsyncAutoResetEvent_Set(this);
                 if (_queue.IsEmpty)
                     _set = true;
                 else

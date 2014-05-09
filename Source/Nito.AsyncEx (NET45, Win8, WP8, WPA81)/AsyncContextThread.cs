@@ -15,7 +15,7 @@ namespace Nito.AsyncEx
         /// <summary>
         /// The child thread.
         /// </summary>
-        private readonly object _thread;
+        private readonly SingleThreadedApartmentThread _thread;
 
         /// <summary>
         /// The asynchronous context executed by the child thread.
@@ -42,7 +42,7 @@ namespace Nito.AsyncEx
         {
             _context = new AsyncContext();
             _context.SynchronizationContext.OperationStarted();
-            _thread = Enlightenment.SingleThreadedApartment.Start(Execute, sta);
+            _thread = new SingleThreadedApartmentThread(Execute, sta);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Nito.AsyncEx
         public Task JoinAsync()
         {
             AllowThreadToExit();
-            return Enlightenment.SingleThreadedApartment.JoinAsync(_thread);
+            return _thread.JoinAsync();
         }
 
         /// <summary>

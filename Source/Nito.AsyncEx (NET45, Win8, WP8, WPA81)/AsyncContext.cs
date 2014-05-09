@@ -68,7 +68,7 @@ namespace Nito.AsyncEx
         private void OperationStarted()
         {
             var newCount = Interlocked.Increment(ref _outstandingOperations);
-            Enlightenment.Trace.AsyncContext_OperationIncrement(this, newCount);
+            //Enlightenment.Trace.AsyncContext_OperationIncrement(this, newCount);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Nito.AsyncEx
         private void OperationCompleted()
         {
             var newCount = Interlocked.Decrement(ref _outstandingOperations);
-            Enlightenment.Trace.AsyncContext_OperationDecrement(this, newCount);
+            //Enlightenment.Trace.AsyncContext_OperationDecrement(this, newCount);
             if (newCount == 0)
                 _queue.CompleteAdding();
         }
@@ -89,11 +89,11 @@ namespace Nito.AsyncEx
         /// <param name="propagateExceptions">A value indicating whether exceptions on this task should be propagated out of the main loop.</param>
         private void Enqueue(Task task, bool propagateExceptions)
         {
-            Enlightenment.Trace.AsyncContext_TaskScheduled(this, task);
+            //Enlightenment.Trace.AsyncContext_TaskScheduled(this, task);
             OperationStarted();
             task.ContinueWith(_ => OperationCompleted(), CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
             if (!_queue.TryAdd(task, propagateExceptions))
-                Enlightenment.Trace.AsyncContext_TaskQueueFailed(this, task);
+                ;//Enlightenment.Trace.AsyncContext_TaskQueueFailed(this, task);
 
             // If we fail to add to the queue, just drop the Task. This is the same behavior as the TaskScheduler.FromCurrentSynchronizationContext(WinFormsSynchronizationContext).
         }

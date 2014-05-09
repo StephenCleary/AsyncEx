@@ -17,7 +17,7 @@ namespace Nito.AsyncEx
         /// <returns>The started task.</returns>
         public static Task Run(this TaskFactory @this, Action action)
         {
-            return @this.StartNew(action, @this.CancellationToken, Enlightenment.Async.AddDenyChildAttach(@this.CreationOptions), @this.Scheduler ?? TaskScheduler.Default);
+            return @this.StartNew(action, @this.CancellationToken, AsyncEnlightenment.AddDenyChildAttach(@this.CreationOptions), @this.Scheduler ?? TaskScheduler.Default);
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Nito.AsyncEx
         /// <returns>The started task.</returns>
         public static Task<TResult> Run<TResult>(this TaskFactory @this, Func<TResult> action)
         {
-            return @this.StartNew(action, @this.CancellationToken, Enlightenment.Async.AddDenyChildAttach(@this.CreationOptions), @this.Scheduler ?? TaskScheduler.Default);
+            return @this.StartNew(action, @this.CancellationToken, AsyncEnlightenment.AddDenyChildAttach(@this.CreationOptions), @this.Scheduler ?? TaskScheduler.Default);
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Nito.AsyncEx
         /// <returns>The started task.</returns>
         public static Task Run(this TaskFactory @this, Func<Task> action)
         {
-            return @this.StartNew(action, @this.CancellationToken, Enlightenment.Async.AddDenyChildAttach(@this.CreationOptions), @this.Scheduler ?? TaskScheduler.Default).Unwrap();
+            return @this.StartNew(action, @this.CancellationToken, AsyncEnlightenment.AddDenyChildAttach(@this.CreationOptions), @this.Scheduler ?? TaskScheduler.Default).Unwrap();
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Nito.AsyncEx
         /// <returns>The started task.</returns>
         public static Task<TResult> Run<TResult>(this TaskFactory @this, Func<Task<TResult>> action)
         {
-            return @this.StartNew(action, @this.CancellationToken, Enlightenment.Async.AddDenyChildAttach(@this.CreationOptions), @this.Scheduler ?? TaskScheduler.Default).Unwrap();
+            return @this.StartNew(action, @this.CancellationToken, AsyncEnlightenment.AddDenyChildAttach(@this.CreationOptions), @this.Scheduler ?? TaskScheduler.Default).Unwrap();
         }
     }
 }

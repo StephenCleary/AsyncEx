@@ -33,7 +33,7 @@ namespace Nito.AsyncEx
         {
             _tcs = new TaskCompletionSource();
             _count = count;
-            Enlightenment.Trace.AsyncCountdownEvent_CountChanged(this, -1, count);
+            //Enlightenment.Trace.AsyncCountdownEvent_CountChanged(this, -1, count);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Nito.AsyncEx
                     return false;
                 if (Interlocked.CompareExchange(ref _count, newCount, oldCount) == oldCount)
                 {
-                    Enlightenment.Trace.AsyncCountdownEvent_CountChanged(this, oldCount, newCount);
+                    //Enlightenment.Trace.AsyncCountdownEvent_CountChanged(this, oldCount, newCount);
                     if (newCount == 0)
                         _tcs.SetResult();
                     return true;

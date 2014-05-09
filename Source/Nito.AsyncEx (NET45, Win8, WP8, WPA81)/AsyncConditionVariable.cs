@@ -72,7 +72,7 @@ namespace Nito.AsyncEx
             IDisposable finish = null;
             lock (_mutex)
             {
-                Enlightenment.Trace.AsyncConditionVariable_NotifyOne(this, _asyncLock);
+                //Enlightenment.Trace.AsyncConditionVariable_NotifyOne(this, _asyncLock);
                 if (!_queue.IsEmpty)
                     finish = _queue.Dequeue();
             }
@@ -88,7 +88,7 @@ namespace Nito.AsyncEx
             IDisposable finish;
             lock (_mutex)
             {
-                Enlightenment.Trace.AsyncConditionVariable_NotifyAll(this, _asyncLock);
+                //Enlightenment.Trace.AsyncConditionVariable_NotifyAll(this, _asyncLock);
                 finish = _queue.DequeueAll();
             }
             finish.Dispose();
@@ -117,7 +117,7 @@ namespace Nito.AsyncEx
                 }, CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
 
                 var ret = retTcs.Task;
-                Enlightenment.Trace.AsyncConditionVariable_TrackWait(this, _asyncLock, task, ret);
+                //Enlightenment.Trace.AsyncConditionVariable_TrackWait(this, _asyncLock, task, ret);
 
                 // Release the lock while we are waiting.
                 _asyncLock.ReleaseLock();

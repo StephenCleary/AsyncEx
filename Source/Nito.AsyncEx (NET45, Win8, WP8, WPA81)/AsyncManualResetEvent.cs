@@ -49,12 +49,12 @@ namespace Nito.AsyncEx
             _tcs = new TaskCompletionSource();
             if (set)
             {
-                Enlightenment.Trace.AsyncManualResetEvent_Set(this, _tcs.Task);
+                //Enlightenment.Trace.AsyncManualResetEvent_Set(this, _tcs.Task);
                 _tcs.SetResult();
             }
             else
             {
-                Enlightenment.Trace.AsyncManualResetEvent_Reset(this, _tcs.Task);
+                //Enlightenment.Trace.AsyncManualResetEvent_Reset(this, _tcs.Task);
             }
         }
 
@@ -82,7 +82,7 @@ namespace Nito.AsyncEx
             lock (_sync)
             {
                 var ret = _tcs.Task;
-                Enlightenment.Trace.AsyncManualResetEvent_Wait(this, ret);
+                //Enlightenment.Trace.AsyncManualResetEvent_Wait(this, ret);
                 return ret;
             }
         }
@@ -114,7 +114,7 @@ namespace Nito.AsyncEx
         {
             lock (_sync)
             {
-                Enlightenment.Trace.AsyncManualResetEvent_Set(this, _tcs.Task);
+                //Enlightenment.Trace.AsyncManualResetEvent_Set(this, _tcs.Task);
                 _tcs.TrySetResultWithBackgroundContinuations();
             }
         }
@@ -128,7 +128,7 @@ namespace Nito.AsyncEx
             {
                 if (_tcs.Task.IsCompleted)
                     _tcs = new TaskCompletionSource();
-                Enlightenment.Trace.AsyncManualResetEvent_Reset(this, _tcs.Task);
+                //Enlightenment.Trace.AsyncManualResetEvent_Reset(this, _tcs.Task);
             }
         }
 

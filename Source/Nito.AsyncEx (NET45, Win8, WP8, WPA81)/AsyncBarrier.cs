@@ -66,7 +66,7 @@ namespace Nito.AsyncEx
             _sync = new object();
             _tcs = new TaskCompletionSource();
             _participants = _count = participants;
-            Enlightenment.Trace.AsyncBarrier_PhaseChanged(this, 0, participants, _tcs.Task);
+            //Enlightenment.Trace.AsyncBarrier_PhaseChanged(this, 0, participants, _tcs.Task);
         }
 
         /// <summary>
@@ -150,11 +150,11 @@ namespace Nito.AsyncEx
                 if (signalCount > _count)
                     return null;
                 _count -= signalCount;
-                Enlightenment.Trace.AsyncBarrier_CountChanged(this, _phase, _count);
+                //Enlightenment.Trace.AsyncBarrier_CountChanged(this, _phase, _count);
                 if (removeParticipants)
                 {
                     _participants -= signalCount;
-                    Enlightenment.Trace.AsyncBarrier_ParticipantsChanged(this, _phase, _participants);
+                    //Enlightenment.Trace.AsyncBarrier_ParticipantsChanged(this, _phase, _participants);
                 }
 
                 if (_count == 0)
@@ -167,7 +167,7 @@ namespace Nito.AsyncEx
                             _tcs = new TaskCompletionSource();
                             _count = _participants;
                             ++_phase;
-                            Enlightenment.Trace.AsyncBarrier_PhaseChanged(this, _phase, _participants, _tcs.Task);
+                            //Enlightenment.Trace.AsyncBarrier_PhaseChanged(this, _phase, _participants, _tcs.Task);
                         }
 
                         // When the post-phase action completes, complete all waiting tasks for that phase, propagating the post-phase action result.
@@ -256,9 +256,9 @@ namespace Nito.AsyncEx
                 if ((count > int.MaxValue - _participants) || (_count == 0 && _participants != 0))
                     throw new InvalidOperationException("Cannot add participants to barrier.");
                 _count += count;
-                Enlightenment.Trace.AsyncBarrier_CountChanged(this, _phase, count);
+                //Enlightenment.Trace.AsyncBarrier_CountChanged(this, _phase, count);
                 _participants += count;
-                Enlightenment.Trace.AsyncBarrier_ParticipantsChanged(this, _phase, _participants);
+                //Enlightenment.Trace.AsyncBarrier_ParticipantsChanged(this, _phase, _participants);
                 return _phase;
             }
         }

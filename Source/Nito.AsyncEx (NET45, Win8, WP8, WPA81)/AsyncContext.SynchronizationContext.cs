@@ -73,7 +73,7 @@ namespace Nito.AsyncEx
             /// </summary>
             public override void OperationStarted()
             {
-                Enlightenment.Trace.AsyncContext_ExplicitOperationIncrement(_context);
+                //Enlightenment.Trace.AsyncContext_ExplicitOperationIncrement(_context);
                 _context.OperationStarted();
             }
 
@@ -82,7 +82,7 @@ namespace Nito.AsyncEx
             /// </summary>
             public override void OperationCompleted()
             {
-                Enlightenment.Trace.AsyncContext_ExplicitOperationDecrement(_context);
+                //Enlightenment.Trace.AsyncContext_ExplicitOperationDecrement(_context);
                 _context.OperationCompleted();
             }
 

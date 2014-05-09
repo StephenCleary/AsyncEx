@@ -85,7 +85,7 @@ namespace Nito.AsyncEx
                     ret = _queue.Enqueue(cancellationToken);
                 }
 
-                Enlightenment.Trace.AsyncLock_TrackLock(this, ret);
+                //Enlightenment.Trace.AsyncLock_TrackLock(this, ret);
             }
 
             return ret;
@@ -137,7 +137,7 @@ namespace Nito.AsyncEx
             IDisposable finish = null;
             lock (_mutex)
             {
-                Enlightenment.Trace.AsyncLock_Unlocked(this);
+                //Enlightenment.Trace.AsyncLock_Unlocked(this);
                 if (_queue.IsEmpty)
                     _taken = false;
                 else

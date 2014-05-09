@@ -126,7 +126,7 @@ namespace Nito.AsyncEx
 
             // Register all asynchronous cases.
             var tcs = new TaskCompletionSource<bool>();
-            var threadPoolRegistration = Enlightenment.ThreadPool.RegisterWaitForSingleObject(handle,
+            var threadPoolRegistration = ThreadPoolEnlightenment.RegisterWaitForSingleObject(handle,
                 (state, timedOut) => ((TaskCompletionSource<bool>)state).TrySetResult(!timedOut),
                 tcs, timeout);
             var tokenRegistration = token.Register(

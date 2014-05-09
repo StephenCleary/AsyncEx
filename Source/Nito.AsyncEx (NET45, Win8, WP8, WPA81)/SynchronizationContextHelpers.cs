@@ -42,7 +42,7 @@ namespace Nito.AsyncEx
             public SynchronizationContextSwitcher(SynchronizationContext newContext)
             {
                 _oldContext = SynchronizationContext.Current;
-                Enlightenment.SynchronizationContext.SetCurrent(newContext);
+                SynchronizationContextEnlightenment.SetCurrentSynchronizationContext(newContext);
             }
 
             /// <summary>
@@ -52,7 +52,7 @@ namespace Nito.AsyncEx
             {
                 if (_disposed)
                     return;
-                Enlightenment.SynchronizationContext.SetCurrent(_oldContext);
+                SynchronizationContextEnlightenment.SetCurrentSynchronizationContext(_oldContext);
                 _disposed = true;
             }
         }
