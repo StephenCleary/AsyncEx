@@ -72,12 +72,13 @@
       <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.166\lib\sl4\Microsoft.Threading.Tasks.Extensions.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
-    <Reference Include="System.IO">
-      <HintPath>..\..\packages\Microsoft.Bcl.1.1.7\lib\sl5\System.IO.dll</HintPath>
+    <Reference Include="System.IO, Version=2.6.7.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.Bcl.1.1.9\lib\sl5\System.IO.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime, Version=2.6.7.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Microsoft.Bcl.1.1.7\lib\sl5\System.Runtime.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Bcl.1.1.9\lib\sl5\System.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
