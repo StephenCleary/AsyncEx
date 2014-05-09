@@ -33,7 +33,7 @@
     <DocumentationFile>bin\Release\Nito.AsyncEx.Dataflow.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\Nito.AsyncEx.snk</AssemblyOriginatorKeyFile>
@@ -86,9 +86,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Nito.AsyncEx.snk">
-      <Link>Nito.AsyncEx.snk</Link>
-    </None>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>

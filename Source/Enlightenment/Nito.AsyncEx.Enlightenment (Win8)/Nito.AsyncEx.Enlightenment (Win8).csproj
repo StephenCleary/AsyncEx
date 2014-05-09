@@ -104,12 +104,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="..\..\Nito.AsyncEx.snk">
-      <Link>Nito.AsyncEx.snk</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="..\..\AssemblyVersion.cs">
       <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
@@ -166,7 +160,7 @@
     <StartupObject />
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\..\Nito.AsyncEx.snk</AssemblyOriginatorKeyFile>

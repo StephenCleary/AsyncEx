@@ -35,7 +35,7 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\..\Nito.AsyncEx.snk</AssemblyOriginatorKeyFile>
@@ -72,11 +72,6 @@
     <Compile Include="Internal\PlatformEnlightenment\SynchronizationContextEnlightenment.cs" />
     <Compile Include="Internal\PlatformEnlightenment\ThreadPoolEnlightenment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\Nito.AsyncEx.snk">
-      <Link>Nito.AsyncEx.snk</Link>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29.csproj">

@@ -34,16 +34,13 @@
     <DocumentationFile>bin\Release\Nito.AsyncEx.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\Nito.AsyncEx.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <None Include="..\Nito.AsyncEx.snk">
-      <Link>Nito.AsyncEx.snk</Link>
-    </None>
     <None Include="AsyncFactory %28of TResult%29.FromAsync.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AsyncFactory %28of TResult%29.FromAsync.cs</LastGenOutput>

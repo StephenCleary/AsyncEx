@@ -34,17 +34,11 @@
     <DocumentationFile>bin\Release\Nito.AsyncEx.Concurrent.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\Nito.AsyncEx.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-  <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-    <None Include="..\Nito.AsyncEx.snk">
-      <Link>Nito.AsyncEx.snk</Link>
-    </None>
-  </ItemGroup>
   <ItemGroup>
     <Compile Include="..\AssemblyVersion.cs">
       <Link>Properties\AssemblyVersion.cs</Link>
