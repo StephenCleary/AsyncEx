@@ -104,6 +104,9 @@
     <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET40%29\Internal\PlatformEnlightenment\ExceptionEnlightenment.cs">
       <Link>Internal\PlatformEnlightenment\ExceptionEnlightenment.cs</Link>
     </Compile>
+    <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET40%29\Internal\PlatformEnlightenment\ReflectionHelper.cs">
+      <Link>Internal\PlatformEnlightenment\ReflectionHelper.cs</Link>
+    </Compile>
     <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET45%29\EnlightenmentVerification.cs">
       <Link>EnlightenmentVerification.cs</Link>
     </Compile>

@@ -340,6 +340,12 @@
       <HintPath>..\packages\Microsoft.Bcl.1.1.7\lib\portable-net40+sl5+win8+wp8+wpa81\System.Threading.Tasks.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Enlightenment\Nito.AsyncEx.Enlightenment %28NET4, Win8, SL5, WP8, WPA81%29\Nito.AsyncEx.Enlightenment %28NET4, Win8, SL5, WP8, WPA81%29.csproj">
+      <Project>{40ce2f27-b155-4d4e-8b07-a65b79b7dbea}</Project>
+      <Name>Nito.AsyncEx.Enlightenment %28NET4, Win8, SL5, WP8, WPA81%29</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">

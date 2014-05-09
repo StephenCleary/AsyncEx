@@ -19,14 +19,13 @@ namespace Nito.AsyncEx.Internal.PlatformEnlightenment
 
         static ExceptionEnlightenment()
         {
-            IReflectionExpressionProvider r = new ReflectionExpressionProvider();
             var exception = Expression.Parameter(typeof(Exception), "exception");
-            var capture = r.Call(r.Type("System.Runtime.ExceptionServices.ExceptionDispatchInfo"), "Capture", exception);
-            var @throw = r.Call(capture, "Throw");
-            CaptureAndThrow = r.Compile<Action<Exception>>(@throw, exception);
+            var capture = ReflectionHelper.Call(ReflectionHelper.Type("System.Runtime.ExceptionServices.ExceptionDispatchInfo"), "Capture", exception);
+            var @throw = ReflectionHelper.Call(capture, "Throw");
+            CaptureAndThrow = ReflectionHelper.Compile<Action<Exception>>(@throw, exception);
 
-            var prepForRemoting = r.Call(exception, "PrepForRemoting", BindingFlags.Instance | BindingFlags.NonPublic);
-            PrepForRemoting = r.Compile<Action<Exception>>(prepForRemoting, exception);
+            var prepForRemoting = ReflectionHelper.Call(exception, "PrepForRemoting", BindingFlags.Instance | BindingFlags.NonPublic);
+            PrepForRemoting = ReflectionHelper.Compile<Action<Exception>>(prepForRemoting, exception);
         }
 
         public static Exception PrepareForRethrow(Exception exception)

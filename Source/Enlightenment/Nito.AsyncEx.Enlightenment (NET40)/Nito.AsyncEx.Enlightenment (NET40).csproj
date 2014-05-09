@@ -112,6 +112,7 @@
     <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.ThreadIdentityEnlightenment.cs" />
     <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.cs" />
     <Compile Include="Internal\PlatformEnlightenment\EnlightenmentProvider.TraceEnlightenment.cs" />
+    <Compile Include="Internal\PlatformEnlightenment\ReflectionHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
