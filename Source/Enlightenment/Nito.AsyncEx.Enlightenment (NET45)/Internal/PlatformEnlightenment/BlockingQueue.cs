@@ -17,7 +17,7 @@ namespace Nito.AsyncEx.Internal.PlatformEnlightenment
         {
             try
             {
-                return TryAdd(item);
+                return _queue.TryAdd(item);
             }
             catch (InvalidOperationException)
             {
