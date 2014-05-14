@@ -1,3 +1,3 @@
 ﻿using System.Reflection;
 
-[assembly: AssemblyTitle("Nito.AsyncEx Enlightenment for Silverlight 4")]
+[assembly: AssemblyTitle("Nito.AsyncEx Enlightenment for Silverlight 5")]

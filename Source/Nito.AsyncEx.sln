@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30324.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FA26D995-6F9A-4261-8C9A-2F35449A6C2A}"
 	ProjectSection(SolutionItems) = preProject
@@ -9,7 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Nito.AsyncEx.Dataflow.nuspec = Nito.AsyncEx.Dataflow.nuspec
 		Nito.AsyncEx.DataflowProxy.nuspec = Nito.AsyncEx.DataflowProxy.nuspec
 		Nito.AsyncEx.nuspec = Nito.AsyncEx.nuspec
-		Unit tests.testsettings = Unit tests.testsettings
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Enlightenment", "Enlightenment", "{FB99775E-8183-4444-8763-65C0BF332960}"
@@ -51,6 +50,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nito.AsyncEx.Enlightenment (SL5)", "Enlightenment\Nito.AsyncEx.Enlightenment (SL5)\Nito.AsyncEx.Enlightenment (SL5).csproj", "{BA55F0BD-3F57-4364-87BF-E83E696779C3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nito.AsyncEx (NET4, Win8, SL5, WP8, WPA81)", "Nito.AsyncEx (NET4, Win8, SL5, WP8, WPA81)\Nito.AsyncEx (NET4, Win8, SL5, WP8, WPA81).csproj", "{4B8C613E-9ED8-4159-BEFD-662C826560F9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FCF85B9C-F6B3-4AFE-83D0-83C2CAA76D24} = {FCF85B9C-F6B3-4AFE-83D0-83C2CAA76D24}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nito.AsyncEx (NET45, Win8, WP8, WPA81)", "Nito.AsyncEx (NET45, Win8, WP8, WPA81)\Nito.AsyncEx (NET45, Win8, WP8, WPA81).csproj", "{FCF85B9C-F6B3-4AFE-83D0-83C2CAA76D24}"
 EndProject

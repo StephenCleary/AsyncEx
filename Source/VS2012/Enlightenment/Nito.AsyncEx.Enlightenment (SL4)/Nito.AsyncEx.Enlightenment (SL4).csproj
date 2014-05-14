@@ -5,21 +5,18 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{BA55F0BD-3F57-4364-87BF-E83E696779C3}</ProjectGuid>
+    <ProjectGuid>{AC762797-D4D1-46C6-9AB9-781CDE4C27DA}</ProjectGuid>
     <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Nito.AsyncEx</RootNamespace>
     <AssemblyName>Nito.AsyncEx.Enlightenment</AssemblyName>
     <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
-    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
     <SilverlightApplication>false</SilverlightApplication>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <!-- This property group is only here to support building this project using the 
        MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
@@ -37,9 +34,8 @@
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <NoWarn>1591</NoWarn>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -50,38 +46,29 @@
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>Bin\Release\Nito.AsyncEx.Enlightenment.xml</DocumentationFile>
-    <Prefer32Bit>false</Prefer32Bit>
-    <NoWarn>1591</NoWarn>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\..\Nito.AsyncEx.snk</AssemblyOriginatorKeyFile>
+    <DocumentationFile>Bin\Release\Nito.AsyncEx.Enlightenment.xml</DocumentationFile>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Microsoft.Threading.Tasks">
       <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\sl4\Microsoft.Threading.Tasks.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions">
       <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\sl4\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Threading.Tasks.Extensions.Silverlight, Version=1.0.168.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Silverlight">
       <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\sl4\Microsoft.Threading.Tasks.Extensions.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
-    <Reference Include="System.IO, Version=2.6.7.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Microsoft.Bcl.1.1.9\lib\sl5\System.IO.dll</HintPath>
+    <Reference Include="System.IO">
+      <HintPath>..\..\packages\Microsoft.Bcl.1.1.8\lib\sl4\System.IO.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime, Version=2.6.7.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Microsoft.Bcl.1.1.9\lib\sl5\System.Runtime.dll</HintPath>
+    <Reference Include="System.Runtime">
+      <HintPath>..\..\packages\Microsoft.Bcl.1.1.8\lib\sl4\System.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks">
+      <HintPath>..\..\packages\Microsoft.Bcl.1.1.8\lib\sl4\System.Threading.Tasks.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -93,45 +80,45 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\AssemblyVersion.cs">
+    <Compile Include="..\..\..\AssemblyVersion.cs">
       <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="..\..\SharedAssemblyInfo.cs">
-      <Link>Properties\SharedAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET40%29\Internal\PlatformEnlightenment\AsyncEnlightenment.cs">
+    <Compile Include="..\..\..\Enlightenment\Nito.AsyncEx.Enlightenment %28NET40%29\Internal\PlatformEnlightenment\AsyncEnlightenment.cs">
       <Link>Internal\PlatformEnlightenment\AsyncEnlightenment.cs</Link>
     </Compile>
-    <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET40%29\Internal\PlatformEnlightenment\ExceptionEnlightenment.cs">
+    <Compile Include="..\..\..\Enlightenment\Nito.AsyncEx.Enlightenment %28NET40%29\Internal\PlatformEnlightenment\ExceptionEnlightenment.cs">
       <Link>Internal\PlatformEnlightenment\ExceptionEnlightenment.cs</Link>
     </Compile>
-    <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET40%29\Internal\PlatformEnlightenment\ReflectionHelper.cs">
+    <Compile Include="..\..\..\Enlightenment\Nito.AsyncEx.Enlightenment %28NET40%29\Internal\PlatformEnlightenment\ReflectionHelper.cs">
       <Link>Internal\PlatformEnlightenment\ReflectionHelper.cs</Link>
     </Compile>
-    <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET45%29\EnlightenmentVerification.cs">
+    <Compile Include="..\..\..\Enlightenment\Nito.AsyncEx.Enlightenment %28NET45%29\EnlightenmentVerification.cs">
       <Link>EnlightenmentVerification.cs</Link>
     </Compile>
-    <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET45%29\Internal\PlatformEnlightenment\Lazy.cs">
+    <Compile Include="..\..\..\Enlightenment\Nito.AsyncEx.Enlightenment %28NET45%29\Internal\PlatformEnlightenment\Lazy.cs">
       <Link>Internal\PlatformEnlightenment\Lazy.cs</Link>
     </Compile>
-    <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET45%29\Internal\PlatformEnlightenment\SynchronizationContextEnlightenment.cs">
+    <Compile Include="..\..\..\Enlightenment\Nito.AsyncEx.Enlightenment %28NET45%29\Internal\PlatformEnlightenment\SynchronizationContextEnlightenment.cs">
       <Link>Internal\PlatformEnlightenment\SynchronizationContextEnlightenment.cs</Link>
     </Compile>
-    <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET45%29\Internal\PlatformEnlightenment\ThreadPoolEnlightenment.cs">
+    <Compile Include="..\..\..\Enlightenment\Nito.AsyncEx.Enlightenment %28NET45%29\Internal\PlatformEnlightenment\ThreadPoolEnlightenment.cs">
       <Link>Internal\PlatformEnlightenment\ThreadPoolEnlightenment.cs</Link>
     </Compile>
-    <Compile Include="..\Nito.AsyncEx.Enlightenment %28Win8%29\Internal\PlatformEnlightenment\SingleThreadedApartmentThread.cs">
+    <Compile Include="..\..\..\Enlightenment\Nito.AsyncEx.Enlightenment %28Win8%29\Internal\PlatformEnlightenment\SingleThreadedApartmentThread.cs">
       <Link>Internal\PlatformEnlightenment\SingleThreadedApartmentThread.cs</Link>
     </Compile>
-    <Compile Include="..\Nito.AsyncEx.Enlightenment %28WP8%29\Internal\PlatformEnlightenment\BlockingQueue.cs">
+    <Compile Include="..\..\..\Enlightenment\Nito.AsyncEx.Enlightenment %28WP8%29\Internal\PlatformEnlightenment\BlockingQueue.cs">
       <Link>Internal\PlatformEnlightenment\BlockingQueue.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

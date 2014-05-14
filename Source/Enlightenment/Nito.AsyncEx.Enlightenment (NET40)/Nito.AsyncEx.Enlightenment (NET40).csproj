@@ -86,6 +86,9 @@
     <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET45%29\Internal\PlatformEnlightenment\BlockingQueue.cs">
       <Link>Internal\PlatformEnlightenment\BlockingQueue.cs</Link>
     </Compile>
+    <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET45%29\Internal\PlatformEnlightenment\Lazy.cs">
+      <Link>Internal\PlatformEnlightenment\Lazy.cs</Link>
+    </Compile>
     <Compile Include="..\Nito.AsyncEx.Enlightenment %28NET45%29\Internal\PlatformEnlightenment\SingleThreadedApartmentThread.cs">
       <Link>Internal\PlatformEnlightenment\SingleThreadedApartmentThread.cs</Link>
     </Compile>
