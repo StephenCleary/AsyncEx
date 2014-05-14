@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Nito.AsyncEx.DataflowProxy</id>
-    <version>1.0.2</version>
+    <version>1.1.0</version>
     <title>Proxy package used to pull in Dataflow for all supported platforms.</title>
     <authors>Stephen Cleary</authors>
     <owners>Stephen Cleary</owners>
@@ -11,13 +11,12 @@
     <language>en-US</language>
     <projectUrl>http://nitoasyncex.codeplex.com/</projectUrl>
     <dependencies>
-      <group targetFramework="portable-net45+win8">
+      <group targetFramework="portable-net45+win8+wp8+wpa81">
         <dependency id="Microsoft.Tpl.Dataflow" />
       </group>
     </dependencies>
     <releaseNotes>
-      [1.0.2] Clarified targets in metadata. Removed the unsupported sl4/sl5/wp71/wp75 platforms.
-      [1.0.1] Fixed references for win8/sl4/sl5/wp71/wp75.
+      Added support for WP8 and WPA81.
     </releaseNotes>
   </metadata>
   <files>
@@ -25,13 +24,10 @@
     <file src="lib\Dataflow\NET40\System.Threading.Tasks.Dataflow.dll" target="lib\net40" />
     <file src="lib\Dataflow\NET40\System.Threading.Tasks.Dataflow.xml" target="lib\net40" />
 
-    <!-- Windows Store -->
-    <file src="lib\_._" target="lib\win8" />
-
     <!-- .NET 4.5 -->
     <file src="lib\_._" target="lib\net45" />
 
-    <!-- Portable libraries: .NET 4.5, Windows Store -->
-    <file src="lib\_._" target="lib\portable-net45+win8" />
+    <!-- Portable libraries: .NET 4.5, Windows Store 8.0, Windows Phone Silverlight 8.0, Windows Phone Applications 8.1 -->
+    <file src="lib\_._" target="lib\portable-net45+win8+wp8+wpa81" />
   </files>
 </package>

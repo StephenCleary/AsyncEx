@@ -128,9 +128,9 @@
       <Project>{a79aa3fd-f530-4a58-8c11-2e305cde3251}</Project>
       <Name>Nito.AsyncEx.Concurrent %28NET45, Win8, WPA81%29</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Nito.AsyncEx.Dataflow %28NET45, Win8%29\Nito.AsyncEx.Dataflow %28NET45, Win8%29.csproj">
+    <ProjectReference Include="..\..\Nito.AsyncEx.Dataflow %28NET45, Win8, WP8, WPA81%29\Nito.AsyncEx.Dataflow %28NET45, Win8, WP8, WPA81%29.csproj">
       <Project>{c4603c8e-fe0e-4a31-aa6c-88ca22f82756}</Project>
-      <Name>Nito.AsyncEx.Dataflow %28NET45, Win8%29</Name>
+      <Name>Nito.AsyncEx.Dataflow %28NET45, Win8, WP8, WPA81%29</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

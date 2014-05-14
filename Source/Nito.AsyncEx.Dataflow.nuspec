@@ -9,10 +9,9 @@
     <summary>A helper library for async/await with TPL Dataflow.</summary>
     <description>A helper library for async/await with TPL Dataflow.</description>
     <language>en-US</language>
-    <!--  <licenseUrl>http://nitoasyncex.codeplex.com/license</licenseUrl> -->
     <projectUrl>http://nitoasyncex.codeplex.com/</projectUrl>
     <iconUrl>https://lh3.googleusercontent.com/-rWegFo7oREc/Tmgxy2qf6mI/AAAAAAAAFoE/15IERRFJ01I/s800/cadence%2525202%252520small.PNG</iconUrl>
-    <tags>nito dataflow async await net45 win8 net40 netcore45</tags>
+    <tags>dataflow async await net45 win8 net40 netcore45 wp8 wpa81 nito</tags>
     <dependencies>
       <group targetFramework="net40">
         <dependency id="Microsoft.Bcl.Async" version="1.0.16" />
@@ -26,8 +25,7 @@
       </group>
     </dependencies>
     <releaseNotes>
-      [2.0.0] All ambiguous task schedulers are now explicitly specified (fixes some extremely rare and obscure bugs). Updated dependencies.
-      [1.0.0] First public release.
+      Added support for WP8 and WPA81.
     </releaseNotes>
   </metadata>
   <files>
@@ -38,19 +36,14 @@
     <file src="Nito.AsyncEx.Dataflow (NET45, Win8)\bin\Release\Nito.AsyncEx.Dataflow.xml" target="lib\net45" />
     <file src="Nito.AsyncEx.Dataflow (NET45, Win8)\bin\Release\Nito.AsyncEx.Dataflow.pdb" target="lib\net45" />
 
-    <!-- Windows Store -->
-    <file src="Nito.AsyncEx.Dataflow (NET45, Win8)\bin\Release\Nito.AsyncEx.Dataflow.dll" target="lib\win8" />
-    <file src="Nito.AsyncEx.Dataflow (NET45, Win8)\bin\Release\Nito.AsyncEx.Dataflow.xml" target="lib\win8" />
-    <file src="Nito.AsyncEx.Dataflow (NET45, Win8)\bin\Release\Nito.AsyncEx.Dataflow.pdb" target="lib\win8" />
-
     <!-- .NET 4.0 -->
     <file src="Nito.AsyncEx.Dataflow (NET40)\bin\Release\Nito.AsyncEx.Dataflow.dll" target="lib\net40" />
     <file src="Nito.AsyncEx.Dataflow (NET40)\bin\Release\Nito.AsyncEx.Dataflow.xml" target="lib\net40" />
     <file src="Nito.AsyncEx.Dataflow (NET40)\bin\Release\Nito.AsyncEx.Dataflow.pdb" target="lib\net40" />
 
-    <!-- Portable libraries: .NET 4.5, Windows Store -->
-    <file src="Nito.AsyncEx.Dataflow (NET45, Win8)\bin\Release\Nito.AsyncEx.Dataflow.dll" target="lib\portable-net45+win8" />
-    <file src="Nito.AsyncEx.Dataflow (NET45, Win8)\bin\Release\Nito.AsyncEx.Dataflow.xml" target="lib\portable-net45+win8" />
-    <file src="Nito.AsyncEx.Dataflow (NET45, Win8)\bin\Release\Nito.AsyncEx.Dataflow.pdb" target="lib\portable-net45+win8" />
+    <!-- Portable libraries: .NET 4.5, Windows Store 8.0, Windows Phone Silverlight 8.0, Windows Phone Applications 8.1 -->
+    <file src="Nito.AsyncEx.Dataflow (NET45, Win8)\bin\Release\Nito.AsyncEx.Dataflow.dll" target="lib\portable-net45+win8+wp8+wpa81" />
+    <file src="Nito.AsyncEx.Dataflow (NET45, Win8)\bin\Release\Nito.AsyncEx.Dataflow.xml" target="lib\portable-net45+win8+wp8+wpa81" />
+    <file src="Nito.AsyncEx.Dataflow (NET45, Win8)\bin\Release\Nito.AsyncEx.Dataflow.pdb" target="lib\portable-net45+win8+wp8+wpa81" />
   </files>
 </package>

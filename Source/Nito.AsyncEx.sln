@@ -17,8 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit Tests", "Unit Tests", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installation Tests", "Installation Tests", "{EBAB0A5B-F121-43B9-BD2C-804A8BA06B83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nito.AsyncEx.Dataflow (NET45, Win8)", "Nito.AsyncEx.Dataflow (NET45, Win8)\Nito.AsyncEx.Dataflow (NET45, Win8).csproj", "{C4603C8E-FE0E-4A31-AA6C-88CA22F82756}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nito.AsyncEx.Dataflow (NET40)", "Nito.AsyncEx.Dataflow (NET40)\Nito.AsyncEx.Dataflow (NET40).csproj", "{23403B7B-D5DB-4BEF-A6B8-64EED2725E3E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nito.AsyncEx.Concurrent (NET4, Win8)", "Nito.AsyncEx.Concurrent (NET4, Win8)\Nito.AsyncEx.Concurrent (NET4, Win8).csproj", "{5B9C3BB4-6A56-4A88-8394-7451CB03DDEC}"
@@ -64,6 +62,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPA81", "Installation Tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nito.AsyncEx.Enlightenment (NET4, Win8, SL5, WP8, WPA81)", "Enlightenment\Nito.AsyncEx.Enlightenment (NET4, Win8, SL5, WP8, WPA81)\Nito.AsyncEx.Enlightenment (NET4, Win8, SL5, WP8, WPA81).csproj", "{40CE2F27-B155-4D4E-8B07-A65B79B7DBEA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nito.AsyncEx.Dataflow (NET45, Win8, WP8, WPA81)", "Nito.AsyncEx.Dataflow (NET45, Win8, WP8, WPA81)\Nito.AsyncEx.Dataflow (NET45, Win8, WP8, WPA81).csproj", "{C4603C8E-FE0E-4A31-AA6C-88CA22F82756}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,16 +76,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C4603C8E-FE0E-4A31-AA6C-88CA22F82756}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4603C8E-FE0E-4A31-AA6C-88CA22F82756}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C4603C8E-FE0E-4A31-AA6C-88CA22F82756}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{C4603C8E-FE0E-4A31-AA6C-88CA22F82756}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{C4603C8E-FE0E-4A31-AA6C-88CA22F82756}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{C4603C8E-FE0E-4A31-AA6C-88CA22F82756}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C4603C8E-FE0E-4A31-AA6C-88CA22F82756}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C4603C8E-FE0E-4A31-AA6C-88CA22F82756}.Release|ARM.ActiveCfg = Release|Any CPU
-		{C4603C8E-FE0E-4A31-AA6C-88CA22F82756}.Release|x64.ActiveCfg = Release|Any CPU
-		{C4603C8E-FE0E-4A31-AA6C-88CA22F82756}.Release|x86.ActiveCfg = Release|Any CPU
 		{23403B7B-D5DB-4BEF-A6B8-64EED2725E3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{23403B7B-D5DB-4BEF-A6B8-64EED2725E3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23403B7B-D5DB-4BEF-A6B8-64EED2725E3E}.Debug|ARM.ActiveCfg = Debug|Any CPU
@@ -320,6 +310,16 @@ Global
 		{40CE2F27-B155-4D4E-8B07-A65B79B7DBEA}.Release|ARM.ActiveCfg = Release|Any CPU
 		{40CE2F27-B155-4D4E-8B07-A65B79B7DBEA}.Release|x64.ActiveCfg = Release|Any CPU
 		{40CE2F27-B155-4D4E-8B07-A65B79B7DBEA}.Release|x86.ActiveCfg = Release|Any CPU
+		{C4603C8E-FE0E-4A31-AA6C-88CA22F82756}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4603C8E-FE0E-4A31-AA6C-88CA22F82756}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4603C8E-FE0E-4A31-AA6C-88CA22F82756}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{C4603C8E-FE0E-4A31-AA6C-88CA22F82756}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C4603C8E-FE0E-4A31-AA6C-88CA22F82756}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C4603C8E-FE0E-4A31-AA6C-88CA22F82756}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4603C8E-FE0E-4A31-AA6C-88CA22F82756}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4603C8E-FE0E-4A31-AA6C-88CA22F82756}.Release|ARM.ActiveCfg = Release|Any CPU
+		{C4603C8E-FE0E-4A31-AA6C-88CA22F82756}.Release|x64.ActiveCfg = Release|Any CPU
+		{C4603C8E-FE0E-4A31-AA6C-88CA22F82756}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -76,10 +76,10 @@
     <Compile Include="..\AssemblyVersion.cs">
       <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="..\Nito.AsyncEx.Dataflow %28NET45, Win8%29\DataflowProgress.cs">
+    <Compile Include="..\Nito.AsyncEx.Dataflow %28NET45, Win8, WP8, WPA81%29\DataflowProgress.cs">
       <Link>DataflowProgress.cs</Link>
     </Compile>
-    <Compile Include="..\Nito.AsyncEx.Dataflow %28NET45, Win8%29\FuncBlock.cs">
+    <Compile Include="..\Nito.AsyncEx.Dataflow %28NET45, Win8, WP8, WPA81%29\FuncBlock.cs">
       <Link>FuncBlock.cs</Link>
     </Compile>
     <Compile Include="..\SharedAssemblyInfo.cs">
