@@ -42,9 +42,6 @@
     <AssemblyOriginatorKeyFile>..\Nito.AsyncEx.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\AssemblyVersion.cs">
-      <Link>Properties\AssemblyVersion.cs</Link>
-    </Compile>
     <Compile Include="..\Nito.AsyncEx %28NET4, Win8, SL5, WP8, WPA81%29\Internal\TaskShim.cs">
       <Link>Internal\TaskShim.cs</Link>
     </Compile>

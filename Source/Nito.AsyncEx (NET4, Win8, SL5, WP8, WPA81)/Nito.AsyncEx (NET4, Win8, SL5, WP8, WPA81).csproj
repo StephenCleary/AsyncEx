@@ -128,9 +128,6 @@
     <AssemblyOriginatorKeyFile>..\Nito.AsyncEx.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\AssemblyVersion.cs">
-      <Link>Properties\AssemblyVersion.cs</Link>
-    </Compile>
     <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\AsyncAutoResetEvent.cs">
       <Link>AsyncAutoResetEvent.cs</Link>
     </Compile>

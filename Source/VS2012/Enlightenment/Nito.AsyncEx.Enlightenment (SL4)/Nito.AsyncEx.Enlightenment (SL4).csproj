@@ -80,9 +80,6 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\AssemblyVersion.cs">
-      <Link>Properties\AssemblyVersion.cs</Link>
-    </Compile>
     <Compile Include="..\..\..\Enlightenment\Nito.AsyncEx.Enlightenment %28NET40%29\Internal\PlatformEnlightenment\AsyncEnlightenment.cs">
       <Link>Internal\PlatformEnlightenment\AsyncEnlightenment.cs</Link>
     </Compile>
