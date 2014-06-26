@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 // Instead of this, use https://github.com/svick/AsyncParallel
+// See Petr's email.
 
 namespace ClassLibrary1
 {
