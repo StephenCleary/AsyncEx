@@ -52,7 +52,7 @@ namespace Nito.AsyncEx
             /// </summary>
             /// <param name="d">The <see cref="T:System.Threading.SendOrPostCallback"/> delegate to call. May not be <c>null</c>.</param>
             /// <param name="state">The object passed to the delegate.</param>
-#if !NATIVETASKS
+#if NONATIVETASKS
             [Obsolete]
 #endif
             public override void Send(SendOrPostCallback d, object state)

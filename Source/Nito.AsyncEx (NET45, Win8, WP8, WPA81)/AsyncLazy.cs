@@ -3,10 +3,10 @@ using System.Threading.Tasks;
 using Nito.AsyncEx.Internal;
 using System.Diagnostics;
 using Nito.AsyncEx.Internal.PlatformEnlightenment;
-#if NATIVETASKS
-using System.Runtime.CompilerServices;
-#else
+#if NONATIVETASKS
 using Microsoft.Runtime.CompilerServices;
+#else
+using System.Runtime.CompilerServices;
 #endif
 
 namespace Nito.AsyncEx
