@@ -174,3 +174,4 @@ UpgradeLog*.htm
 FakesAssemblies/
 
 .localhistory/
+/Source/lib/_._

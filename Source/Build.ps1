@@ -1,58 +1,24 @@
-Param($version = "0.0.0", $extraVersion = "")
 $ErrorActionPreference = "Stop"
 
-if ($version -eq "0.0.0") {
-  throw "Pass a version number to this script."
-}
+# Build VS2013 solution
+Write-Output "Building VS2013 Solution..."
+$project = Get-Project
+$build = $project.DTE.Solution.SolutionBuild
+$oldConfiguration = $build.ActiveConfiguration
+$build.SolutionConfigurations.Item("Release").Activate()
+$build.Build($true)
+$oldConfiguration.Activate()
+Write-Output "... done building VS2013 Solution."
 
-# Set environment variables for Visual Studio Command Prompt
-if (Test-Path 'C:\Program Files\Microsoft Visual Studio 12.0\VC') {
-  pushd 'C:\Program Files\Microsoft Visual Studio 12.0\VC'
-}
-else {
-  pushd 'C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC'
-}
+# $p.ConfigurationManager.ActiveConfiguration.Properties.Item("OutputPath").Value == "bin\Debug\"
+# $p.Properties.Item("FullPath").Value == "D:\Personal\AsyncEx-git\Source\Nito.AsyncEx.Dataflow (NET45, Win8, WP8, WPA81)\"
 
-cmd /c "vcvarsall.bat&set" |
-foreach {
-  if ($_ -match "=") {
-    $v = $_.split("="); set-item -force -path "ENV:\$($v[0])" -value "$($v[1])"
-  }
-}
-popd
+# Build VS2012 solution
+Write-Output "Building VS2012 Solution..."
+$buildVS2012 = "`"" + $env:VS110COMNTOOLS + "VsDevCmd.bat" + "`" && devenv VS2012\VS2012.sln /rebuild Release"
+cmd /c $buildVS2012
+Write-Output "... done building VS2012 Solution."
 
-# Find NuGet.exe
-if (Test-Path '.nuget\nuget.exe') {
-  $nuget = Get-ChildItem '.nuget' -Filter 'nuget.exe'
-}
-else {
-  $nuget = Get-ChildItem '..\Util' -Filter 'nuget.exe'
-}
-
-# Write out version info for dll
-"using System.Reflection;`r`n[assembly: AssemblyVersion(`"$version`")]`r`n" > 'AssemblyVersion.cs'
-
-# Build solution
-$solution = Get-ChildItem '.' -Filter '*.sln'
-devenv $solution /rebuild Release | Write-Output
-
-# Create binaries directory if necessary
-if (!(Test-Path '..\Binaries')) {
-  New-Item '..\Binaries' -type directory | Out-Null
-}
-
-# Build NuGet package
-if ($extraVersion -Eq "") {
-  $fullVersion = $version
-} else {
-  $fullVersion = $version + "-" + $extraVersion
-}
-
-&$nuget.FullName pack -Symbols 'Nito.AsyncEx.DataflowProxy.nuspec' -OutputDirectory ..\Binaries
-&$nuget.FullName pack -Symbols 'Nito.AsyncEx.Dataflow.nuspec' -Version $fullVersion -OutputDirectory ..\Binaries
-&$nuget.FullName pack -Symbols 'Nito.AsyncEx.nuspec' -Version $fullVersion -OutputDirectory ..\Binaries
-
-# Create a tag.
-# hg tag $version
-
-"Built " + $nuspec.BaseName + " version $fullVersion"
+nuget pack -Symbols "Nito.AsyncEx.DataflowProxy.nuspec"
+nuget pack -Symbols "Nito.AsyncEx.Dataflow.nuspec"
+nuget pack -Symbols "Nito.AsyncEx.nuspec"

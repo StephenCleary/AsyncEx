@@ -9,10 +9,10 @@
     <summary>Proxy package used to pull in Dataflow for all supported platforms.</summary>
     <description>Proxy package used to pull in Dataflow for all supported platforms.</description>
     <language>en-US</language>
-    <projectUrl>http://nitoasyncex.codeplex.com/</projectUrl>
+    <projectUrl>https://github.com/StephenCleary/AsyncEx</projectUrl>
     <dependencies>
       <group targetFramework="portable-net45+win8+wp8+wpa81">
-        <dependency id="Microsoft.Tpl.Dataflow" />
+        <dependency id="Microsoft.Tpl.Dataflow" version="4.5.20" />
       </group>
     </dependencies>
     <releaseNotes>
