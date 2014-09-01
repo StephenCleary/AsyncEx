@@ -65,9 +65,9 @@
     <file src="Nito.AsyncEx.Concurrent (NET45, Win8, WPA81)\bin\Release\Nito.AsyncEx.Concurrent.dll" target="lib\MonoTouch" />
     <file src="Nito.AsyncEx.Concurrent (NET45, Win8, WPA81)\bin\Release\Nito.AsyncEx.Concurrent.xml" target="lib\MonoTouch" />
     <file src="Nito.AsyncEx.Concurrent (NET45, Win8, WPA81)\bin\Release\Nito.AsyncEx.Concurrent.pdb" target="lib\MonoTouch" />
-    <file src="Enlightenment\Nito.AsyncEx.Enlightenment (iOS, Droid)\bin\Release\Nito.AsyncEx.Enlightenment.dll" target="lib\MonoTouch" />
-    <file src="Enlightenment\Nito.AsyncEx.Enlightenment (iOS, Droid)\bin\Release\Nito.AsyncEx.Enlightenment.xml" target="lib\MonoTouch" />
-    <file src="Enlightenment\Nito.AsyncEx.Enlightenment (iOS, Droid)\bin\Release\Nito.AsyncEx.Enlightenment.pdb" target="lib\MonoTouch" />
+    <file src="Enlightenment\Nito.AsyncEx.Enlightenment (NET45)\bin\Release\Nito.AsyncEx.Enlightenment.dll" target="lib\MonoTouch" />
+    <file src="Enlightenment\Nito.AsyncEx.Enlightenment (NET45)\bin\Release\Nito.AsyncEx.Enlightenment.xml" target="lib\MonoTouch" />
+    <file src="Enlightenment\Nito.AsyncEx.Enlightenment (NET45)\bin\Release\Nito.AsyncEx.Enlightenment.pdb" target="lib\MonoTouch" />
 
     <!-- Android -->
     <file src="Nito.AsyncEx (NET45, Win8, WP8, WPA81)\bin\Release\Nito.AsyncEx.dll" target="lib\MonoAndroid" />
@@ -76,9 +76,9 @@
     <file src="Nito.AsyncEx.Concurrent (NET45, Win8, WPA81)\bin\Release\Nito.AsyncEx.Concurrent.dll" target="lib\MonoAndroid" />
     <file src="Nito.AsyncEx.Concurrent (NET45, Win8, WPA81)\bin\Release\Nito.AsyncEx.Concurrent.xml" target="lib\MonoAndroid" />
     <file src="Nito.AsyncEx.Concurrent (NET45, Win8, WPA81)\bin\Release\Nito.AsyncEx.Concurrent.pdb" target="lib\MonoAndroid" />
-    <file src="Enlightenment\Nito.AsyncEx.Enlightenment (iOS, Droid)\bin\Release\Nito.AsyncEx.Enlightenment.dll" target="lib\MonoAndroid" />
-    <file src="Enlightenment\Nito.AsyncEx.Enlightenment (iOS, Droid)\bin\Release\Nito.AsyncEx.Enlightenment.xml" target="lib\MonoAndroid" />
-    <file src="Enlightenment\Nito.AsyncEx.Enlightenment (iOS, Droid)\bin\Release\Nito.AsyncEx.Enlightenment.pdb" target="lib\MonoAndroid" />
+    <file src="Enlightenment\Nito.AsyncEx.Enlightenment (NET45)\bin\Release\Nito.AsyncEx.Enlightenment.dll" target="lib\MonoAndroid" />
+    <file src="Enlightenment\Nito.AsyncEx.Enlightenment (NET45)\bin\Release\Nito.AsyncEx.Enlightenment.xml" target="lib\MonoAndroid" />
+    <file src="Enlightenment\Nito.AsyncEx.Enlightenment (NET45)\bin\Release\Nito.AsyncEx.Enlightenment.pdb" target="lib\MonoAndroid" />
 
     <!-- Windows Store -->
     <file src="Nito.AsyncEx (NET45, Win8, WP8, WPA81)\bin\Release\Nito.AsyncEx.dll" target="lib\netcore45" />

@@ -617,65 +617,83 @@ namespace Tests
         }
 
         [Test]
-        public async Task OutputAvailableAsync_NoItemsInQueue_IsNotCompleted()
+        public void OutputAvailableAsync_NoItemsInQueue_IsNotCompleted()
         {
-            var queue = new AsyncProducerConsumerQueue<int>();
-
-            var task = queue.OutputAvailableAsync();
-
-            await AssertEx.NeverCompletesAsync(task);
-        }
-
-        [Test]
-        public async Task OutputAvailableAsync_ItemInQueue_ReturnsTrue()
-        {
-            var queue = new AsyncProducerConsumerQueue<int>();
-            queue.Enqueue(13);
-
-            var result = await queue.OutputAvailableAsync();
-            Assert.IsTrue(result);
-        }
-
-        [Test]
-        public async Task OutputAvailableAsync_NoItemsAndCompleted_ReturnsFalse()
-        {
-            var queue = new AsyncProducerConsumerQueue<int>();
-            queue.CompleteAdding();
-
-            var result = await queue.OutputAvailableAsync();
-            Assert.IsFalse(result);
-        }
-
-        [Test]
-        public async Task OutputAvailableAsync_ItemInQueueAndCompleted_ReturnsTrue()
-        {
-            var queue = new AsyncProducerConsumerQueue<int>();
-            queue.Enqueue(13);
-            queue.CompleteAdding();
-
-            var result = await queue.OutputAvailableAsync();
-            Assert.IsTrue(result);
-        }
-
-        [Test]
-        public async Task StandardAsyncSingleConsumerCode()
-        {
-            var queue = new AsyncProducerConsumerQueue<int>();
-            var producer = TaskShim.Run(() =>
+            Test.Async(async () =>
             {
-                queue.Enqueue(3);
-                queue.Enqueue(13);
-                queue.Enqueue(17);
-                queue.CompleteAdding();
+                var queue = new AsyncProducerConsumerQueue<int>();
+
+                var task = queue.OutputAvailableAsync();
+
+                await AssertEx.NeverCompletesAsync(task);
             });
+        }
 
-            var results = new List<int>();
-            while (await queue.OutputAvailableAsync())
+        [Test]
+        public void OutputAvailableAsync_ItemInQueue_ReturnsTrue()
+        {
+            Test.Async(async () =>
             {
-                results.Add(queue.Dequeue());
-            }
+                var queue = new AsyncProducerConsumerQueue<int>();
+                queue.Enqueue(13);
 
-            CollectionAssert.AreEqual(new[] { 3, 13, 17 }, results);
+                var result = await queue.OutputAvailableAsync();
+                Assert.IsTrue(result);
+            });
+        }
+
+        [Test]
+        public void OutputAvailableAsync_NoItemsAndCompleted_ReturnsFalse()
+        {
+            Test.Async(async () =>
+            {
+                var queue = new AsyncProducerConsumerQueue<int>();
+                queue.CompleteAdding();
+
+                var result = await queue.OutputAvailableAsync();
+                Assert.IsFalse(result);
+            });
+        }
+
+        [Test]
+        public void OutputAvailableAsync_ItemInQueueAndCompleted_ReturnsTrue()
+        {
+            Test.Async(async () =>
+            {
+                var queue = new AsyncProducerConsumerQueue<int>();
+                queue.Enqueue(13);
+                queue.CompleteAdding();
+
+                var result = await queue.OutputAvailableAsync();
+                Assert.IsTrue(result);
+            });
+        }
+
+        [Test]
+        public void StandardAsyncSingleConsumerCode()
+        {
+            Test.Async(async () =>
+            {
+                var queue = new AsyncProducerConsumerQueue<int>();
+                var producer = TaskShim.Run(() =>
+                {
+                    queue.Enqueue(3);
+                    queue.Enqueue(13);
+                    queue.Enqueue(17);
+                    queue.CompleteAdding();
+                });
+
+                var results = new List<int>();
+                while (await queue.OutputAvailableAsync())
+                {
+                    results.Add(queue.Dequeue());
+                }
+
+                Assert.AreEqual(results.Count, 3);
+                Assert.AreEqual(results[0], 3);
+                Assert.AreEqual(results[1], 13);
+                Assert.AreEqual(results[2], 17);
+            });
         }
     }
 }

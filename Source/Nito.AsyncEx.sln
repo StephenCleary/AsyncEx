@@ -1,12 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FA26D995-6F9A-4261-8C9A-2F35449A6C2A}"
 	ProjectSection(SolutionItems) = preProject
 		Build.ps1 = Build.ps1
-		Nito.AsyncEx (NET45, Win8, WP8, WPA81)\Nito.AsyncEx (NET45, Win8, WP8, WPA81).nuspec = Nito.AsyncEx (NET45, Win8, WP8, WPA81)\Nito.AsyncEx (NET45, Win8, WP8, WPA81).nuspec
 		Nito.AsyncEx.Dataflow.nuspec = Nito.AsyncEx.Dataflow.nuspec
 		Nito.AsyncEx.DataflowProxy.nuspec = Nito.AsyncEx.DataflowProxy.nuspec
 		Nito.AsyncEx.nuspec = Nito.AsyncEx.nuspec

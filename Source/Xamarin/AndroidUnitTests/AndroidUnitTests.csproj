@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{6AB8F67F-3762-48B5-9498-EF2E63B0C33B}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -45,46 +45,115 @@
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
     <Reference Include="Xamarin.Android.NUnitLite" />
+    <Reference Include="Nito.AsyncEx.Concurrent">
+      <HintPath>..\packages\Nito.AsyncEx.3.0.0\lib\MonoAndroid\Nito.AsyncEx.Concurrent.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.AsyncEx">
+      <HintPath>..\packages\Nito.AsyncEx.3.0.0\lib\MonoAndroid\Nito.AsyncEx.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Enlightenment">
+      <HintPath>..\packages\Nito.AsyncEx.3.0.0\lib\MonoAndroid\Nito.AsyncEx.Enlightenment.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Internal\AssertEx.cs" />
-    <Compile Include="AsyncAutoResetEventUnitTests.cs" />
-    <Compile Include="AsyncBarrierUnitTests.cs" />
-    <Compile Include="AsyncConditionVariableUnitTests.cs" />
-    <Compile Include="AsyncContextThreadUnitTests.cs" />
-    <Compile Include="AsyncContextUnitTests.cs" />
-    <Compile Include="AsyncCountdownEventUnitTests.cs" />
-    <Compile Include="AsyncFactoryUnitTests.cs" />
     <Compile Include="Internal\AndroidWorkarounds.cs" />
-    <Compile Include="AsyncLazyUnitTests.cs" />
-    <Compile Include="AsyncLockUnitTests.cs" />
-    <Compile Include="AsyncManualResetEventUnitTests.cs" />
-    <Compile Include="AsyncMonitorUnitTests.cs" />
-    <Compile Include="AsyncProducerConsumerQueueUnitTests.cs" />
-    <Compile Include="AsyncReaderWriterLockUnitTests.cs" />
-    <Compile Include="AsyncSemaphoreUnitTests.cs" />
-    <Compile Include="AsyncWaitQueueUnitTests.cs" />
-    <Compile Include="CancellationTokenExtensionsUnitTests.cs" />
-    <Compile Include="CancellationTokenHelpersUnitTests.cs" />
-    <Compile Include="DeferralManagerUnitTests.cs" />
-    <Compile Include="ExceptionHelpersUnitTests.cs" />
-    <Compile Include="ProducerProgressUnitTests.cs" />
-    <Compile Include="PropertyProgressUnitTests.cs" />
-    <Compile Include="SynchronizationContextHelpersUnitTests.cs" />
-    <Compile Include="TaskCompletionNotifierUnitTests.cs" />
-    <Compile Include="TaskCompletionSourceExtensionsUnitTests.cs" />
-    <Compile Include="TaskCompletionSourceUnitTests.cs" />
-    <Compile Include="TaskConstantsUnitTests.cs" />
-    <Compile Include="TaskExtensionsUnitTests.cs" />
-    <Compile Include="TaskFactoryExtensionsUnitTests.cs" />
+    <Compile Include="..\..\Unit Tests\Tests\AsyncLockUnitTests.cs">
+      <Link>AsyncLockUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="Internal\ExcludeFromCodeCoverageAttribute.cs" />
+    <Compile Include="..\..\Unit Tests\Tests\AsyncAutoResetEventUnitTests.cs">
+      <Link>AsyncAutoResetEventUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Unit Tests\Tests\AsyncBarrierUnitTests.cs">
+      <Link>AsyncBarrierUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Unit Tests\Tests\AsyncConditionVariableUnitTests.cs">
+      <Link>AsyncConditionVariableUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Unit Tests\Tests\AsyncContextThreadUnitTests.cs">
+      <Link>AsyncContextThreadUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Unit Tests\Tests\AsyncContextUnitTests.cs">
+      <Link>AsyncContextUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Unit Tests\Tests\AsyncCountdownEventUnitTests.cs">
+      <Link>AsyncCountdownEventUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Unit Tests\Tests\AsyncFactoryUnitTests.cs">
+      <Link>AsyncFactoryUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Unit Tests\Tests\AsyncLazyUnitTests.cs">
+      <Link>AsyncLazyUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Unit Tests\Tests\AsyncManualResetEventUnitTests.cs">
+      <Link>AsyncManualResetEventUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Unit Tests\Tests\AsyncMonitorUnitTests.cs">
+      <Link>AsyncMonitorUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Unit Tests\Tests\AsyncProducerConsumerQueueUnitTests.cs">
+      <Link>AsyncProducerConsumerQueueUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Unit Tests\Tests\AsyncReaderWriterLockUnitTests.cs">
+      <Link>AsyncReaderWriterLockUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Unit Tests\Tests\AsyncSemaphoreUnitTests.cs">
+      <Link>AsyncSemaphoreUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Unit Tests\Tests\AsyncWaitQueueUnitTests.cs">
+      <Link>AsyncWaitQueueUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Unit Tests\Tests\CancellationTokenExtensionsUnitTests.cs">
+      <Link>CancellationTokenExtensionsUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Unit Tests\Tests\CancellationTokenHelpersUnitTests.cs">
+      <Link>CancellationTokenHelpersUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Unit Tests\Tests\DeferralManagerUnitTests.cs">
+      <Link>DeferralManagerUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Unit Tests\Tests\ExceptionHelpersUnitTests.cs">
+      <Link>ExceptionHelpersUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Unit Tests\Tests\ProducerProgressUnitTests.cs">
+      <Link>ProducerProgressUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Unit Tests\Tests\PropertyProgressUnitTests.cs">
+      <Link>PropertyProgressUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Unit Tests\Tests\SynchronizationContextHelpersUnitTests.cs">
+      <Link>SynchronizationContextHelpersUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Unit Tests\Tests\TaskCompletionNotifierUnitTests.cs">
+      <Link>TaskCompletionNotifierUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Unit Tests\Tests\TaskCompletionSourceExtensionsUnitTests.cs">
+      <Link>TaskCompletionSourceExtensionsUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Unit Tests\Tests\TaskCompletionSourceUnitTests.cs">
+      <Link>TaskCompletionSourceUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Unit Tests\Tests\TaskConstantsUnitTests.cs">
+      <Link>TaskConstantsUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Unit Tests\Tests\TaskExtensionsUnitTests.cs">
+      <Link>TaskExtensionsUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Unit Tests\Tests\TaskFactoryExtensionsUnitTests.cs">
+      <Link>TaskFactoryExtensionsUnitTests.cs</Link>
+    </Compile>
+    <Compile Include="Internal\TestAsync.cs" />
+    <Compile Include="Internal\TaskShim.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\Icon.png" />
