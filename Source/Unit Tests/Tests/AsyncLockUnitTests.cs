@@ -29,7 +29,7 @@ namespace Tests
         {
             var mutex = new AsyncLock();
 
-            var lockTask = mutex.LockAsync();
+            var lockTask = mutex.LockAsync().AsTask();
 
             Assert.IsTrue(lockTask.IsCompleted);
             Assert.IsFalse(lockTask.IsFaulted);
@@ -45,11 +45,9 @@ namespace Tests
                 var task1HasLock = new TaskCompletionSource();
                 var task1Continue = new TaskCompletionSource();
 
-                Task<IDisposable> task1LockTask = null;
                 var task1 = TaskShim.Run(async () =>
                 {
-                    task1LockTask = mutex.LockAsync();
-                    using (await task1LockTask)
+                    using (await mutex.LockAsync())
                     {
                         task1HasLock.SetResult();
                         await task1Continue.Task;
@@ -57,11 +55,9 @@ namespace Tests
                 });
                 await task1HasLock.Task;
 
-                Task<IDisposable> task2LockTask = null;
                 var task2Start = Task.Factory.StartNew(async () =>
                 {
-                    task2LockTask = mutex.LockAsync();
-                    await task2LockTask;
+                    await mutex.LockAsync();
                 });
                 var task2 = await task2Start;
 
@@ -80,20 +76,16 @@ namespace Tests
                 var task1HasLock = new TaskCompletionSource();
                 var task1Continue = new TaskCompletionSource();
 
-                Task<IDisposable> lockTask = null;
                 await TaskShim.Run(async () =>
                 {
-                    lockTask = mutex.LockAsync();
-                    var key = await lockTask;
+                    var key = await mutex.LockAsync();
                     key.Dispose();
                     key.Dispose();
                 });
 
-                Task<IDisposable> task1LockTask = null;
                 var task1 = TaskShim.Run(async () =>
                 {
-                    task1LockTask = mutex.LockAsync();
-                    using (await task1LockTask)
+                    using (await mutex.LockAsync())
                     {
                         task1HasLock.SetResult();
                         await task1Continue.Task;
@@ -101,11 +93,9 @@ namespace Tests
                 });
                 await task1HasLock.Task;
 
-                Task<IDisposable> task2LockTask = null;
                 var task2Start = Task.Factory.StartNew(async () =>
                 {
-                    task2LockTask = mutex.LockAsync();
-                    await task2LockTask;
+                    await mutex.LockAsync();
                 });
                 var task2 = await task2Start;
 
@@ -125,12 +115,10 @@ namespace Tests
                 var task1Continue = new TaskCompletionSource();
                 var task2HasLock = new TaskCompletionSource();
                 var task2Continue = new TaskCompletionSource();
-                Task<IDisposable> task1LockTask = null, task2LockTask = null, task3LockTask = null;
 
                 var task1 = TaskShim.Run(async () =>
                 {
-                    task1LockTask = mutex.LockAsync();
-                    using (await task1LockTask)
+                    using (await mutex.LockAsync())
                     {
                         task1HasLock.SetResult();
                         await task1Continue.Task;
@@ -140,8 +128,7 @@ namespace Tests
 
                 var task2Start = Task.Factory.StartNew(async () =>
                 {
-                    task2LockTask = mutex.LockAsync();
-                    using (await task2LockTask)
+                    using (await mutex.LockAsync())
                     {
                         task2HasLock.SetResult();
                         await task2Continue.Task;
@@ -151,8 +138,7 @@ namespace Tests
 
                 var task3Start = Task.Factory.StartNew(async () =>
                 {
-                    task3LockTask = mutex.LockAsync();
-                    await task3LockTask;
+                    await mutex.LockAsync();
                 });
                 var task3 = await task3Start;
 
@@ -172,7 +158,7 @@ namespace Tests
             var mutex = new AsyncLock();
             var token = new CancellationToken(true);
 
-            var task = mutex.LockAsync(token);
+            var task = mutex.LockAsync(token).AsTask();
 
             Assert.IsTrue(task.IsCompleted);
             Assert.IsFalse(task.IsCanceled);
@@ -186,7 +172,7 @@ namespace Tests
             var lockTask = mutex.LockAsync();
             var token = new CancellationToken(true);
 
-            var task = mutex.LockAsync(token);
+            var task = mutex.LockAsync(token).AsTask();
 
             Assert.IsTrue(task.IsCompleted);
             Assert.IsTrue(task.IsCanceled);
@@ -201,13 +187,11 @@ namespace Tests
                 var mutex = new AsyncLock();
                 var cts = new CancellationTokenSource();
                 var taskReady = new TaskCompletionSource();
-                Task<IDisposable> initialLockTask = null, lockTask = null;
 
-                initialLockTask = mutex.LockAsync();
-                var unlock = await initialLockTask;
+                var unlock = await mutex.LockAsync();
                 var task = TaskShim.Run(async () =>
                 {
-                    lockTask = mutex.LockAsync(cts.Token);
+                    var lockTask = mutex.LockAsync(cts.Token);
                     taskReady.SetResult();
                     await lockTask;
                 });
@@ -230,9 +214,8 @@ namespace Tests
                 var mutex = new AsyncLock();
                 var cts = new CancellationTokenSource();
 
-                var initialLockTask = mutex.LockAsync();
-                await initialLockTask;
-                var canceledLockTask = mutex.LockAsync(cts.Token);
+                await mutex.LockAsync();
+                var canceledLockTask = mutex.LockAsync(cts.Token).AsTask();
                 cts.Cancel();
 
                 await AssertEx.ThrowsExceptionAsync<OperationCanceledException>(canceledLockTask);
@@ -247,9 +230,8 @@ namespace Tests
                 var mutex = new AsyncLock();
                 var cts = new CancellationTokenSource();
 
-                Task<IDisposable> initialLockTask, cancelableLockTask;
-                initialLockTask = mutex.LockAsync();
-                using (await initialLockTask)
+                AwaitableDisposable<IDisposable> cancelableLockTask;
+                using (await mutex.LockAsync())
                 {
                     cancelableLockTask = mutex.LockAsync(cts.Token);
                 }
@@ -257,7 +239,7 @@ namespace Tests
                 var key = await cancelableLockTask;
                 cts.Cancel();
 
-                var nextLocker = mutex.LockAsync();
+                var nextLocker = mutex.LockAsync().AsTask();
                 Assert.IsFalse(nextLocker.IsCompleted);
 
                 key.Dispose();

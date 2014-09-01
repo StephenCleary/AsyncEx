@@ -84,6 +84,7 @@
     <Compile Include="AsyncReaderWriterLock.cs" />
     <Compile Include="AsyncSemaphore.cs" />
     <Compile Include="AsyncWaitQueue.cs" />
+    <Compile Include="AwaitableDisposable.cs" />
     <Compile Include="CancellationTokenExtensions.cs" />
     <Compile Include="CancellationTokenHelpers.cs" />
     <Compile Include="DeferralManager.cs" />

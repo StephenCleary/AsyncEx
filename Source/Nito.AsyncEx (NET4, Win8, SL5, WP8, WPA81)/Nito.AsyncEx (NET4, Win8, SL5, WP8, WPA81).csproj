@@ -191,6 +191,9 @@
     <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\AsyncWaitQueue.cs">
       <Link>AsyncWaitQueue.cs</Link>
     </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\AwaitableDisposable.cs">
+      <Link>AwaitableDisposable.cs</Link>
+    </Compile>
     <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\CancellationTokenExtensions.cs">
       <Link>CancellationTokenExtensions.cs</Link>
     </Compile>

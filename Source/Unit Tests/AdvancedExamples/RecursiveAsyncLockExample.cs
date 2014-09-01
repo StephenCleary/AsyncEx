@@ -93,7 +93,7 @@ namespace Tests
             {
                 var key = AsyncLockTracker.Lookup(this);
                 if (key == null)
-                    key = mutex.LockAsync(token);
+                    key = mutex.LockAsync(token).AsTask();
                 return new RecursiveLockAwaitable(key, this);
             }
 
@@ -163,7 +163,7 @@ namespace Tests
             var mutex = new AsyncLock();
             var key = await mutex.LockAsync();
             
-            var waiter = mutex.LockAsync();
+            var waiter = mutex.LockAsync().AsTask();
 
             Assert.IsFalse(waiter.Wait(1000));
             key.Dispose();

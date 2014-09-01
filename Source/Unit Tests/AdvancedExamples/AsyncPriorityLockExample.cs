@@ -188,7 +188,7 @@ namespace Tests
                 lock (_queue)
                 {
                     _queue.NextPriority = priority;
-                    var ret = _mutex.LockAsync(token);
+                    var ret = _mutex.LockAsync(token).AsTask();
                     return new LockRequest(this, ret, priority);
                 }
             }
@@ -234,8 +234,8 @@ namespace Tests
         {
             var mutex = new AsyncLock();
             var key = await mutex.LockAsync();
-            var wait1 = mutex.LockAsync();
-            var wait2 = mutex.LockAsync();
+            var wait1 = mutex.LockAsync().AsTask();
+            var wait2 = mutex.LockAsync().AsTask();
 
             key.Dispose();
 

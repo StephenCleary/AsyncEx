@@ -44,12 +44,10 @@ namespace Tests
                 var monitor = new AsyncMonitor();
                 var task1HasLock = new TaskCompletionSource();
                 var task1Continue = new TaskCompletionSource();
-                Task<IDisposable> initialLockTask = null;
 
                 var task1 = TaskShim.Run(async () =>
                 {
-                    initialLockTask = monitor.EnterAsync();
-                    using (await initialLockTask)
+                    using (await monitor.EnterAsync())
                     {
                         task1HasLock.SetResult();
                         await task1Continue.Task;
@@ -57,7 +55,7 @@ namespace Tests
                 });
                 await task1HasLock.Task;
 
-                var lockTask = monitor.EnterAsync();
+                var lockTask = monitor.EnterAsync().AsTask();
                 Assert.IsFalse(lockTask.IsCompleted);
                 task1Continue.SetResult();
                 await lockTask;
@@ -73,28 +71,22 @@ namespace Tests
                 int completed = 0;
                 var task1Ready = new TaskCompletionSource();
                 var task2Ready = new TaskCompletionSource();
-                Task<IDisposable> lockTask1 = null;
-                Task waitTask1 = null;
                 var task1 = TaskShim.Run(async () =>
                 {
-                    lockTask1 = monitor.EnterAsync();
-                    using (await lockTask1)
+                    using (await monitor.EnterAsync())
                     {
-                        waitTask1 = monitor.WaitAsync();
+                        var waitTask1 = monitor.WaitAsync();
                         task1Ready.SetResult();
                         await waitTask1;
                         Interlocked.Increment(ref completed);
                     }
                 });
                 await task1Ready.Task;
-                Task<IDisposable> lockTask2 = null;
-                Task waitTask2 = null;
                 var task2 = TaskShim.Run(async () =>
                 {
-                    lockTask2 = monitor.EnterAsync();
-                    using (await lockTask2)
+                    using (await monitor.EnterAsync())
                     {
-                        waitTask2 = monitor.WaitAsync();
+                        var waitTask2 = monitor.WaitAsync();
                         task2Ready.SetResult();
                         await waitTask2;
                         Interlocked.Increment(ref completed);
@@ -102,8 +94,7 @@ namespace Tests
                 });
                 await task2Ready.Task;
 
-                Task<IDisposable> lockTask3 = monitor.EnterAsync();
-                using (await lockTask3)
+                using (await monitor.EnterAsync())
                 {
                     monitor.Pulse();
                 }
@@ -123,12 +114,10 @@ namespace Tests
                 int completed = 0;
                 var task1Ready = new TaskCompletionSource();
                 var task2Ready = new TaskCompletionSource();
-                Task<IDisposable> lockTask1 = null;
                 Task waitTask1 = null;
                 var task1 = TaskShim.Run(async () =>
                 {
-                    lockTask1 = monitor.EnterAsync();
-                    using (await lockTask1)
+                    using (await monitor.EnterAsync())
                     {
                         waitTask1 = monitor.WaitAsync();
                         task1Ready.SetResult();
@@ -137,12 +126,10 @@ namespace Tests
                     }
                 });
                 await task1Ready.Task;
-                Task<IDisposable> lockTask2 = null;
                 Task waitTask2 = null;
                 var task2 = TaskShim.Run(async () =>
                 {
-                    lockTask2 = monitor.EnterAsync();
-                    using (await lockTask2)
+                    using (await monitor.EnterAsync())
                     {
                         waitTask2 = monitor.WaitAsync();
                         task2Ready.SetResult();

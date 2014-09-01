@@ -80,7 +80,7 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="cancellationToken">The cancellation token used to cancel the lock. If this is already set, then this method will attempt to take the lock immediately (succeeding if the lock is currently available).</param>
         /// <returns>A disposable that releases the lock when disposed.</returns>
-        public Task<IDisposable> LockAsync(CancellationToken cancellationToken)
+        public AwaitableDisposable<IDisposable> LockAsync(CancellationToken cancellationToken)
         {
             Task<IDisposable> ret;
             lock (_mutex)
@@ -100,7 +100,7 @@ namespace Nito.AsyncEx
                 //Enlightenment.Trace.AsyncLock_TrackLock(this, ret);
             }
 
-            return ret;
+            return new AwaitableDisposable<IDisposable>(ret);
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Nito.AsyncEx
         /// Asynchronously acquires the lock. Returns a disposable that releases the lock when disposed.
         /// </summary>
         /// <returns>A disposable that releases the lock when disposed.</returns>
-        public Task<IDisposable> LockAsync()
+        public AwaitableDisposable<IDisposable> LockAsync()
         {
             return LockAsync(CancellationToken.None);
         }
