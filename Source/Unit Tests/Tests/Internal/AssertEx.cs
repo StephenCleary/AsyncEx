@@ -80,7 +80,7 @@ internal static class AssertEx
         var completedTask = await TaskShim.WhenAny(task, TaskShim.Delay(timeout));
         if (completedTask == task)
             Assert.Fail("Task completed unexpectedly.");
-        var __ = task.ContinueWith(_ => Assert.Fail("Task completed unexpectedly."));
+        var __ = task.ContinueWith(_ => Assert.Fail("Task completed unexpectedly."), TaskScheduler.Default);
     }
 
     /// <summary>
