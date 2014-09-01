@@ -56,7 +56,7 @@ internal static class AssertEx
     {
         try
         {
-            await action();
+            await action().ConfigureAwait(false);
             Assert.Fail("Delegate did not throw expected exception " + typeof(TException).Name + ".");
         }
         catch (Exception ex)
@@ -77,7 +77,7 @@ internal static class AssertEx
     {
         if (task.IsCompleted)
             Assert.Fail("Task completed unexpectedly.");
-        var completedTask = await TaskShim.WhenAny(task, TaskShim.Delay(timeout));
+        var completedTask = await TaskShim.WhenAny(task, TaskShim.Delay(timeout)).ConfigureAwait(false);
         if (completedTask == task)
             Assert.Fail("Task completed unexpectedly.");
         var __ = task.ContinueWith(_ => Assert.Fail("Task completed unexpectedly."), TaskScheduler.Default);
@@ -91,7 +91,7 @@ internal static class AssertEx
     {
         try
         {
-            await task;
+            await task.ConfigureAwait(false);
             Assert.Fail("Task expected to cancel completed successfully.");
         }
         catch (OperationCanceledException)
