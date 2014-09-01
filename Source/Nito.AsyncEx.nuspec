@@ -10,7 +10,7 @@
     <description>A helper library for the Task-Based Asynchronous Pattern (TAP).</description>
     <language>en-US</language>
     <projectUrl>https://github.com/StephenCleary/AsyncEx</projectUrl>
-    <!--<iconUrl>TODO</iconUrl>-->
+    <iconUrl>https://github.com/StephenCleary/AsyncEx/raw/master/AsyncEx.128.png</iconUrl>
     <tags>async await async-await task asynchronous net45 win8 net40 netcore45 sl5 wp8 wpa81 nito</tags>
     <dependencies>
       <group targetFramework="net40">
@@ -33,7 +33,7 @@
       <group />
     </dependencies>
     <releaseNotes>
-      Added support for WPA targets.
+      Added support for WPA targets; better usability for AsyncLock and AsyncReaderWriterLock.
 <!--  
       [2.1.3] Bugfix for WinPhone8 platform (and made enlightenment assembly loading more resilient in general).
       [2.1.2] Bugfix for iOS/Droid platforms.

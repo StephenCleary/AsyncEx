@@ -10,7 +10,7 @@
     <description>A helper library for async/await with TPL Dataflow.</description>
     <language>en-US</language>
     <projectUrl>https://github.com/StephenCleary/AsyncEx</projectUrl>
-    <!--<iconUrl>TODO</iconUrl>-->
+    <iconUrl>https://github.com/StephenCleary/AsyncEx/raw/master/AsyncEx.128.png</iconUrl>
     <tags>dataflow async await net45 win8 net40 netcore45 wp8 wpa81 nito</tags>
     <dependencies>
       <group targetFramework="net40">
