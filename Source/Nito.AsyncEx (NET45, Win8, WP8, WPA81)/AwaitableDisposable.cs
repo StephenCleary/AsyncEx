@@ -12,7 +12,7 @@ using System.Runtime.CompilerServices;
 namespace Nito.AsyncEx
 {
     /// <summary>
-    /// An awaitable wrapper around a task whose result is disposable. The wrapper is not disposable, so this prevents usage errors like "using (XAsync())" when the appropriate usage should be "using (await XAsync())".
+    /// An awaitable wrapper around a task whose result is disposable. The wrapper is not disposable, so this prevents usage errors like "using (MyAsync())" when the appropriate usage should be "using (await MyAsync())".
     /// </summary>
     /// <typeparam name="T">The type of the result of the underlying task.</typeparam>
     public struct AwaitableDisposable<T> where T : IDisposable
@@ -37,6 +37,15 @@ namespace Nito.AsyncEx
         public Task<T> AsTask()
         {
             return _task;
+        }
+
+        /// <summary>
+        /// Implicit conversion to the underlying task.
+        /// </summary>
+        /// <param name="source">The awaitable wrapper.</param>
+        public static implicit operator Task<T>(AwaitableDisposable<T> source)
+        {
+            return source.AsTask();
         }
 
         /// <summary>
