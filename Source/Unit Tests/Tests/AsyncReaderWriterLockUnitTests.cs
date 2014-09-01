@@ -535,59 +535,6 @@ namespace Tests
         }
 
         [Test]
-        public void ReaderKey_MultiDispose_DoesNothing()
-        {
-            Test.Async(async () =>
-            {
-                var rwl = new AsyncReaderWriterLock();
-                var key = await rwl.ReaderLockAsync();
-                key.Dispose();
-                key.Dispose();
-                await rwl.ReaderLockAsync();
-            });
-        }
-
-        [Test]
-        public void WriterKey_MultiDispose_DoesNothing()
-        {
-            Test.Async(async () =>
-            {
-                var rwl = new AsyncReaderWriterLock();
-                var key = await rwl.WriterLockAsync();
-                key.Dispose();
-                key.Dispose();
-                await rwl.WriterLockAsync();
-            });
-        }
-
-        [Test]
-        public void UpgradableKey_MultiDispose_DoesNothing()
-        {
-            Test.Async(async () =>
-            {
-                var rwl = new AsyncReaderWriterLock();
-                var key = await rwl.UpgradeableReaderLockAsync();
-                key.Dispose();
-                key.Dispose();
-                await rwl.UpgradeableReaderLockAsync();
-            });
-        }
-
-        [Test]
-        public void UpgradeKey_MultiDispose_DoesNothing()
-        {
-            Test.Async(async () =>
-            {
-                var rwl = new AsyncReaderWriterLock();
-                var upgradeable = await rwl.UpgradeableReaderLockAsync();
-                var key = await upgradeable.UpgradeAsync();
-                key.Dispose();
-                key.Dispose();
-                await upgradeable.UpgradeAsync();
-            });
-        }
-
-        [Test]
         public void UpgradeableKey_MultiUpgrade_ThrowsException()
         {
             Test.Async(async () =>

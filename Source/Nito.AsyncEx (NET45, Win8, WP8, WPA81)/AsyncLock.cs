@@ -28,11 +28,6 @@ namespace Nito.AsyncEx
         private readonly IAsyncWaitQueue<IDisposable> _queue;
 
         /// <summary>
-        /// The key object that unlocks this lock whenever it is disposed.
-        /// </summary>
-        private readonly IDisposable _cachedKey;
-
-        /// <summary>
         /// A task that is completed with the key object for this lock.
         /// </summary>
         private readonly Task<IDisposable> _cachedKeyTask;
@@ -62,8 +57,7 @@ namespace Nito.AsyncEx
         public AsyncLock(IAsyncWaitQueue<IDisposable> queue)
         {
             _queue = queue;
-            _cachedKey = new Key(this);
-            _cachedKeyTask = TaskShim.FromResult(_cachedKey);
+            _cachedKeyTask = TaskShim.FromResult<IDisposable>(new Key(this));
             _mutex = new object();
         }
 
@@ -115,7 +109,7 @@ namespace Nito.AsyncEx
                 if (!_taken)
                 {
                     _taken = true;
-                    return _cachedKey;
+                    return _cachedKeyTask.Result;
                 }
 
                 enqueuedTask = _queue.Enqueue(cancellationToken);
@@ -153,7 +147,7 @@ namespace Nito.AsyncEx
                 if (_queue.IsEmpty)
                     _taken = false;
                 else
-                    finish = _queue.Dequeue(_cachedKey);
+                    finish = _queue.Dequeue(_cachedKeyTask.Result);
             }
             if (finish != null)
                 finish.Dispose();

@@ -58,6 +58,16 @@ namespace Nito.AsyncEx
         /// </summary>
         private readonly object _mutex;
 
+        /// <summary>
+        /// A task that is completed with the reader key object for this lock.
+        /// </summary>
+        private readonly Task<IDisposable> _cachedReaderKeyTask;
+
+        /// <summary>
+        /// A task that is completed with the writer key object for this lock.
+        /// </summary>
+        private readonly Task<IDisposable> _cachedWriterKeyTask;
+
         [DebuggerNonUserCode]
         internal State GetStateForDebugger
         {
@@ -101,6 +111,8 @@ namespace Nito.AsyncEx
             _upgradeableReaderQueue = upgradeableReaderQueue;
             _upgradeReaderQueue = upgradeReaderQueue;
             _mutex = new object();
+            _cachedReaderKeyTask = TaskShim.FromResult<IDisposable>(new ReaderKey(this));
+            _cachedWriterKeyTask = TaskShim.FromResult<IDisposable>(new WriterKey(this));
         }
 
         /// <summary>
@@ -154,7 +166,7 @@ namespace Nito.AsyncEx
                 if (_locksHeld >= 0 && _writerQueue.IsEmpty && _upgradeableReaderQueue.IsEmpty && _upgradeReaderQueue.IsEmpty)
                 {
                     ++_locksHeld;
-                    ret = TaskShim.FromResult<IDisposable>(new ReaderKey(this));
+                    ret = _cachedReaderKeyTask;
                 }
                 else
                 {
@@ -181,7 +193,7 @@ namespace Nito.AsyncEx
                 if (_locksHeld >= 0 && _writerQueue.IsEmpty && _upgradeableReaderQueue.IsEmpty && _upgradeReaderQueue.IsEmpty)
                 {
                     ++_locksHeld;
-                    return new ReaderKey(this);
+                    return _cachedReaderKeyTask.Result;
                 }
 
                 // Wait for the lock to become available or cancellation.
@@ -223,7 +235,7 @@ namespace Nito.AsyncEx
                 if (_locksHeld == 0)
                 {
                     _locksHeld = -1;
-                    ret = TaskShim.FromResult<IDisposable>(new WriterKey(this));
+                    ret = _cachedWriterKeyTask;
                 }
                 else
                 {
@@ -251,7 +263,7 @@ namespace Nito.AsyncEx
                 if (_locksHeld == 0)
                 {
                     _locksHeld = -1;
-                    return new WriterKey(this);
+                    return _cachedWriterKeyTask.Result;
                 }
              
                 // Wait for the lock to become available or cancellation.
@@ -364,7 +376,7 @@ namespace Nito.AsyncEx
             if (_locksHeld == 1)
             {
                 _locksHeld = -1;
-                ret = TaskShim.FromResult<IDisposable>(new UpgradeableReaderKey.UpgradeKey(_upgradeableReaderKey));
+                ret = _upgradeableReaderKey._cachedUpgradeKeyTask;
             }
             else
             {
@@ -398,7 +410,7 @@ namespace Nito.AsyncEx
                 // Give priority to writers.
                 if (!_writerQueue.IsEmpty)
                 {
-                    ret.Add(_writerQueue.Dequeue(new WriterKey(this)));
+                    ret.Add(_writerQueue.Dequeue(_cachedWriterKeyTask.Result));
                     _locksHeld = -1;
                     return ret;
                 }
@@ -414,7 +426,7 @@ namespace Nito.AsyncEx
                 // Finally to readers.
                 while (!_readerQueue.IsEmpty)
                 {
-                    ret.Add(_readerQueue.Dequeue(new ReaderKey(this)));
+                    ret.Add(_readerQueue.Dequeue(_cachedReaderKeyTask.Result));
                     ++_locksHeld;
                 }
 
@@ -426,7 +438,7 @@ namespace Nito.AsyncEx
             {
                 if (!_upgradeReaderQueue.IsEmpty)
                 {
-                    ret.Add(_upgradeReaderQueue.Dequeue(new UpgradeableReaderKey.UpgradeKey(_upgradeableReaderKey)));
+                    ret.Add(_upgradeReaderQueue.Dequeue(_upgradeableReaderKey._cachedUpgradeKeyTask.Result));
                     _locksHeld = -1;
                 }
             }
@@ -510,7 +522,7 @@ namespace Nito.AsyncEx
             /// <summary>
             /// The lock to release.
             /// </summary>
-            private AsyncReaderWriterLock _asyncReaderWriterLock;
+            private readonly AsyncReaderWriterLock _asyncReaderWriterLock;
 
             /// <summary>
             /// Creates the key for a lock.
@@ -526,10 +538,7 @@ namespace Nito.AsyncEx
             /// </summary>
             public void Dispose()
             {
-                if (_asyncReaderWriterLock == null)
-                    return;
                 _asyncReaderWriterLock.ReleaseReaderLock();
-                _asyncReaderWriterLock = null;
             }
         }
 
@@ -541,7 +550,7 @@ namespace Nito.AsyncEx
             /// <summary>
             /// The lock to release.
             /// </summary>
-            private AsyncReaderWriterLock _asyncReaderWriterLock;
+            private readonly AsyncReaderWriterLock _asyncReaderWriterLock;
 
             /// <summary>
             /// Creates the key for a lock.
@@ -557,10 +566,7 @@ namespace Nito.AsyncEx
             /// </summary>
             public void Dispose()
             {
-                if (_asyncReaderWriterLock == null)
-                    return;
                 _asyncReaderWriterLock.ReleaseWriterLock();
-                _asyncReaderWriterLock = null;
             }
         }
 
@@ -581,9 +587,9 @@ namespace Nito.AsyncEx
             private Task<IDisposable> _upgrade;
 
             /// <summary>
-            /// Whether or not this instance has been disposed.
+            /// A task that is completed with the upgrade key object for this key.
             /// </summary>
-            private bool _disposed;
+            internal readonly Task<IDisposable> _cachedUpgradeKeyTask;
 
             [DebuggerNonUserCode]
             internal State GetStateForDebugger
@@ -612,6 +618,7 @@ namespace Nito.AsyncEx
             internal UpgradeableReaderKey(AsyncReaderWriterLock asyncReaderWriterLock)
             {
                 _asyncReaderWriterLock = asyncReaderWriterLock;
+                _cachedUpgradeKeyTask = TaskShim.FromResult<IDisposable>(new UpgradeKey(this));
             }
 
             /// <summary>
@@ -713,10 +720,7 @@ namespace Nito.AsyncEx
             /// </summary>
             public void Dispose()
             {
-                if (_disposed)
-                    return;
                 _asyncReaderWriterLock.ReleaseUpgradeableReaderLock(_upgrade);
-                _disposed = true;
             }
 
             /// <summary>
@@ -727,7 +731,7 @@ namespace Nito.AsyncEx
                 /// <summary>
                 /// The upgradeable reader key to downgrade.
                 /// </summary>
-                private UpgradeableReaderKey _key;
+                private readonly UpgradeableReaderKey _key;
 
                 /// <summary>
                 /// Creates the upgrade key for an upgradeable reader key.
@@ -743,10 +747,7 @@ namespace Nito.AsyncEx
                 /// </summary>
                 public void Dispose()
                 {
-                    if (_key == null)
-                        return;
                     _key.Downgrade();
-                    _key = null;
                 }
             }
         }
