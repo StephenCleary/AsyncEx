@@ -53,7 +53,7 @@ namespace Tests
             {
                 var rwl = new AsyncReaderWriterLock();
                 await rwl.WriterLockAsync();
-                var task = rwl.WriterLockAsync();
+                var task = rwl.WriterLockAsync().AsTask();
                 await AssertEx.NeverCompletesAsync(task);
             });
         }
@@ -65,7 +65,7 @@ namespace Tests
             {
                 var rwl = new AsyncReaderWriterLock();
                 await rwl.WriterLockAsync();
-                var task = rwl.ReaderLockAsync();
+                var task = rwl.ReaderLockAsync().AsTask();
                 await AssertEx.NeverCompletesAsync(task);
             });
         }
@@ -77,7 +77,7 @@ namespace Tests
             {
                 var rwl = new AsyncReaderWriterLock();
                 await rwl.WriterLockAsync();
-                var task = rwl.UpgradeableReaderLockAsync();
+                var task = rwl.UpgradeableReaderLockAsync().AsTask();
                 await AssertEx.NeverCompletesAsync(task);
             });
         }
@@ -99,7 +99,7 @@ namespace Tests
                     }
                 });
                 await firstWriteLockTaken.Task;
-                var lockTask = rwl.WriterLockAsync();
+                var lockTask = rwl.WriterLockAsync().AsTask();
                 Assert.IsFalse(lockTask.IsCompleted);
                 releaseFirstWriteLock.SetResult();
                 await lockTask;
@@ -113,7 +113,7 @@ namespace Tests
             {
                 var rwl = new AsyncReaderWriterLock();
                 await rwl.ReaderLockAsync();
-                var task = rwl.WriterLockAsync();
+                var task = rwl.WriterLockAsync().AsTask();
                 await AssertEx.NeverCompletesAsync(task);
             });
         }
@@ -137,7 +137,7 @@ namespace Tests
                 var rwl = new AsyncReaderWriterLock();
                 var key = await rwl.UpgradeableReaderLockAsync();
                 Assert.IsFalse(key.Upgraded);
-                var task = rwl.WriterLockAsync();
+                var task = rwl.WriterLockAsync().AsTask();
                 await AssertEx.NeverCompletesAsync(task);
             });
         }
@@ -178,7 +178,7 @@ namespace Tests
                 var key = await rwl.UpgradeableReaderLockAsync();
                 await key.UpgradeAsync();
                 Assert.IsTrue(key.Upgraded);
-                var task = rwl.WriterLockAsync();
+                var task = rwl.WriterLockAsync().AsTask();
                 await AssertEx.NeverCompletesAsync(task);
             });
         }
@@ -203,7 +203,7 @@ namespace Tests
                 using (var key = await rwl.UpgradeableReaderLockAsync())
                 {
                     Assert.IsFalse(key.Upgraded);
-                    var lockTask = key.UpgradeAsync();
+                    var lockTask = key.UpgradeAsync().AsTask();
                     Assert.IsFalse(lockTask.IsCompleted);
                     releaseReadLock.SetResult();
                     await lockTask;
@@ -231,7 +231,7 @@ namespace Tests
                 Task upgradeTask;
                 using (var key = await rwl.UpgradeableReaderLockAsync())
                 {
-                    upgradeTask = key.UpgradeAsync();
+                    upgradeTask = key.UpgradeAsync().AsTask();
                     Assert.IsFalse(key.Upgraded);
                 }
 
@@ -265,7 +265,7 @@ namespace Tests
             var rwl = new AsyncReaderWriterLock();
             var token = new CancellationToken(true);
             
-            var task = rwl.WriterLockAsync(token);
+            var task = rwl.WriterLockAsync(token).AsTask();
 
             Assert.IsTrue(task.IsCompleted);
             Assert.IsFalse(task.IsCanceled);
@@ -279,7 +279,7 @@ namespace Tests
             var token = new CancellationToken(true);
             rwl.WriterLockAsync();
 
-            var task = rwl.WriterLockAsync(token);
+            var task = rwl.WriterLockAsync(token).AsTask();
 
             Assert.IsTrue(task.IsCompleted);
             Assert.IsTrue(task.IsCanceled);
@@ -292,7 +292,7 @@ namespace Tests
             var rwl = new AsyncReaderWriterLock();
             var token = new CancellationToken(true);
 
-            var task = rwl.ReaderLockAsync(token);
+            var task = rwl.ReaderLockAsync(token).AsTask();
 
             Assert.IsTrue(task.IsCompleted);
             Assert.IsFalse(task.IsCanceled);
@@ -306,7 +306,7 @@ namespace Tests
             var token = new CancellationToken(true);
             rwl.WriterLockAsync();
 
-            var task = rwl.ReaderLockAsync(token);
+            var task = rwl.ReaderLockAsync(token).AsTask();
 
             Assert.IsTrue(task.IsCompleted);
             Assert.IsTrue(task.IsCanceled);
@@ -319,7 +319,7 @@ namespace Tests
             var rwl = new AsyncReaderWriterLock();
             var token = new CancellationToken(true);
 
-            var task = rwl.UpgradeableReaderLockAsync(token);
+            var task = rwl.UpgradeableReaderLockAsync(token).AsTask();
 
             Assert.IsTrue(task.IsCompleted);
             Assert.IsFalse(task.IsCanceled);
@@ -333,7 +333,7 @@ namespace Tests
             var token = new CancellationToken(true);
             rwl.WriterLockAsync();
 
-            var task = rwl.UpgradeableReaderLockAsync(token);
+            var task = rwl.UpgradeableReaderLockAsync(token).AsTask();
 
             Assert.IsTrue(task.IsCompleted);
             Assert.IsTrue(task.IsCanceled);
@@ -345,9 +345,9 @@ namespace Tests
         {
             var rwl = new AsyncReaderWriterLock();
             var token = new CancellationToken(true);
-            var key = rwl.UpgradeableReaderLockAsync().Result;
+            var key = rwl.UpgradeableReaderLockAsync().AsTask().Result;
 
-            var task = key.UpgradeAsync(token);
+            var task = key.UpgradeAsync(token).AsTask();
 
             Assert.IsTrue(task.IsCompleted);
             Assert.IsFalse(task.IsCanceled);
@@ -359,10 +359,10 @@ namespace Tests
         {
             var rwl = new AsyncReaderWriterLock();
             var token = new CancellationToken(true);
-            var key = rwl.UpgradeableReaderLockAsync().Result;
+            var key = rwl.UpgradeableReaderLockAsync().AsTask().Result;
             rwl.ReaderLockAsync();
 
-            var task = key.UpgradeAsync(token);
+            var task = key.UpgradeAsync(token).AsTask();
 
             Assert.IsTrue(task.IsCompleted);
             Assert.IsTrue(task.IsCanceled);
@@ -378,7 +378,7 @@ namespace Tests
                 using (await rwl.WriterLockAsync())
                 {
                     var cts = new CancellationTokenSource();
-                    var task = rwl.WriterLockAsync(cts.Token);
+                    var task = rwl.WriterLockAsync(cts.Token).AsTask();
                     cts.Cancel();
                     await AssertEx.ThrowsExceptionAsync<OperationCanceledException>(() => task);
                 }
@@ -396,7 +396,7 @@ namespace Tests
                 using (await rwl.WriterLockAsync())
                 {
                     var cts = new CancellationTokenSource();
-                    var task = rwl.ReaderLockAsync(cts.Token);
+                    var task = rwl.ReaderLockAsync(cts.Token).AsTask();
                     cts.Cancel();
                     await AssertEx.ThrowsExceptionAsync<OperationCanceledException>(() => task);
                 }
@@ -414,7 +414,7 @@ namespace Tests
                 using (await rwl.WriterLockAsync())
                 {
                     var cts = new CancellationTokenSource();
-                    var task = rwl.UpgradeableReaderLockAsync(cts.Token);
+                    var task = rwl.UpgradeableReaderLockAsync(cts.Token).AsTask();
                     cts.Cancel();
                     await AssertEx.ThrowsExceptionAsync<OperationCanceledException>(() => task);
                 }
@@ -432,8 +432,8 @@ namespace Tests
                 Task writeLock, upgradeableReadLock;
                 using (await rwl.WriterLockAsync())
                 {
-                    upgradeableReadLock = rwl.UpgradeableReaderLockAsync();
-                    writeLock = rwl.WriterLockAsync();
+                    upgradeableReadLock = rwl.UpgradeableReaderLockAsync().AsTask();
+                    writeLock = rwl.WriterLockAsync().AsTask();
                 }
 
                 await writeLock;
@@ -450,8 +450,8 @@ namespace Tests
                 Task writeLock, readLock;
                 using (await rwl.WriterLockAsync())
                 {
-                    readLock = rwl.ReaderLockAsync();
-                    writeLock = rwl.WriterLockAsync();
+                    readLock = rwl.ReaderLockAsync().AsTask();
+                    writeLock = rwl.WriterLockAsync().AsTask();
                 }
 
                 await writeLock;
@@ -468,9 +468,9 @@ namespace Tests
                 Task upgradeableReadLock, readLock1, readLock2;
                 using (await rwl.WriterLockAsync())
                 {
-                    upgradeableReadLock = rwl.UpgradeableReaderLockAsync();
-                    readLock1 = rwl.ReaderLockAsync();
-                    readLock2 = rwl.ReaderLockAsync();
+                    upgradeableReadLock = rwl.UpgradeableReaderLockAsync().AsTask();
+                    readLock1 = rwl.ReaderLockAsync().AsTask();
+                    readLock2 = rwl.ReaderLockAsync().AsTask();
                 }
 
                 await TaskShim.WhenAll(upgradeableReadLock, readLock1, readLock2);
@@ -487,8 +487,8 @@ namespace Tests
                 await rwl.ReaderLockAsync();
                 using (await rwl.ReaderLockAsync())
                 {
-                    writeLock = rwl.WriterLockAsync();
-                    readLock = rwl.ReaderLockAsync();
+                    writeLock = rwl.WriterLockAsync().AsTask();
+                    readLock = rwl.ReaderLockAsync().AsTask();
                 }
 
                 await TaskShim.WhenAll(AssertEx.NeverCompletesAsync(writeLock),
@@ -507,8 +507,8 @@ namespace Tests
                 using (await rwl.ReaderLockAsync())
                 {
                     var upgradeableReadLock = await rwl.UpgradeableReaderLockAsync();
-                    upgradingReadLock = upgradeableReadLock.UpgradeAsync();
-                    readLock = rwl.ReaderLockAsync();
+                    upgradingReadLock = upgradeableReadLock.UpgradeAsync().AsTask();
+                    readLock = rwl.ReaderLockAsync().AsTask();
                 }
 
                 await TaskShim.WhenAll(AssertEx.NeverCompletesAsync(upgradingReadLock),
@@ -526,7 +526,7 @@ namespace Tests
                 using (await rwl.ReaderLockAsync())
                 using (await rwl.UpgradeableReaderLockAsync())
                 {
-                    upgradableReadLock = rwl.UpgradeableReaderLockAsync();
+                    upgradableReadLock = rwl.UpgradeableReaderLockAsync().AsTask();
                     Assert.IsFalse(upgradableReadLock.IsCompleted);
                 }
 

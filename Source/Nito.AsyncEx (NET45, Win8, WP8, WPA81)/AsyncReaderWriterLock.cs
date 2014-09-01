@@ -157,7 +157,7 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="cancellationToken">The cancellation token used to cancel the lock. If this is already set, then this method will attempt to take the lock immediately (succeeding if the lock is currently available).</param>
         /// <returns>A disposable that releases the lock when disposed.</returns>
-        public Task<IDisposable> ReaderLockAsync(CancellationToken cancellationToken)
+        public AwaitableDisposable<IDisposable> ReaderLockAsync(CancellationToken cancellationToken)
         {
             Task<IDisposable> ret;
             lock (SyncObject)
@@ -176,7 +176,7 @@ namespace Nito.AsyncEx
                 //Enlightenment.Trace.AsyncReaderWriterLock_TrackLock(this, AsyncReaderWriterLockLockType.Reader, ret);
             }
 
-            return ret;
+            return new AwaitableDisposable<IDisposable>(ret);
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Nito.AsyncEx
         /// Asynchronously acquires the lock as a reader. Returns a disposable that releases the lock when disposed.
         /// </summary>
         /// <returns>A disposable that releases the lock when disposed.</returns>
-        public Task<IDisposable> ReaderLockAsync()
+        public AwaitableDisposable<IDisposable> ReaderLockAsync()
         {
             return ReaderLockAsync(CancellationToken.None);
         }
@@ -226,7 +226,7 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="cancellationToken">The cancellation token used to cancel the lock. If this is already set, then this method will attempt to take the lock immediately (succeeding if the lock is currently available).</param>
         /// <returns>A disposable that releases the lock when disposed.</returns>
-        public Task<IDisposable> WriterLockAsync(CancellationToken cancellationToken)
+        public AwaitableDisposable<IDisposable> WriterLockAsync(CancellationToken cancellationToken)
         {
             Task<IDisposable> ret;
             lock (SyncObject)
@@ -246,7 +246,7 @@ namespace Nito.AsyncEx
             }
 
             ReleaseWaitersWhenCanceled(ret);
-            return ret;
+            return new AwaitableDisposable<IDisposable>(ret);
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace Nito.AsyncEx
         /// Asynchronously acquires the lock as a writer. Returns a disposable that releases the lock when disposed.
         /// </summary>
         /// <returns>A disposable that releases the lock when disposed.</returns>
-        public Task<IDisposable> WriterLockAsync()
+        public AwaitableDisposable<IDisposable> WriterLockAsync()
         {
             return WriterLockAsync(CancellationToken.None);
         }
@@ -297,7 +297,7 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="cancellationToken">The cancellation token used to cancel the lock. If this is already set, then this method will attempt to take the lock immediately (succeeding if the lock is currently available).</param>
         /// <returns>A key that can be used to upgrade and downgrade this lock, and releases the lock when disposed.</returns>
-        public Task<UpgradeableReaderKey> UpgradeableReaderLockAsync(CancellationToken cancellationToken)
+        public AwaitableDisposable<UpgradeableReaderKey> UpgradeableReaderLockAsync(CancellationToken cancellationToken)
         {
             Task<UpgradeableReaderKey> ret;
             lock (SyncObject)
@@ -318,7 +318,7 @@ namespace Nito.AsyncEx
             }
 
             ReleaseWaitersWhenCanceled(ret);
-            return ret;
+            return new AwaitableDisposable<UpgradeableReaderKey>(ret);
         }
 
         /// <summary>
@@ -351,7 +351,7 @@ namespace Nito.AsyncEx
         /// Asynchronously acquires the lock as a reader with the option to upgrade. Returns a key that can be used to upgrade and downgrade the lock, and releases the lock when disposed.
         /// </summary>
         /// <returns>A key that can be used to upgrade and downgrade this lock, and releases the lock when disposed.</returns>
-        public Task<UpgradeableReaderKey> UpgradeableReaderLockAsync()
+        public AwaitableDisposable<UpgradeableReaderKey> UpgradeableReaderLockAsync()
         {
             return UpgradeableReaderLockAsync(CancellationToken.None);
         }
@@ -638,7 +638,7 @@ namespace Nito.AsyncEx
             /// Upgrades the reader lock to a writer lock. Returns a disposable that downgrades the writer lock to a reader lock when disposed.
             /// </summary>
             /// <param name="cancellationToken">The cancellation token used to cancel the upgrade. If this is already set, then this method will attempt to upgrade immediately (succeeding if the lock is currently available).</param>
-            public Task<IDisposable> UpgradeAsync(CancellationToken cancellationToken)
+            public AwaitableDisposable<IDisposable> UpgradeAsync(CancellationToken cancellationToken)
             {
                 lock (_asyncReaderWriterLock.SyncObject)
                 {
@@ -656,7 +656,7 @@ namespace Nito.AsyncEx
                         lock (_asyncReaderWriterLock.SyncObject) { _upgrade = null; }
                     ret.TryCompleteFromCompletedTask(t);
                 }, CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
-                return ret.Task;
+                return new AwaitableDisposable<IDisposable>(ret.Task);
             }
 
             /// <summary>
@@ -687,7 +687,7 @@ namespace Nito.AsyncEx
             /// <summary>
             /// Upgrades the reader lock to a writer lock. Returns a disposable that downgrades the writer lock to a reader lock when disposed.
             /// </summary>
-            public Task<IDisposable> UpgradeAsync()
+            public AwaitableDisposable<IDisposable> UpgradeAsync()
             {
                 return UpgradeAsync(CancellationToken.None);
             }
