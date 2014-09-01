@@ -28,6 +28,16 @@ namespace Nito.AsyncEx
         private readonly IAsyncWaitQueue<IDisposable> _queue;
 
         /// <summary>
+        /// The key object that unlocks this lock whenever it is disposed.
+        /// </summary>
+        private readonly IDisposable _cachedKey;
+
+        /// <summary>
+        /// A task that is completed with the key object for this lock.
+        /// </summary>
+        private readonly Task<IDisposable> _cachedKeyTask;
+
+        /// <summary>
         /// The semi-unique identifier for this instance. This is 0 if the id has not yet been created.
         /// </summary>
         private int _id;
@@ -52,6 +62,8 @@ namespace Nito.AsyncEx
         public AsyncLock(IAsyncWaitQueue<IDisposable> queue)
         {
             _queue = queue;
+            _cachedKey = new Key(this);
+            _cachedKeyTask = TaskShim.FromResult(_cachedKey);
             _mutex = new object();
         }
 
@@ -77,7 +89,7 @@ namespace Nito.AsyncEx
                 {
                     // If the lock is available, take it immediately.
                     _taken = true;
-                    ret = TaskShim.FromResult<IDisposable>(new Key(this));
+                    ret = _cachedKeyTask;
                 }
                 else
                 {
@@ -103,7 +115,7 @@ namespace Nito.AsyncEx
                 if (!_taken)
                 {
                     _taken = true;
-                    return new Key(this);
+                    return _cachedKey;
                 }
 
                 enqueuedTask = _queue.Enqueue(cancellationToken);
@@ -141,7 +153,7 @@ namespace Nito.AsyncEx
                 if (_queue.IsEmpty)
                     _taken = false;
                 else
-                    finish = _queue.Dequeue(new Key(this));
+                    finish = _queue.Dequeue(_cachedKey);
             }
             if (finish != null)
                 finish.Dispose();
@@ -155,7 +167,7 @@ namespace Nito.AsyncEx
             /// <summary>
             /// The lock to release.
             /// </summary>
-            private AsyncLock _asyncLock;
+            private readonly AsyncLock _asyncLock;
 
             /// <summary>
             /// Creates the key for a lock.
@@ -171,10 +183,7 @@ namespace Nito.AsyncEx
             /// </summary>
             public void Dispose()
             {
-                if (_asyncLock == null)
-                    return;
                 _asyncLock.ReleaseLock();
-                _asyncLock = null;
             }
         }
 
