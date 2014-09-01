@@ -154,5 +154,29 @@
     <file src="Nito.AsyncEx (NET4, Win8, SL5, WP8, WPA81)\bin\Release\Nito.AsyncEx.dll" target="lib\portable-net40+netcore45+sl5+wp8+wpa81+MonoTouch+MonoAndroid" />
     <file src="Nito.AsyncEx (NET4, Win8, SL5, WP8, WPA81)\bin\Release\Nito.AsyncEx.xml" target="lib\portable-net40+netcore45+sl5+wp8+wpa81+MonoTouch+MonoAndroid" />
     <file src="Nito.AsyncEx (NET4, Win8, SL5, WP8, WPA81)\bin\Release\Nito.AsyncEx.pdb" target="lib\portable-net40+netcore45+sl5+wp8+wpa81+MonoTouch+MonoAndroid" />
+    
+    <!-- Legacy platforms -->
+
+    <!-- Silverlight 4 -->
+    <file src="VS2012\Nito.AsyncEx (NET4, Win8, SL4, WP71)\bin\Release\Nito.AsyncEx.dll" target="lib\sl4" />
+    <file src="VS2012\Nito.AsyncEx (NET4, Win8, SL4, WP71)\bin\Release\Nito.AsyncEx.xml" target="lib\sl4" />
+    <file src="VS2012\Nito.AsyncEx (NET4, Win8, SL4, WP71)\bin\Release\Nito.AsyncEx.pdb" target="lib\sl4" />
+    <file src="VS2012\Enlightenment\Nito.AsyncEx.Enlightenment (SL4)\Bin\Release\Nito.AsyncEx.Enlightenment.dll" target="lib\sl4" />
+    <file src="VS2012\Enlightenment\Nito.AsyncEx.Enlightenment (SL4)\Bin\Release\Nito.AsyncEx.Enlightenment.xml" target="lib\sl4" />
+    <file src="VS2012\Enlightenment\Nito.AsyncEx.Enlightenment (SL4)\Bin\Release\Nito.AsyncEx.Enlightenment.pdb" target="lib\sl4" />
+
+    <!-- Windows Phone Silverlight 7.5 -->
+    <file src="VS2012\Nito.AsyncEx (NET4, Win8, SL4, WP71)\bin\Release\Nito.AsyncEx.dll" target="lib\wp71" />
+    <file src="VS2012\Nito.AsyncEx (NET4, Win8, SL4, WP71)\bin\Release\Nito.AsyncEx.xml" target="lib\wp71" />
+    <file src="VS2012\Nito.AsyncEx (NET4, Win8, SL4, WP71)\bin\Release\Nito.AsyncEx.pdb" target="lib\wp71" />
+    <file src="VS2012\Enlightenment\Nito.AsyncEx.Enlightenment (WP71)\Bin\Release\Nito.AsyncEx.Enlightenment.dll" target="lib\wp71" />
+    <file src="VS2012\Enlightenment\Nito.AsyncEx.Enlightenment (WP71)\Bin\Release\Nito.AsyncEx.Enlightenment.xml" target="lib\wp71" />
+    <file src="VS2012\Enlightenment\Nito.AsyncEx.Enlightenment (WP71)\Bin\Release\Nito.AsyncEx.Enlightenment.pdb" target="lib\wp71" />
+
+    <!-- Portable libraries: .NET 4.0, Windows Store, Windows Phone Silverlight 7.5, iOS, Android -->
+    <file src="VS2012\Nito.AsyncEx (NET4, Win8, SL4, WP71)\bin\Release\Nito.AsyncEx.dll" target="lib\portable-net40+netcore45+sl4+wp71+MonoTouch+MonoAndroid" />
+    <file src="VS2012\Nito.AsyncEx (NET4, Win8, SL4, WP71)\bin\Release\Nito.AsyncEx.xml" target="lib\portable-net40+netcore45+sl4+wp71+MonoTouch+MonoAndroid" />
+    <file src="VS2012\Nito.AsyncEx (NET4, Win8, SL4, WP71)\bin\Release\Nito.AsyncEx.pdb" target="lib\portable-net40+netcore45+sl4+wp71+MonoTouch+MonoAndroid" />
+
   </files>
 </package>
