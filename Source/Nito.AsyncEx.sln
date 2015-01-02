@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FA26D995-6F9A-4261-8C9A-2F35449A6C2A}"
 	ProjectSection(SolutionItems) = preProject
@@ -61,6 +61,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nito.AsyncEx.Enlightenment (NET4, Win8, SL5, WP8, WPA81)", "Enlightenment\Nito.AsyncEx.Enlightenment (NET4, Win8, SL5, WP8, WPA81)\Nito.AsyncEx.Enlightenment (NET4, Win8, SL5, WP8, WPA81).csproj", "{40CE2F27-B155-4D4E-8B07-A65B79B7DBEA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nito.AsyncEx.Dataflow (NET45, Win8, WP8, WPA81)", "Nito.AsyncEx.Dataflow (NET45, Win8, WP8, WPA81)\Nito.AsyncEx.Dataflow (NET45, Win8, WP8, WPA81).csproj", "{C4603C8E-FE0E-4A31-AA6C-88CA22F82756}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7474BFEF-7E12-45DE-95EB-CCFF4AA262C5}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
