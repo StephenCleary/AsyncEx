@@ -176,3 +176,6 @@ FakesAssemblies/
 .localhistory/
 /Source/lib/_._
 *.userprefs
+*.nupkg
+/Source/Nito.AsyncEx.Dataflow.StrongNamed.nuspec
+/Source/Nito.AsyncEx.StrongNamed.nuspec
