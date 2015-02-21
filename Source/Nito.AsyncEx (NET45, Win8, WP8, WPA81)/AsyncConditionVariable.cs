@@ -103,7 +103,7 @@ namespace Nito.AsyncEx
             lock (_mutex)
             {
                 // Begin waiting for either a signal or cancellation.
-                var task = _queue.Enqueue(cancellationToken);
+                var task = _queue.Enqueue(_mutex, cancellationToken);
 
                 // Attach to the signal or cancellation.
                 var retTcs = new TaskCompletionSource();
@@ -136,7 +136,7 @@ namespace Nito.AsyncEx
             lock (_mutex)
             {
                 // Begin waiting for either a signal or cancellation.
-                enqueuedTask = _queue.Enqueue(cancellationToken);
+                enqueuedTask = _queue.Enqueue(_mutex, cancellationToken);
             }
 
             // Release the lock while we are waiting.

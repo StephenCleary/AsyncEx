@@ -88,7 +88,7 @@ namespace Nito.AsyncEx
                 else
                 {
                     // Wait for the lock to become available or cancellation.
-                    ret = _queue.Enqueue(cancellationToken);
+                    ret = _queue.Enqueue(_mutex, cancellationToken);
                 }
 
                 //Enlightenment.Trace.AsyncLock_TrackLock(this, ret);
@@ -112,7 +112,7 @@ namespace Nito.AsyncEx
                     return _cachedKeyTask.Result;
                 }
 
-                enqueuedTask = _queue.Enqueue(cancellationToken);
+                enqueuedTask = _queue.Enqueue(_mutex, cancellationToken);
             }
 
             return enqueuedTask.WaitAndUnwrapException();

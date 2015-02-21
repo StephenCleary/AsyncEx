@@ -171,7 +171,7 @@ namespace Nito.AsyncEx
                 else
                 {
                     // Wait for the lock to become available or cancellation.
-                    ret = _readerQueue.Enqueue(cancellationToken);
+                    ret = _readerQueue.Enqueue(SyncObject, cancellationToken);
                 }
                 //Enlightenment.Trace.AsyncReaderWriterLock_TrackLock(this, AsyncReaderWriterLockLockType.Reader, ret);
             }
@@ -197,7 +197,7 @@ namespace Nito.AsyncEx
                 }
 
                 // Wait for the lock to become available or cancellation.
-                ret = _readerQueue.Enqueue(cancellationToken);
+                ret = _readerQueue.Enqueue(SyncObject, cancellationToken);
             }
 
             return ret.WaitAndUnwrapException();
@@ -240,7 +240,7 @@ namespace Nito.AsyncEx
                 else
                 {
                     // Wait for the lock to become available or cancellation.
-                    ret = _writerQueue.Enqueue(cancellationToken);
+                    ret = _writerQueue.Enqueue(SyncObject, cancellationToken);
                 }
                 //Enlightenment.Trace.AsyncReaderWriterLock_TrackLock(this, AsyncReaderWriterLockLockType.Writer, ret);
             }
@@ -267,7 +267,7 @@ namespace Nito.AsyncEx
                 }
              
                 // Wait for the lock to become available or cancellation.
-                ret = _writerQueue.Enqueue(cancellationToken);
+                ret = _writerQueue.Enqueue(SyncObject, cancellationToken);
             }
 
             ReleaseWaitersWhenCanceled(ret);
@@ -312,7 +312,7 @@ namespace Nito.AsyncEx
                 else
                 {
                     // Wait for the lock to become available or cancellation.
-                    ret = _upgradeableReaderQueue.Enqueue(cancellationToken);
+                    ret = _upgradeableReaderQueue.Enqueue(SyncObject, cancellationToken);
                 }
                 //Enlightenment.Trace.AsyncReaderWriterLock_TrackLock(this, AsyncReaderWriterLockLockType.UpgradeableReader, ret);
             }
@@ -340,7 +340,7 @@ namespace Nito.AsyncEx
                 }
 
                 // Wait for the lock to become available or cancellation.
-                ret = _upgradeableReaderQueue.Enqueue(cancellationToken);
+                ret = _upgradeableReaderQueue.Enqueue(SyncObject, cancellationToken);
             }
 
             ReleaseWaitersWhenCanceled(ret);
@@ -381,7 +381,7 @@ namespace Nito.AsyncEx
             else
             {
                 // Wait for the lock to become available or cancellation.
-                ret = _upgradeReaderQueue.Enqueue(cancellationToken);
+                ret = _upgradeReaderQueue.Enqueue(SyncObject, cancellationToken);
             }
 
             //Enlightenment.Trace.AsyncReaderWriterLock_TrackLock(this, AsyncReaderWriterLockLockType.UpgradingToWriter, ret);

@@ -164,7 +164,7 @@ namespace Tests
             {
                 var queue = new DefaultAsyncWaitQueue<object>() as IAsyncWaitQueue<object>;
                 var cts = new CancellationTokenSource();
-                var task = queue.Enqueue(cts.Token);
+                var task = queue.Enqueue(new object(), cts.Token);
                 cts.Cancel();
                 await AssertEx.ThrowsExceptionAsync<OperationCanceledException>(task);
             });
@@ -177,7 +177,7 @@ namespace Tests
             {
                 var queue = new DefaultAsyncWaitQueue<object>() as IAsyncWaitQueue<object>;
                 var cts = new CancellationTokenSource();
-                var task = queue.Enqueue(cts.Token);
+                var task = queue.Enqueue(new object(), cts.Token);
                 cts.Cancel();
                 await AssertEx.ThrowsExceptionAsync<OperationCanceledException>(task);
                 Assert.IsTrue(queue.IsEmpty);
@@ -189,7 +189,7 @@ namespace Tests
         {
             var queue = new DefaultAsyncWaitQueue<object>() as IAsyncWaitQueue<object>;
             var cts = new CancellationTokenSource();
-            var task = queue.Enqueue(cts.Token);
+            var task = queue.Enqueue(new object(), cts.Token);
             var _ = queue.Enqueue();
             queue.Dequeue().Dispose();
             cts.Cancel();
@@ -202,7 +202,7 @@ namespace Tests
             var queue = new DefaultAsyncWaitQueue<object>() as IAsyncWaitQueue<object>;
             var cts = new CancellationTokenSource();
             cts.Cancel();
-            var task = queue.Enqueue(cts.Token);
+            var task = queue.Enqueue(new object(), cts.Token);
             Assert.IsTrue(task.IsCanceled);
         }
 
@@ -212,7 +212,7 @@ namespace Tests
             var queue = new DefaultAsyncWaitQueue<object>() as IAsyncWaitQueue<object>;
             var cts = new CancellationTokenSource();
             cts.Cancel();
-            var task = queue.Enqueue(cts.Token);
+            var task = queue.Enqueue(new object(), cts.Token);
             Assert.IsTrue(queue.IsEmpty);
         }
     }

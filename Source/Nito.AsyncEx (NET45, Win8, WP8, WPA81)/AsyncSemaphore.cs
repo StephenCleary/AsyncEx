@@ -95,7 +95,7 @@ namespace Nito.AsyncEx
                 else
                 {
                     // Wait for the semaphore to become available or cancellation.
-                    ret = _queue.Enqueue(cancellationToken);
+                    ret = _queue.Enqueue(_mutex, cancellationToken);
                 }
                 //Enlightenment.Trace.AsyncSemaphore_TrackWait(this, ret);
             }

@@ -92,7 +92,7 @@ namespace Nito.AsyncEx
                 }
                 else
                 {
-                    ret = _queue.Enqueue(cancellationToken);
+                    ret = _queue.Enqueue(_mutex, cancellationToken);
                 }
                 //Enlightenment.Trace.AsyncAutoResetEvent_TrackWait(this, ret);
             }
@@ -115,7 +115,7 @@ namespace Nito.AsyncEx
                     return;
                 }
 
-                ret = _queue.Enqueue(cancellationToken);
+                ret = _queue.Enqueue(_mutex, cancellationToken);
             }
 
             ret.WaitAndUnwrapException();
