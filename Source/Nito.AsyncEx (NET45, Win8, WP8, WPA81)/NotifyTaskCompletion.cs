@@ -141,38 +141,41 @@ namespace Nito.AsyncEx
             public NotifyTaskCompletionImplementation(Task task)
             {
                 Task = task;
-                if (!task.IsCompleted)
+                if (task.IsCompleted)
                 {
-                    var scheduler = (SynchronizationContext.Current == null) ? TaskScheduler.Current : TaskScheduler.FromCurrentSynchronizationContext();
-                    TaskCompleted = task.ContinueWith(t =>
-                    {
-                        var propertyChanged = PropertyChanged;
-                        if (propertyChanged != null)
-                        {
-                            propertyChanged(this, new PropertyChangedEventArgs("Status"));
-                            propertyChanged(this, new PropertyChangedEventArgs("IsCompleted"));
-                            propertyChanged(this, new PropertyChangedEventArgs("IsNotCompleted"));
-                            if (t.IsCanceled)
-                            {
-                                propertyChanged(this, new PropertyChangedEventArgs("IsCanceled"));
-                            }
-                            else if (t.IsFaulted)
-                            {
-                                propertyChanged(this, new PropertyChangedEventArgs("IsFaulted"));
-                                propertyChanged(this, new PropertyChangedEventArgs("Exception"));
-                                propertyChanged(this, new PropertyChangedEventArgs("InnerException"));
-                                propertyChanged(this, new PropertyChangedEventArgs("ErrorMessage"));
-                            }
-                            else
-                            {
-                                propertyChanged(this, new PropertyChangedEventArgs("IsSuccessfullyCompleted"));
-                            }
-                        }
-                    },
-                    CancellationToken.None,
-                    TaskContinuationOptions.ExecuteSynchronously,
-                    scheduler);
+                    TaskCompleted = TaskConstants.Completed;
+                    return;
                 }
+
+                var scheduler = (SynchronizationContext.Current == null) ? TaskScheduler.Current : TaskScheduler.FromCurrentSynchronizationContext();
+                TaskCompleted = task.ContinueWith(t =>
+                {
+                    var propertyChanged = PropertyChanged;
+                    if (propertyChanged == null)
+                        return;
+
+                    propertyChanged(this, new PropertyChangedEventArgs("Status"));
+                    propertyChanged(this, new PropertyChangedEventArgs("IsCompleted"));
+                    propertyChanged(this, new PropertyChangedEventArgs("IsNotCompleted"));
+                    if (t.IsCanceled)
+                    {
+                        propertyChanged(this, new PropertyChangedEventArgs("IsCanceled"));
+                    }
+                    else if (t.IsFaulted)
+                    {
+                        propertyChanged(this, new PropertyChangedEventArgs("IsFaulted"));
+                        propertyChanged(this, new PropertyChangedEventArgs("Exception"));
+                        propertyChanged(this, new PropertyChangedEventArgs("InnerException"));
+                        propertyChanged(this, new PropertyChangedEventArgs("ErrorMessage"));
+                    }
+                    else
+                    {
+                        propertyChanged(this, new PropertyChangedEventArgs("IsSuccessfullyCompleted"));
+                    }
+                },
+                CancellationToken.None,
+                TaskContinuationOptions.ExecuteSynchronously,
+                scheduler);
             }
 
             public Task Task { get; private set; }
@@ -203,39 +206,42 @@ namespace Nito.AsyncEx
             public NotifyTaskCompletionImplementation(Task<TResult> task)
             {
                 Task = task;
-                if (!task.IsCompleted)
+                if (task.IsCompleted)
                 {
-                    var scheduler = (SynchronizationContext.Current == null) ? TaskScheduler.Current : TaskScheduler.FromCurrentSynchronizationContext();
-                    TaskCompleted = task.ContinueWith(t =>
-                    {
-                        var propertyChanged = PropertyChanged;
-                        if (propertyChanged != null)
-                        {
-                            propertyChanged(this, new PropertyChangedEventArgs("Status"));
-                            propertyChanged(this, new PropertyChangedEventArgs("IsCompleted"));
-                            propertyChanged(this, new PropertyChangedEventArgs("IsNotCompleted"));
-                            if (t.IsCanceled)
-                            {
-                                propertyChanged(this, new PropertyChangedEventArgs("IsCanceled"));
-                            }
-                            else if (t.IsFaulted)
-                            {
-                                propertyChanged(this, new PropertyChangedEventArgs("IsFaulted"));
-                                propertyChanged(this, new PropertyChangedEventArgs("Exception"));
-                                propertyChanged(this, new PropertyChangedEventArgs("InnerException"));
-                                propertyChanged(this, new PropertyChangedEventArgs("ErrorMessage"));
-                            }
-                            else
-                            {
-                                propertyChanged(this, new PropertyChangedEventArgs("IsSuccessfullyCompleted"));
-                                propertyChanged(this, new PropertyChangedEventArgs("Result"));
-                            }
-                        }
-                    },
-                    CancellationToken.None,
-                    TaskContinuationOptions.ExecuteSynchronously,
-                    scheduler);
+                    TaskCompleted = TaskConstants.Completed;
+                    return;
                 }
+
+                var scheduler = (SynchronizationContext.Current == null) ? TaskScheduler.Current : TaskScheduler.FromCurrentSynchronizationContext();
+                TaskCompleted = task.ContinueWith(t =>
+                {
+                    var propertyChanged = PropertyChanged;
+                    if (propertyChanged == null)
+                        return;
+
+                    propertyChanged(this, new PropertyChangedEventArgs("Status"));
+                    propertyChanged(this, new PropertyChangedEventArgs("IsCompleted"));
+                    propertyChanged(this, new PropertyChangedEventArgs("IsNotCompleted"));
+                    if (t.IsCanceled)
+                    {
+                        propertyChanged(this, new PropertyChangedEventArgs("IsCanceled"));
+                    }
+                    else if (t.IsFaulted)
+                    {
+                        propertyChanged(this, new PropertyChangedEventArgs("IsFaulted"));
+                        propertyChanged(this, new PropertyChangedEventArgs("Exception"));
+                        propertyChanged(this, new PropertyChangedEventArgs("InnerException"));
+                        propertyChanged(this, new PropertyChangedEventArgs("ErrorMessage"));
+                    }
+                    else
+                    {
+                        propertyChanged(this, new PropertyChangedEventArgs("IsSuccessfullyCompleted"));
+                        propertyChanged(this, new PropertyChangedEventArgs("Result"));
+                    }
+                },
+                CancellationToken.None,
+                TaskContinuationOptions.ExecuteSynchronously,
+                scheduler);
             }
 
             public Task<TResult> Task { get; private set; }
