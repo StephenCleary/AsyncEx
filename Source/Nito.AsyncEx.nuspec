@@ -22,10 +22,10 @@
       <group targetFramework="portable-net40+win8+sl4+wp71">
         <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
       </group>
-      <group targetFramework="portable-net40+win8+sl5+wp8+wpa81+MonoTouch+MonoAndroid">
+      <group targetFramework="portable-net40+win8+sl5+wp8+wpa81">
         <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
       </group>
-      <group targetFramework="portable-net45+win8+wp8+wpa81+MonoTouch+MonoAndroid" />
+      <group targetFramework="portable-net45+win8+wp8+wpa81" />
       <group targetFramework="net45" />
       <group targetFramework="win8" />
       <group targetFramework="wp8" />
@@ -59,15 +59,26 @@
     <file src="Enlightenment\Nito.AsyncEx.Enlightenment (NET45)\bin\Release\Nito.AsyncEx.Enlightenment.pdb" target="lib\net45" />
 
     <!-- iOS -->
-    <file src="Nito.AsyncEx (NET45, Win8, WP8, WPA81)\bin\Release\Nito.AsyncEx.dll" target="lib\MonoTouch" />
-    <file src="Nito.AsyncEx (NET45, Win8, WP8, WPA81)\bin\Release\Nito.AsyncEx.xml" target="lib\MonoTouch" />
-    <file src="Nito.AsyncEx (NET45, Win8, WP8, WPA81)\bin\Release\Nito.AsyncEx.pdb" target="lib\MonoTouch" />
-    <file src="Nito.AsyncEx.Concurrent (NET45, Win8, WPA81)\bin\Release\Nito.AsyncEx.Concurrent.dll" target="lib\MonoTouch" />
-    <file src="Nito.AsyncEx.Concurrent (NET45, Win8, WPA81)\bin\Release\Nito.AsyncEx.Concurrent.xml" target="lib\MonoTouch" />
-    <file src="Nito.AsyncEx.Concurrent (NET45, Win8, WPA81)\bin\Release\Nito.AsyncEx.Concurrent.pdb" target="lib\MonoTouch" />
-    <file src="Enlightenment\Nito.AsyncEx.Enlightenment (NET45)\bin\Release\Nito.AsyncEx.Enlightenment.dll" target="lib\MonoTouch" />
-    <file src="Enlightenment\Nito.AsyncEx.Enlightenment (NET45)\bin\Release\Nito.AsyncEx.Enlightenment.xml" target="lib\MonoTouch" />
-    <file src="Enlightenment\Nito.AsyncEx.Enlightenment (NET45)\bin\Release\Nito.AsyncEx.Enlightenment.pdb" target="lib\MonoTouch" />
+    <file src="Nito.AsyncEx (NET45, Win8, WP8, WPA81)\bin\Release\Nito.AsyncEx.dll" target="lib\Xamarin.iOS10" />
+    <file src="Nito.AsyncEx (NET45, Win8, WP8, WPA81)\bin\Release\Nito.AsyncEx.xml" target="lib\Xamarin.iOS10" />
+    <file src="Nito.AsyncEx (NET45, Win8, WP8, WPA81)\bin\Release\Nito.AsyncEx.pdb" target="lib\Xamarin.iOS10" />
+    <file src="Nito.AsyncEx.Concurrent (NET45, Win8, WPA81)\bin\Release\Nito.AsyncEx.Concurrent.dll" target="lib\Xamarin.iOS10" />
+    <file src="Nito.AsyncEx.Concurrent (NET45, Win8, WPA81)\bin\Release\Nito.AsyncEx.Concurrent.xml" target="lib\Xamarin.iOS10" />
+    <file src="Nito.AsyncEx.Concurrent (NET45, Win8, WPA81)\bin\Release\Nito.AsyncEx.Concurrent.pdb" target="lib\Xamarin.iOS10" />
+    <file src="Enlightenment\Nito.AsyncEx.Enlightenment (NET45)\bin\Release\Nito.AsyncEx.Enlightenment.dll" target="lib\Xamarin.iOS10" />
+    <file src="Enlightenment\Nito.AsyncEx.Enlightenment (NET45)\bin\Release\Nito.AsyncEx.Enlightenment.xml" target="lib\Xamarin.iOS10" />
+    <file src="Enlightenment\Nito.AsyncEx.Enlightenment (NET45)\bin\Release\Nito.AsyncEx.Enlightenment.pdb" target="lib\Xamarin.iOS10" />
+
+    <!-- Mac -->
+    <file src="Nito.AsyncEx (NET45, Win8, WP8, WPA81)\bin\Release\Nito.AsyncEx.dll" target="lib\Xamarin.Mac20" />
+    <file src="Nito.AsyncEx (NET45, Win8, WP8, WPA81)\bin\Release\Nito.AsyncEx.xml" target="lib\Xamarin.Mac20" />
+    <file src="Nito.AsyncEx (NET45, Win8, WP8, WPA81)\bin\Release\Nito.AsyncEx.pdb" target="lib\Xamarin.Mac20" />
+    <file src="Nito.AsyncEx.Concurrent (NET45, Win8, WPA81)\bin\Release\Nito.AsyncEx.Concurrent.dll" target="lib\Xamarin.Mac20" />
+    <file src="Nito.AsyncEx.Concurrent (NET45, Win8, WPA81)\bin\Release\Nito.AsyncEx.Concurrent.xml" target="lib\Xamarin.Mac20" />
+    <file src="Nito.AsyncEx.Concurrent (NET45, Win8, WPA81)\bin\Release\Nito.AsyncEx.Concurrent.pdb" target="lib\Xamarin.Mac20" />
+    <file src="Enlightenment\Nito.AsyncEx.Enlightenment (NET45)\bin\Release\Nito.AsyncEx.Enlightenment.dll" target="lib\Xamarin.Mac20" />
+    <file src="Enlightenment\Nito.AsyncEx.Enlightenment (NET45)\bin\Release\Nito.AsyncEx.Enlightenment.xml" target="lib\Xamarin.Mac20" />
+    <file src="Enlightenment\Nito.AsyncEx.Enlightenment (NET45)\bin\Release\Nito.AsyncEx.Enlightenment.pdb" target="lib\Xamarin.Mac20" />
 
     <!-- Android -->
     <file src="Nito.AsyncEx (NET45, Win8, WP8, WPA81)\bin\Release\Nito.AsyncEx.dll" target="lib\MonoAndroid" />
@@ -130,30 +141,30 @@
     <file src="Enlightenment\Nito.AsyncEx.Enlightenment (WP8)\bin\Release\Nito.AsyncEx.Enlightenment.pdb" target="lib\wp8" />
 
     <!-- Portable libraries: .NET 4.5, Windows Store, Windows Phone Apps 8.1, Windows Phone Silverlight 8.0, iOS, Android -->
-    <file src="Nito.AsyncEx (NET45, Win8, WP8, WPA81)\bin\Release\Nito.AsyncEx.dll" target="lib\portable-net45+netcore45+wp8+wpa81+MonoTouch+MonoAndroid" />
-    <file src="Nito.AsyncEx (NET45, Win8, WP8, WPA81)\bin\Release\Nito.AsyncEx.xml" target="lib\portable-net45+netcore45+wp8+wpa81+MonoTouch+MonoAndroid" />
-    <file src="Nito.AsyncEx (NET45, Win8, WP8, WPA81)\bin\Release\Nito.AsyncEx.pdb" target="lib\portable-net45+netcore45+wp8+wpa81+MonoTouch+MonoAndroid" />
+    <file src="Nito.AsyncEx (NET45, Win8, WP8, WPA81)\bin\Release\Nito.AsyncEx.dll" target="lib\portable-net45+netcore45+wp8+wpa81" />
+    <file src="Nito.AsyncEx (NET45, Win8, WP8, WPA81)\bin\Release\Nito.AsyncEx.xml" target="lib\portable-net45+netcore45+wp8+wpa81" />
+    <file src="Nito.AsyncEx (NET45, Win8, WP8, WPA81)\bin\Release\Nito.AsyncEx.pdb" target="lib\portable-net45+netcore45+wp8+wpa81" />
 
     <!-- Portable libraries: .NET 4.5, Windows Store, Windows Phone Apps 8.1, iOS, Android -->
-    <file src="Nito.AsyncEx (NET45, Win8, WP8, WPA81)\bin\Release\Nito.AsyncEx.dll" target="lib\portable-net45+netcore45+wpa81+MonoTouch+MonoAndroid" />
-    <file src="Nito.AsyncEx (NET45, Win8, WP8, WPA81)\bin\Release\Nito.AsyncEx.xml" target="lib\portable-net45+netcore45+wpa81+MonoTouch+MonoAndroid" />
-    <file src="Nito.AsyncEx (NET45, Win8, WP8, WPA81)\bin\Release\Nito.AsyncEx.pdb" target="lib\portable-net45+netcore45+wpa81+MonoTouch+MonoAndroid" />
-    <file src="Nito.AsyncEx.Concurrent (NET45, Win8, WPA81)\bin\Release\Nito.AsyncEx.Concurrent.dll" target="lib\portable-net45+netcore45+wpa81+MonoTouch+MonoAndroid" />
-    <file src="Nito.AsyncEx.Concurrent (NET45, Win8, WPA81)\bin\Release\Nito.AsyncEx.Concurrent.xml" target="lib\portable-net45+netcore45+wpa81+MonoTouch+MonoAndroid" />
-    <file src="Nito.AsyncEx.Concurrent (NET45, Win8, WPA81)\bin\Release\Nito.AsyncEx.Concurrent.pdb" target="lib\portable-net45+netcore45+wpa81+MonoTouch+MonoAndroid" />
+    <file src="Nito.AsyncEx (NET45, Win8, WP8, WPA81)\bin\Release\Nito.AsyncEx.dll" target="lib\portable-net45+netcore45+wpa81" />
+    <file src="Nito.AsyncEx (NET45, Win8, WP8, WPA81)\bin\Release\Nito.AsyncEx.xml" target="lib\portable-net45+netcore45+wpa81" />
+    <file src="Nito.AsyncEx (NET45, Win8, WP8, WPA81)\bin\Release\Nito.AsyncEx.pdb" target="lib\portable-net45+netcore45+wpa81" />
+    <file src="Nito.AsyncEx.Concurrent (NET45, Win8, WPA81)\bin\Release\Nito.AsyncEx.Concurrent.dll" target="lib\portable-net45+netcore45+wpa81" />
+    <file src="Nito.AsyncEx.Concurrent (NET45, Win8, WPA81)\bin\Release\Nito.AsyncEx.Concurrent.xml" target="lib\portable-net45+netcore45+wpa81" />
+    <file src="Nito.AsyncEx.Concurrent (NET45, Win8, WPA81)\bin\Release\Nito.AsyncEx.Concurrent.pdb" target="lib\portable-net45+netcore45+wpa81" />
 
     <!-- Portable libraries: .NET 4.0, Windows Store, iOS, Android -->
-    <file src="Nito.AsyncEx (NET4, Win8, SL5, WP8, WPA81)\bin\Release\Nito.AsyncEx.dll" target="lib\portable-net40+netcore45+MonoTouch+MonoAndroid" />
-    <file src="Nito.AsyncEx (NET4, Win8, SL5, WP8, WPA81)\bin\Release\Nito.AsyncEx.xml" target="lib\portable-net40+netcore45+MonoTouch+MonoAndroid" />
-    <file src="Nito.AsyncEx (NET4, Win8, SL5, WP8, WPA81)\bin\Release\Nito.AsyncEx.pdb" target="lib\portable-net40+netcore45+MonoTouch+MonoAndroid" />
-    <file src="Nito.AsyncEx.Concurrent (NET4, Win8)\bin\Release\Nito.AsyncEx.Concurrent.dll" target="lib\portable-net40+netcore45+MonoTouch+MonoAndroid" />
-    <file src="Nito.AsyncEx.Concurrent (NET4, Win8)\bin\Release\Nito.AsyncEx.Concurrent.xml" target="lib\portable-net40+netcore45+MonoTouch+MonoAndroid" />
-    <file src="Nito.AsyncEx.Concurrent (NET4, Win8)\bin\Release\Nito.AsyncEx.Concurrent.pdb" target="lib\portable-net40+netcore45+MonoTouch+MonoAndroid" />
+    <file src="Nito.AsyncEx (NET4, Win8, SL5, WP8, WPA81)\bin\Release\Nito.AsyncEx.dll" target="lib\portable-net40+netcore45" />
+    <file src="Nito.AsyncEx (NET4, Win8, SL5, WP8, WPA81)\bin\Release\Nito.AsyncEx.xml" target="lib\portable-net40+netcore45" />
+    <file src="Nito.AsyncEx (NET4, Win8, SL5, WP8, WPA81)\bin\Release\Nito.AsyncEx.pdb" target="lib\portable-net40+netcore45" />
+    <file src="Nito.AsyncEx.Concurrent (NET4, Win8)\bin\Release\Nito.AsyncEx.Concurrent.dll" target="lib\portable-net40+netcore45" />
+    <file src="Nito.AsyncEx.Concurrent (NET4, Win8)\bin\Release\Nito.AsyncEx.Concurrent.xml" target="lib\portable-net40+netcore45" />
+    <file src="Nito.AsyncEx.Concurrent (NET4, Win8)\bin\Release\Nito.AsyncEx.Concurrent.pdb" target="lib\portable-net40+netcore45" />
 
     <!-- Portable libraries: .NET 4.0, Windows Store, Silverlight 5, Windows Phone Apps 8.1, Windows Phone Silverlight 8, iOS, Android -->
-    <file src="Nito.AsyncEx (NET4, Win8, SL5, WP8, WPA81)\bin\Release\Nito.AsyncEx.dll" target="lib\portable-net40+netcore45+sl5+wp8+wpa81+MonoTouch+MonoAndroid" />
-    <file src="Nito.AsyncEx (NET4, Win8, SL5, WP8, WPA81)\bin\Release\Nito.AsyncEx.xml" target="lib\portable-net40+netcore45+sl5+wp8+wpa81+MonoTouch+MonoAndroid" />
-    <file src="Nito.AsyncEx (NET4, Win8, SL5, WP8, WPA81)\bin\Release\Nito.AsyncEx.pdb" target="lib\portable-net40+netcore45+sl5+wp8+wpa81+MonoTouch+MonoAndroid" />
+    <file src="Nito.AsyncEx (NET4, Win8, SL5, WP8, WPA81)\bin\Release\Nito.AsyncEx.dll" target="lib\portable-net40+netcore45+sl5+wp8+wpa81" />
+    <file src="Nito.AsyncEx (NET4, Win8, SL5, WP8, WPA81)\bin\Release\Nito.AsyncEx.xml" target="lib\portable-net40+netcore45+sl5+wp8+wpa81" />
+    <file src="Nito.AsyncEx (NET4, Win8, SL5, WP8, WPA81)\bin\Release\Nito.AsyncEx.pdb" target="lib\portable-net40+netcore45+sl5+wp8+wpa81" />
     
     <!-- Legacy platforms -->
 
@@ -174,9 +185,9 @@
     <file src="VS2012\Enlightenment\Nito.AsyncEx.Enlightenment (WP71)\Bin\Release\Nito.AsyncEx.Enlightenment.pdb" target="lib\wp71" />
 
     <!-- Portable libraries: .NET 4.0, Windows Store, Windows Phone Silverlight 7.5, iOS, Android -->
-    <file src="VS2012\Nito.AsyncEx (NET4, Win8, SL4, WP71)\bin\Release\Nito.AsyncEx.dll" target="lib\portable-net40+netcore45+sl4+wp71+MonoTouch+MonoAndroid" />
-    <file src="VS2012\Nito.AsyncEx (NET4, Win8, SL4, WP71)\bin\Release\Nito.AsyncEx.xml" target="lib\portable-net40+netcore45+sl4+wp71+MonoTouch+MonoAndroid" />
-    <file src="VS2012\Nito.AsyncEx (NET4, Win8, SL4, WP71)\bin\Release\Nito.AsyncEx.pdb" target="lib\portable-net40+netcore45+sl4+wp71+MonoTouch+MonoAndroid" />
+    <file src="VS2012\Nito.AsyncEx (NET4, Win8, SL4, WP71)\bin\Release\Nito.AsyncEx.dll" target="lib\portable-net40+netcore45+sl4+wp71" />
+    <file src="VS2012\Nito.AsyncEx (NET4, Win8, SL4, WP71)\bin\Release\Nito.AsyncEx.xml" target="lib\portable-net40+netcore45+sl4+wp71" />
+    <file src="VS2012\Nito.AsyncEx (NET4, Win8, SL4, WP71)\bin\Release\Nito.AsyncEx.pdb" target="lib\portable-net40+netcore45+sl4+wp71" />
 
   </files>
 </package>
