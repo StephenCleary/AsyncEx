@@ -6,6 +6,10 @@ A helper library for async/await.
 
 Supports .NET 4.5/4.0, iOS, Android, Windows Store 8.0, Windows Phone Silverlight 8.0/7.5, Windows Phone Applications 8.1, Silverlight 5.0/4.0, and all portable libraries thereof.
 
+Note: iOS applications need to add a special line of code to prevent aggresive compiler optimizations:
+
+    EnlightenmentVerification.EnsureLoaded();
+
 ## Getting Started
 
 Install the [NuGet package](http://www.nuget.org/packages/Nito.AsyncEx).
