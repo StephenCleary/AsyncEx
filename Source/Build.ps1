@@ -7,7 +7,8 @@ $build = $project.DTE.Solution.SolutionBuild
 $oldConfiguration = $build.ActiveConfiguration
 $build.SolutionConfigurations.Item("Release").Activate()
 $build.Clean($true)
-$build.Build($true)
+$project.DTE.ExecuteCommand("Build.RebuildSolution")
+# $build.Build($true) # This was not generating xml doc files for some reason
 $oldConfiguration.Activate()
 Write-Output "... done building VS2013 Solution."
 
