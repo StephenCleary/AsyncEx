@@ -79,6 +79,14 @@ namespace Nito.AsyncEx
         }
 
         /// <summary>
+        /// Whether the asynchronous factory method has started. This is initially <c>false</c> and becomes <c>true</c> when this instance is awaited or after <see cref="Start"/> is called.
+        /// </summary>
+        public bool IsStarted
+        {
+            get { return _instance.IsValueCreated; }
+        }
+
+        /// <summary>
         /// Asynchronous infrastructure support. This method permits instances of <see cref="AsyncLazy&lt;T&gt;"/> to be await'ed.
         /// </summary>
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
