@@ -77,6 +77,14 @@ namespace Nito.AsyncEx
         }
 
         /// <summary>
+        /// Whether this event is currently set. This member is seldom used; code using this member has a high possibility of race conditions.
+        /// </summary>
+        public bool IsSet
+        {
+            get { lock (_mutex) return _set; }
+        }
+
+        /// <summary>
         /// Asynchronously waits for this event to be set. If the event is set, this method will auto-reset it and return immediately, even if the cancellation token is already signalled. If the wait is canceled, then it will not auto-reset this event.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token used to cancel this wait.</param>

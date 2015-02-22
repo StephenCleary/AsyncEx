@@ -75,6 +75,14 @@ namespace Nito.AsyncEx
         }
 
         /// <summary>
+        /// Whether this event is currently set. This member is seldom used; code using this member has a high possibility of race conditions.
+        /// </summary>
+        public bool IsSet
+        {
+            get { lock (_sync) return _tcs.Task.IsCompleted; }
+        }
+
+        /// <summary>
         /// Asynchronously waits for this event to be set.
         /// </summary>
         public Task WaitAsync()

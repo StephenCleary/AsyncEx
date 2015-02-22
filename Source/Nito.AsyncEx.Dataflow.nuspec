@@ -25,7 +25,7 @@
       </group>
     </dependencies>
     <releaseNotes>
-      Added support for WP8 and WPA81.
+      Minor bugfixes. Added strong-name and iOS Unified support.
     </releaseNotes>
   </metadata>
   <files>

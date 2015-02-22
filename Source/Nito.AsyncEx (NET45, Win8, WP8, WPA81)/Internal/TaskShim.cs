@@ -53,5 +53,25 @@ namespace Nito.AsyncEx.Internal
         {
             return Task.WhenAll(tasks);
         }
+
+        public static Task<Task<TResult>> WhenAny<TResult>(IEnumerable<Task<TResult>> tasks)
+        {
+            return Task.WhenAny(tasks);
+        }
+
+        public static Task<Task> WhenAny(IEnumerable<Task> tasks)
+        {
+            return Task.WhenAny(tasks);
+        }
+
+        public static Task<Task<TResult>> WhenAny<TResult>(params Task<TResult>[] tasks)
+        {
+            return Task.WhenAny(tasks);
+        }
+
+        public static Task<Task> WhenAny(params Task[] tasks)
+        {
+            return Task.WhenAny(tasks);
+        }
     }
 }

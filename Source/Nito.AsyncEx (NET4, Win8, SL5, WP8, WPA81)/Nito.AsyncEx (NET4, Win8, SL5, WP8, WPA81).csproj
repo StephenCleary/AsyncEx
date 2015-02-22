@@ -218,6 +218,9 @@
     <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\NotifyTaskCompletion.cs">
       <Link>NotifyTaskCompletion.cs</Link>
     </Compile>
+    <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\PauseToken.cs">
+      <Link>PauseToken.cs</Link>
+    </Compile>
     <Compile Include="..\Nito.AsyncEx %28NET45, Win8, WP8, WPA81%29\PropertyProgress.cs">
       <Link>PropertyProgress.cs</Link>
     </Compile>

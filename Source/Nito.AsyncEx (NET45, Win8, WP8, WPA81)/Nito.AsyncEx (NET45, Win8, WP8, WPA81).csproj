@@ -95,6 +95,7 @@
     <Compile Include="Internal\TaskShim.cs" />
     <Compile Include="NormalizedCancellationToken.cs" />
     <Compile Include="NotifyTaskCompletion.cs" />
+    <Compile Include="PauseToken.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyProgress.cs" />
     <Compile Include="SynchronizationContextHelpers.cs" />

@@ -16,7 +16,6 @@
       </group>
     </dependencies>
     <releaseNotes>
-      Added support for WP8 and WPA81.
     </releaseNotes>
   </metadata>
   <files>
