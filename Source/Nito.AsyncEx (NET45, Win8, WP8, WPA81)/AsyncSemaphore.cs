@@ -77,6 +77,14 @@ namespace Nito.AsyncEx
         }
 
         /// <summary>
+        /// Gets the number of waiters on this semaphore.
+        /// </summary>
+        public int WaitersCount
+        {
+            get { lock (_mutex) { return this._queue.Count; } }
+        }
+
+        /// <summary>
         /// Asynchronously waits for a slot in the semaphore to be available.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token used to cancel the wait. If this is already set, then this method will attempt to take the slot immediately (succeeding if a slot is currently available).</param>
