@@ -107,11 +107,12 @@ namespace Nito.AsyncEx
         /// <param name="releaseCount"></param>
         public void Release(T key, Int32 releaseCount)
         {
-            this._dictionary[key].Release(releaseCount);
             lock (this._dictionary)
             {
+                AsyncSemaphore s = this._dictionary[key];
                 if (this._dictionary[key].WaitersCount == 0)
                     this._dictionary.Remove(key);
+                s.Release(releaseCount);
             }
         }
 
