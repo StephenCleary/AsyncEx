@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using NUnit.Framework;
 using System.Threading.Tasks;
 using Nito.AsyncEx;
@@ -173,6 +174,52 @@ namespace Tests
                 var results = await TaskShim.WhenAll(task1, task2);
                 Assert.IsTrue(results.SequenceEqual(new[] { 13, 13 }));
                 Assert.AreEqual(1, invokeCount);
+            });
+        }
+
+        [Test]
+        public void AsyncLazy_LazyThreadSafetyMode_PublicationOnly_DoesNotCacheFuncExceptions()
+        {
+            Test.Async(async () =>
+            {
+                int invokeCount = 0;
+                Func<int> func = () =>
+                {
+                    if (invokeCount == 0)
+                    {
+                        ++invokeCount;
+                        throw new Exception();
+                    }
+                    return 13;
+                };
+                var lazy = new AsyncLazy<int>(func, LazyThreadSafetyMode.PublicationOnly);
+                await AssertEx.ThrowsExceptionAsync<Exception>(async () => await lazy);
+                var result = await lazy;
+                Assert.AreEqual(13, result);
+            });
+        }
+
+        [Test]
+        public void AsyncLazy_LazyThreadSafetyMode_PublicationOnly_DoesNotCacheAsyncFuncExceptions()
+        {
+            Test.Async(async () =>
+            {
+                int invokeCount = 0;
+                Func<Task<int>> func = () =>
+                {
+                    if (invokeCount == 0)
+                    {
+                        ++invokeCount;
+                        var tcs = new TaskCompletionSource<int>();
+                        tcs.SetException(new Exception());
+                        return tcs.Task;
+                    }
+                    return TaskShim.FromResult(13);
+                };
+                var lazy = new AsyncLazy<int>(func, LazyThreadSafetyMode.PublicationOnly);
+                await AssertEx.ThrowsExceptionAsync<Exception>(async () => await lazy);
+                var result = await lazy;
+                Assert.AreEqual(13, result);
             });
         }
 
