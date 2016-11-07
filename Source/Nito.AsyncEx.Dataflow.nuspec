@@ -11,6 +11,7 @@
     <language>en-US</language>
     <projectUrl>https://github.com/StephenCleary/AsyncEx</projectUrl>
     <iconUrl>https://github.com/StephenCleary/AsyncEx/raw/master/AsyncEx.128.png</iconUrl>
+    <licenseUrl>https://github.com/StephenCleary/AsyncEx/blob/master/LICENSE</licenseUrl>
     <tags>dataflow async await nito</tags>
     <dependencies>
       <group targetFramework="net40">

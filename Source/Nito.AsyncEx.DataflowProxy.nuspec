@@ -10,6 +10,7 @@
     <description>Proxy package used to pull in Dataflow for all supported platforms.</description>
     <language>en-US</language>
     <projectUrl>https://github.com/StephenCleary/AsyncEx</projectUrl>
+    <licenseUrl>https://github.com/StephenCleary/AsyncEx/blob/master/LICENSE</licenseUrl>
     <dependencies>
       <group targetFramework="portable-net45+win8+wp8+wpa81">
         <dependency id="Microsoft.Tpl.Dataflow" version="4.5.24" />
