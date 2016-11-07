@@ -91,7 +91,7 @@ namespace Nito.AsyncEx
         {
             //Enlightenment.Trace.AsyncContext_TaskScheduled(this, task);
             OperationStarted();
-            task.ContinueWith(_ => OperationCompleted(), CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
+            task.ContinueWith(_ => OperationCompleted(), CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously, _taskScheduler);
             _queue.TryAdd(task, propagateExceptions);
             //if (!_queue.TryAdd(task, propagateExceptions))
             //    Enlightenment.Trace.AsyncContext_TaskQueueFailed(this, task);
@@ -170,7 +170,7 @@ namespace Nito.AsyncEx
                 {
                     context.OperationCompleted();
                     t.WaitAndUnwrapException();
-                }, CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
+                }, CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously, context._taskScheduler);
                 context.Execute();
                 task.WaitAndUnwrapException();
             }
@@ -192,7 +192,7 @@ namespace Nito.AsyncEx
                 {
                     context.OperationCompleted();
                     return t.WaitAndUnwrapException();
-                }, CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
+                }, CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously, context._taskScheduler);
                 context.Execute();
                 return task.WaitAndUnwrapException();
             }

@@ -8,5 +8,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright © 2011-2014 Stephen Cleary")]
 [assembly: CLSCompliant(false)]
 
-[assembly: AssemblyVersion("4.0.0")]
-[assembly: AssemblyInformationalVersion("4.0.0-pre")]
+[assembly: AssemblyVersion("4.0.1")]
+[assembly: AssemblyInformationalVersion("4.0.1-pre")]
