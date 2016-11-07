@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Nito.AsyncEx.Dataflow</id>
-    <version>4.0.0-pre</version> <!-- Also change [AssemblyVersion] and Nito.AsyncEx.nuspec -->
+    <version>4.0.1-pre</version> <!-- Also change [AssemblyVersion] and Nito.AsyncEx.nuspec -->
     <title>Dataflow Helpers</title>
     <authors>Stephen Cleary</authors>
     <owners>Stephen Cleary</owners>

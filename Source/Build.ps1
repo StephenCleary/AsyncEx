@@ -1,16 +1,6 @@
 $ErrorActionPreference = "Stop"
 
-# Build VS2015 solution
-Write-Output "Building VS2015 Solution..."
-$project = Get-Project
-$build = $project.DTE.Solution.SolutionBuild
-$oldConfiguration = $build.ActiveConfiguration
-$build.SolutionConfigurations.Item("Release").Activate()
-$build.Clean($true)
-$project.DTE.ExecuteCommand("Build.RebuildSolution")
-# $build.Build($true) # This was not generating xml doc files for some reason
-$oldConfiguration.Activate()
-Write-Output "... done building VS2015 Solution."
+Write-Output "Solution MUST be built by hand in Release mode!"
 
 # Build NuGet packages
 nuget pack -Symbols "Nito.AsyncEx.DataflowProxy.nuspec"
