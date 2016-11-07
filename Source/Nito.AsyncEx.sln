@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FA26D995-6F9A-4261-8C9A-2F35449A6C2A}"
 	ProjectSection(SolutionItems) = preProject
@@ -39,8 +39,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nito.AsyncEx.Enlightenment 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nito.AsyncEx.Enlightenment (NET45)", "Enlightenment\Nito.AsyncEx.Enlightenment (NET45)\Nito.AsyncEx.Enlightenment (NET45).csproj", "{294FD908-E6A7-4EB0-9231-DACFEB1AD224}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nito.AsyncEx.Enlightenment (Win8)", "Enlightenment\Nito.AsyncEx.Enlightenment (Win8)\Nito.AsyncEx.Enlightenment (Win8).csproj", "{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nito.AsyncEx.Enlightenment (WP8)", "Enlightenment\Nito.AsyncEx.Enlightenment (WP8)\Nito.AsyncEx.Enlightenment (WP8).csproj", "{0DB422BB-9475-4547-A15F-8FA337FB7D31}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nito.AsyncEx.Enlightenment (SL5)", "Enlightenment\Nito.AsyncEx.Enlightenment (SL5)\Nito.AsyncEx.Enlightenment (SL5).csproj", "{BA55F0BD-3F57-4364-87BF-E83E696779C3}"
@@ -66,6 +64,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7474BF
 	ProjectSection(SolutionItems) = preProject
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nito.AsyncEx.Enlightenment (Win81)", "Enlightenment\Nito.AsyncEx.Enlightenment (Win81)\Nito.AsyncEx.Enlightenment (Win81).csproj", "{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -195,22 +195,6 @@ Global
 		{294FD908-E6A7-4EB0-9231-DACFEB1AD224}.Release|ARM.ActiveCfg = Release|Any CPU
 		{294FD908-E6A7-4EB0-9231-DACFEB1AD224}.Release|x64.ActiveCfg = Release|Any CPU
 		{294FD908-E6A7-4EB0-9231-DACFEB1AD224}.Release|x86.ActiveCfg = Release|Any CPU
-		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Debug|ARM.ActiveCfg = Debug|ARM
-		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Debug|ARM.Build.0 = Debug|ARM
-		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Debug|x64.ActiveCfg = Debug|x64
-		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Debug|x64.Build.0 = Debug|x64
-		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Debug|x86.ActiveCfg = Debug|x86
-		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Debug|x86.Build.0 = Debug|x86
-		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Release|Any CPU.Build.0 = Release|Any CPU
-		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Release|ARM.ActiveCfg = Release|ARM
-		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Release|ARM.Build.0 = Release|ARM
-		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Release|x64.ActiveCfg = Release|x64
-		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Release|x64.Build.0 = Release|x64
-		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Release|x86.ActiveCfg = Release|x86
-		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Release|x86.Build.0 = Release|x86
 		{0DB422BB-9475-4547-A15F-8FA337FB7D31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0DB422BB-9475-4547-A15F-8FA337FB7D31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DB422BB-9475-4547-A15F-8FA337FB7D31}.Debug|ARM.ActiveCfg = Debug|ARM
@@ -313,6 +297,22 @@ Global
 		{C4603C8E-FE0E-4A31-AA6C-88CA22F82756}.Release|ARM.ActiveCfg = Release|Any CPU
 		{C4603C8E-FE0E-4A31-AA6C-88CA22F82756}.Release|x64.ActiveCfg = Release|Any CPU
 		{C4603C8E-FE0E-4A31-AA6C-88CA22F82756}.Release|x86.ActiveCfg = Release|Any CPU
+		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Debug|ARM.ActiveCfg = Debug|ARM
+		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Debug|ARM.Build.0 = Debug|ARM
+		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Debug|x64.ActiveCfg = Debug|x64
+		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Debug|x64.Build.0 = Debug|x64
+		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Debug|x86.ActiveCfg = Debug|x86
+		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Debug|x86.Build.0 = Debug|x86
+		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Release|Any CPU.Build.0 = Release|Any CPU
+		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Release|ARM.ActiveCfg = Release|ARM
+		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Release|ARM.Build.0 = Release|ARM
+		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Release|x64.ActiveCfg = Release|x64
+		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Release|x64.Build.0 = Release|x64
+		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Release|x86.ActiveCfg = Release|x86
+		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -327,11 +327,11 @@ Global
 		{30E97644-A1CD-44A4-BE47-4E79E850F4BC} = {E8F3AFDD-CF79-4355-8318-E22B8B4792B0}
 		{F90505C6-D608-4E2A-B92E-025240EB3EC9} = {FB99775E-8183-4444-8763-65C0BF332960}
 		{294FD908-E6A7-4EB0-9231-DACFEB1AD224} = {FB99775E-8183-4444-8763-65C0BF332960}
-		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805} = {FB99775E-8183-4444-8763-65C0BF332960}
 		{0DB422BB-9475-4547-A15F-8FA337FB7D31} = {FB99775E-8183-4444-8763-65C0BF332960}
 		{BA55F0BD-3F57-4364-87BF-E83E696779C3} = {FB99775E-8183-4444-8763-65C0BF332960}
 		{A8C9D754-8D6E-432F-BEEC-90983C161D31} = {FB99775E-8183-4444-8763-65C0BF332960}
 		{B98151CC-0BA0-4B99-ABCF-FA0072142804} = {EBAB0A5B-F121-43B9-BD2C-804A8BA06B83}
 		{40CE2F27-B155-4D4E-8B07-A65B79B7DBEA} = {FB99775E-8183-4444-8763-65C0BF332960}
+		{637B89E1-78D7-49CD-B4E0-6FAF3A51A805} = {FB99775E-8183-4444-8763-65C0BF332960}
 	EndGlobalSection
 EndGlobal

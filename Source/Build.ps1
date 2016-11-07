@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 
-# Build VS2013 solution
-Write-Output "Building VS2013 Solution..."
+# Build VS2015 solution
+Write-Output "Building VS2015 Solution..."
 $project = Get-Project
 $build = $project.DTE.Solution.SolutionBuild
 $oldConfiguration = $build.ActiveConfiguration
@@ -10,17 +10,7 @@ $build.Clean($true)
 $project.DTE.ExecuteCommand("Build.RebuildSolution")
 # $build.Build($true) # This was not generating xml doc files for some reason
 $oldConfiguration.Activate()
-Write-Output "... done building VS2013 Solution."
-
-# Build VS2012 solution
-Write-Output "Building VS2012 Solution..."
-$cleanVS2012 = "`"" + $env:VS110COMNTOOLS + "VsDevCmd.bat" + "`" && devenv VS2012\VS2012.sln /Clean"
-cmd /c $cleanVS2012
-if ($LastExitCode -ne 0) { throw "Build error." }
-$buildVS2012 = "`"" + $env:VS110COMNTOOLS + "VsDevCmd.bat" + "`" && devenv VS2012\VS2012.sln /rebuild Release"
-cmd /c $buildVS2012
-if ($LastExitCode -ne 0) { throw "Build error." }
-Write-Output "... done building VS2012 Solution."
+Write-Output "... done building VS2015 Solution."
 
 # Build NuGet packages
 nuget pack -Symbols "Nito.AsyncEx.DataflowProxy.nuspec"

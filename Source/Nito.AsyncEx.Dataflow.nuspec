@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Nito.AsyncEx.Dataflow</id>
-    <version>3.0.1-pre</version> <!-- Also change [AssemblyVersion] and Nito.AsyncEx.nuspec -->
+    <version>4.0.0-pre</version> <!-- Also change [AssemblyVersion] and Nito.AsyncEx.nuspec -->
     <title>Dataflow Helpers</title>
     <authors>Stephen Cleary</authors>
     <owners>Stephen Cleary</owners>
@@ -11,7 +11,7 @@
     <language>en-US</language>
     <projectUrl>https://github.com/StephenCleary/AsyncEx</projectUrl>
     <iconUrl>https://github.com/StephenCleary/AsyncEx/raw/master/AsyncEx.128.png</iconUrl>
-    <tags>dataflow async await net45 win8 net40 netcore45 wp8 wpa81 nito</tags>
+    <tags>dataflow async await nito</tags>
     <dependencies>
       <group targetFramework="net40">
         <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
