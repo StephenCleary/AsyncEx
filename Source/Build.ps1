@@ -20,21 +20,17 @@ nuget pack -Symbols "Nito.AsyncEx.nuspec"
 # Strong-name the dlls
 $key = Import-StrongNameKeyPair Nito.AsyncEx.snk
 Set-StrongName -KeyPair $key -Force -NoBackup "Nito.AsyncEx (NET45, Win8, WP8, WPA81)\bin\Release\Nito.AsyncEx.dll"
-Set-StrongName -KeyPair $key -Force -NoBackup "VS2012\Nito.AsyncEx (NET4, Win8, SL4, WP71)\bin\Release\Nito.AsyncEx.dll"
 Set-StrongName -KeyPair $key -Force -NoBackup "Nito.AsyncEx (NET4, Win8, SL5, WP8, WPA81)\bin\Release\Nito.AsyncEx.dll"
-Set-StrongName -KeyPair $key -Force -NoBackup "VS2012\Nito.AsyncEx (NET4, Win8, SL4, WP71)\bin\Release\Nito.AsyncEx.dll"
 Set-StrongName -KeyPair $key -Force -NoBackup "Nito.AsyncEx.Concurrent (NET45, Win8, WPA81)\bin\Release\Nito.AsyncEx.Concurrent.dll"
 Set-StrongName -KeyPair $key -Force -NoBackup "Nito.AsyncEx.Concurrent (NET4, Win8)\bin\Release\Nito.AsyncEx.Concurrent.dll"
 Set-StrongName -KeyPair $key -Force -NoBackup "Nito.AsyncEx.Dataflow (NET45, Win8, WP8, WPA81)\bin\Release\Nito.AsyncEx.Dataflow.dll"
 Set-StrongName -KeyPair $key -Force -NoBackup "Nito.AsyncEx.Dataflow (NET40)\bin\Release\Nito.AsyncEx.Dataflow.dll"
 Set-StrongName -KeyPair $key -Force -NoBackup "Enlightenment\Nito.AsyncEx.Enlightenment (NET45)\bin\Release\Nito.AsyncEx.Enlightenment.dll"
-Set-StrongName -KeyPair $key -Force -NoBackup "Enlightenment\Nito.AsyncEx.Enlightenment (Win8)\bin\Release\Nito.AsyncEx.Enlightenment.dll"
+Set-StrongName -KeyPair $key -Force -NoBackup "Enlightenment\Nito.AsyncEx.Enlightenment (Win81)\bin\Release\Nito.AsyncEx.Enlightenment.dll"
 Set-StrongName -KeyPair $key -Force -NoBackup "Enlightenment\Nito.AsyncEx.Enlightenment (WPA81)\bin\Release\Nito.AsyncEx.Enlightenment.dll"
 Set-StrongName -KeyPair $key -Force -NoBackup "Enlightenment\Nito.AsyncEx.Enlightenment (NET40)\bin\Release\Nito.AsyncEx.Enlightenment.dll"
 Set-StrongName -KeyPair $key -Force -NoBackup "Enlightenment\Nito.AsyncEx.Enlightenment (SL5)\bin\Release\Nito.AsyncEx.Enlightenment.dll"
 Set-StrongName -KeyPair $key -Force -NoBackup "Enlightenment\Nito.AsyncEx.Enlightenment (WP8)\bin\Release\Nito.AsyncEx.Enlightenment.dll"
-Set-StrongName -KeyPair $key -Force -NoBackup "VS2012\Enlightenment\Nito.AsyncEx.Enlightenment (SL4)\Bin\Release\Nito.AsyncEx.Enlightenment.dll"
-Set-StrongName -KeyPair $key -Force -NoBackup "VS2012\Enlightenment\Nito.AsyncEx.Enlightenment (WP71)\Bin\Release\Nito.AsyncEx.Enlightenment.dll"
 
 # Create StrongName NuSpecs
 (Get-Content "Nito.AsyncEx.nuspec") | Foreach-Object { $_ -Replace "<id>Nito.AsyncEx</id>", "<id>Nito.AsyncEx.StrongNamed</id>" } | Set-Content "Nito.AsyncEx.StrongNamed.nuspec"
