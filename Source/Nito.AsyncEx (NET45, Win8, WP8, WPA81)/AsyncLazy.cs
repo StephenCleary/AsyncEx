@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Nito.AsyncEx.Internal;
 using System.Diagnostics;
+using System.Threading;
 using Nito.AsyncEx.Internal.PlatformEnlightenment;
 #if NONATIVETASKS
 using Microsoft.Runtime.CompilerServices;
@@ -59,6 +60,21 @@ namespace Nito.AsyncEx
         /// <summary>
         /// Initializes a new instance of the <see cref="AsyncLazy&lt;T&gt;"/> class.
         /// </summary>
+        /// <param name="factory">The delegate that is invoked on a background thread to produce the value when it is needed. May not be <c>null</c>.</param>
+        /// <param name="mode">One of the enumeration values that specifies the thread safety mode.</param>
+        public AsyncLazy(Func<T> factory, LazyThreadSafetyMode mode)
+        {
+            _instance = new Lazy<Task<T>>(() =>
+            {
+                var ret = TaskShim.Run(factory);
+                //Enlightenment.Trace.AsyncLazy_Started(this, ret);
+                return ret;
+            }, mode);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AsyncLazy&lt;T&gt;"/> class.
+        /// </summary>
         /// <param name="factory">The asynchronous delegate that is invoked on a background thread to produce the value when it is needed. May not be <c>null</c>.</param>
         public AsyncLazy(Func<Task<T>> factory)
         {
@@ -68,6 +84,21 @@ namespace Nito.AsyncEx
                 //Enlightenment.Trace.AsyncLazy_Started(this, ret);
                 return ret;
             });
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AsyncLazy&lt;T&gt;"/> class.
+        /// </summary>
+        /// <param name="factory">The asynchronous delegate that is invoked on a background thread to produce the value when it is needed. May not be <c>null</c>.</param>
+        /// <param name="mode">One of the enumeration values that specifies the thread safety mode.</param>
+        public AsyncLazy(Func<Task<T>> factory, LazyThreadSafetyMode mode)
+        {
+            _instance = new Lazy<Task<T>>(() =>
+            {
+                var ret = TaskShim.Run(factory);
+                //Enlightenment.Trace.AsyncLazy_Started(this, ret);
+                return ret;
+            }, mode);
         }
 
         /// <summary>
