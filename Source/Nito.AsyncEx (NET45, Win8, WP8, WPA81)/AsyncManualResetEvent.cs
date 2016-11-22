@@ -116,7 +116,7 @@ namespace Nito.AsyncEx
         }
 
         /// <summary>
-        /// Sets the event, atomically completing every task returned by <see cref="WaitAsync"/>. If the event is already set, this method does nothing.
+        /// Sets the event, automically completing every task returned by <see cref="WaitAsync"/>. If the event is already set, this method does nothing.
         /// </summary>
         public void Set()
         {
