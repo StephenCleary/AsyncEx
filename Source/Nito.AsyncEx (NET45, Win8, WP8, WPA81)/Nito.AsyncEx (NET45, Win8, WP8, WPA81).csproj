@@ -80,6 +80,7 @@
     <Compile Include="AsyncLock.cs" />
     <Compile Include="AsyncManualResetEvent.cs" />
     <Compile Include="AsyncMonitor.cs" />
+    <Compile Include="AsyncMultiSemaphore.cs" />
     <Compile Include="AsyncProducerConsumerQueue.cs" />
     <Compile Include="AsyncReaderWriterLock.cs" />
     <Compile Include="AsyncSemaphore.cs" />

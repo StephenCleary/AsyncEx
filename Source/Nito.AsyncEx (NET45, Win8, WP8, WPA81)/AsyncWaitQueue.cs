@@ -46,6 +46,11 @@ namespace Nito.AsyncEx
         /// Removes all entries from the wait queue. Returns a disposable that cancels all entries.
         /// </summary>
         IDisposable CancelAll();
+
+        /// <summary>
+        /// Queue length/count
+        /// </summary>
+        Int32 Count { get; }
     }
 
     /// <summary>
@@ -112,7 +117,7 @@ namespace Nito.AsyncEx
     {
         private readonly Deque<TaskCompletionSource<T>> _queue = new Deque<TaskCompletionSource<T>>();
 
-        private int Count
+        public int Count
         {
             get { lock (_queue) { return _queue.Count; } }
         }
