@@ -4,11 +4,7 @@
 
 A helper library for async/await.
 
-Supports .NET 4.5/4.0, iOS, Android, Windows Store 8.1, Windows Phone Silverlight 8.0, Windows Phone Applications 8.1, Silverlight 5.0, and all portable libraries thereof.
-
-Note: iOS applications need to add a special line of code to prevent aggresive compiler optimizations:
-
-    EnlightenmentVerification.EnsureLoaded();
+Supports `netstandard1.3` (including .NET 4.6, .NET Core 1.0, Xamarin.iOS 10, Xamarin.Android 7, Mono 4.6, and Universal Windows 10).
 
 ## Getting Started
 
@@ -66,20 +62,14 @@ A lot of developers start using this library for `AsyncLock`, an async-compatibl
 
 `AsyncLock` is just the beginning. The AsyncEx library contains a full suite of coordination primitives: `AsyncManualResetEvent`, `AsyncAutoResetEvent`, `AsyncConditionVariable`, `AsyncMonitor`, `AsyncSemaphore`, `AsyncCountdownEvent`, `AsyncBarrier`, and `AsyncReaderWriterLock`.
 
-## MVVM Support
-
-`NotifyTaskCompletion` is a data-binding-friendly wrapper for a Task, raising property-change notifications when the task completes. `PropertyProgress` exposes progress updates as property-change events.
-
 ## More Stuff
 
-There's quite a few other helpful types; see [the docs for full details](doc/Home.md)
+There's quite a few other helpful types; see [the docs for full details](doc)
 
 ## Infrequently Asked Questions
 
-### Strong Naming
-
-Need strong-naming? Use [the assembly strong naming toolkit](https://www.nuget.org/packages/Nivot.StrongNaming/1.0.4.2).
-
 ### Older Platforms
+
+[AsyncEx v4](https://github.com/StephenCleary/AsyncEx/tree/v4) supported .NET 4.0, Windows Store 8.1, Windows Phone Silverlight 8.0, Windows Phone Applications 8.1, and Silverlight 5.0. Support for these platforms has been dropped with AsyncEx v5.
 
 AsyncEx v3 supported Windows Store 8.0, Windows Phone Silverlight 7.5, and Silverlight 4.0. Support for these platforms has been dropped with AsyncEx v4.
