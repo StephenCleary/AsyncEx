@@ -1,7 +1,0 @@
-Is it possible to allow synchronous as well as asynchronous serialization for at least these types:
-- AsyncLock
-- AsyncConditionVariable
-- AsyncMonitor (trivial if the above is possible)
-That would allow us to build a synchronous/asynchronous producer/consumer queue.
-
-Also consider IDisposable implementations that are only mutable when boxed.

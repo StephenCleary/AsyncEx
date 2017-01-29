@@ -1,7 +1,0 @@
-Check callbacks:
-- CancellationToken.Register
-  - Disposed?
-- Task.ContinueWith
-  - Do we need to worry about these?
-
-Examine all non-async methods returning Task for exceptions.

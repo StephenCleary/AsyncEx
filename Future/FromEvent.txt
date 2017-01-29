@@ -1,2 +1,0 @@
-It is possible to create a *reusable* awaitable object that is triggered when an event takes place.
-- This type would have to queue events as they occur but have not yet been await'ed.
