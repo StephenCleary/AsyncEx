@@ -1,0 +1,33 @@
+{
+  "version": "2.0.0-alpha-01",
+  "description": "Common helper methods for tasks as used in asynchronous programming.",
+  "authors": [ "Stephen Cleary" ],
+  "buildOptions": {
+    "warningsAsErrors": true,
+    "xmlDoc": true
+  },
+  "dependencies": {
+    "Nito.Disposables": "1.0.0"
+  },
+  "packOptions": {
+    "tags": [ "task", "taskfactory", "cancellationtoken", "taskcompletionsource" ],
+    "projectUrl": "https://github.com/StephenCleary/AsyncEx.Tasks",
+    "licenseUrl": "https://raw.githubusercontent.com/StephenCleary/AsyncEx.Tasks/master/LICENSE",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/StephenCleary/AsyncEx.Tasks.git"
+    }
+  },
+  "frameworks": {
+    "netstandard1.3": {
+      "dependencies": {
+        "System.Threading.Tasks": "4.0.11"
+      }
+    },
+    "net46": {
+      "frameworkAssemblies": {
+        "System.Threading.Tasks": { "type": "build" }
+      }
+    }
+  }
+}
