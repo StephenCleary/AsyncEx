@@ -4,7 +4,7 @@
 
 A helper library for async/await.
 
-Supports .NET 4.5/4.0, iOS, Android, Windows Store 8.0, Windows Phone Silverlight 8.0/7.5, Windows Phone Applications 8.1, Silverlight 5.0/4.0, and all portable libraries thereof.
+Supports .NET 4.5/4.0, iOS, Android, Windows Store 8.1, Windows Phone Silverlight 8.0, Windows Phone Applications 8.1, Silverlight 5.0, and all portable libraries thereof.
 
 Note: iOS applications need to add a special line of code to prevent aggresive compiler optimizations:
 
@@ -79,3 +79,7 @@ There's quite a few other helpful types; see [the docs for full details](doc/Hom
 ### Strong Naming
 
 Need strong-naming? Use [the assembly strong naming toolkit](https://www.nuget.org/packages/Nivot.StrongNaming/1.0.4.2).
+
+### Older Platforms
+
+AsyncEx v3 supported Windows Store 8.0, Windows Phone Silverlight 7.5, and Silverlight 4.0. Support for these platforms has been dropped with AsyncEx v4.
