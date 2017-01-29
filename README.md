@@ -72,7 +72,7 @@ A lot of developers start using this library for `AsyncLock`, an async-compatibl
 
 ## More Stuff
 
-There's quite a few other helpful types; see [the Wiki for full details](https://github.com/StephenCleary/AsyncEx/wiki)
+There's quite a few other helpful types; see [the docs for full details](doc/Home.md)
 
 ## Infrequently Asked Questions
 
