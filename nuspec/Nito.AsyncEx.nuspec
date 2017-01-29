@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Nito.AsyncEx</id>
+    <version>5.0.0-pre-01</version>
+    <title>Async and Task Helpers</title>
+    <authors>Stephen Cleary</authors>
+    <owners>Stephen Cleary</owners>
+    <language>en-US</language>
+    <projectUrl>https://github.com/StephenCleary/AsyncEx</projectUrl>
+    <iconUrl>https://github.com/StephenCleary/AsyncEx/raw/master/AsyncEx.128.png</iconUrl>
+    <licenseUrl>https://github.com/StephenCleary/AsyncEx/blob/master/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>A helper library for the Task-Based Asynchronous Pattern (TAP).</summary>
+    <description>A helper library for the Task-Based Asynchronous Pattern (TAP).</description>
+    <tags>async await async-await task asynchronous nito</tags>
+    <dependencies>
+      <dependency id="Nito.AsyncEx.Tasks" version="5.0.0-pre-01" />
+    </dependencies>
+  </metadata>
+</package>

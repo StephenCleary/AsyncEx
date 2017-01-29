@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{55E42050-6495-4544-9761-308EDC0D31AC}"
 	ProjectSection(SolutionItems) = preProject
 		appveyor.yml = appveyor.yml
+		nuspec\Nito.AsyncEx.nuspec = nuspec\Nito.AsyncEx.nuspec
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D87FA556-6FC7-4A87-BDA2-4B5A3993C39B}"
