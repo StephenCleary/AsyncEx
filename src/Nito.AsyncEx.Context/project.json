@@ -1,0 +1,37 @@
+{
+  "version": "1.1.0",
+  "authors": [ "Stephen Cleary" ],
+  "description": "A single-threaded async-compatible context.",
+  "dependencies": {
+    "Nito.AsyncEx.Tasks": "1.1.0"
+  },
+  "buildOptions": {
+    "warningsAsErrors": true,
+    "xmlDoc": true
+  },
+  "packOptions": {
+    "tags": [ "task", "async", "synchronizationcontext" ],
+    "projectUrl": "https://github.com/StephenCleary/AsyncEx.Context",
+    "licenseUrl": "https://raw.githubusercontent.com/StephenCleary/AsyncEx.Context/master/LICENSE",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/StephenCleary/AsyncEx.Context.git"
+    }
+  },
+  "frameworks": {
+    "netstandard1.3": {
+      "dependencies": {
+        "System.Collections.Concurrent": "4.0.12",
+        "System.Diagnostics.Debug": "4.0.11",
+        "System.Threading": "4.0.11"
+      }
+    },
+    "net46": {
+      "frameworkAssemblies": {
+        "System.Collections.Concurrent": { "type": "build" },
+        "System.Diagnostics.Debug": { "type": "build" },
+        "System.Threading": { "type": "build" }
+      }
+    }
+  }
+}
