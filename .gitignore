@@ -178,3 +178,4 @@ FakesAssemblies/
 *.nupkg
 /Source/Nito.AsyncEx.Dataflow.StrongNamed.nuspec
 /Source/Nito.AsyncEx.StrongNamed.nuspec
+/.vs

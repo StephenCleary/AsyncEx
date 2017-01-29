@@ -20,6 +20,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{32CD8875-1
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AsyncEx.Tasks.UnitTests", "test\AsyncEx.Tasks.UnitTests\AsyncEx.Tasks.UnitTests.xproj", "{C24252CE-031C-4A2E-93D1-B0C94D4A7CC3}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Nito.AsyncEx.Coordination", "src\Nito.AsyncEx.Coordination\Nito.AsyncEx.Coordination.xproj", "{530CF156-31F2-433D-96A7-181E8E10AA2E}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AsyncEx.Coordination.UnitTests", "test\AsyncEx.Coordination.UnitTests\AsyncEx.Coordination.UnitTests.xproj", "{51F8EF6D-12BE-43B1-BF65-C834E944A546}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +38,14 @@ Global
 		{C24252CE-031C-4A2E-93D1-B0C94D4A7CC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C24252CE-031C-4A2E-93D1-B0C94D4A7CC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C24252CE-031C-4A2E-93D1-B0C94D4A7CC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{530CF156-31F2-433D-96A7-181E8E10AA2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{530CF156-31F2-433D-96A7-181E8E10AA2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{530CF156-31F2-433D-96A7-181E8E10AA2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{530CF156-31F2-433D-96A7-181E8E10AA2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51F8EF6D-12BE-43B1-BF65-C834E944A546}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51F8EF6D-12BE-43B1-BF65-C834E944A546}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51F8EF6D-12BE-43B1-BF65-C834E944A546}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51F8EF6D-12BE-43B1-BF65-C834E944A546}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -41,5 +53,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{A59E8416-844C-4489-9761-3A5F0BDD6A46} = {D87FA556-6FC7-4A87-BDA2-4B5A3993C39B}
 		{C24252CE-031C-4A2E-93D1-B0C94D4A7CC3} = {32CD8875-1709-4428-816A-FA840C2EE61C}
+		{530CF156-31F2-433D-96A7-181E8E10AA2E} = {D87FA556-6FC7-4A87-BDA2-4B5A3993C39B}
+		{51F8EF6D-12BE-43B1-BF65-C834E944A546} = {32CD8875-1709-4428-816A-FA840C2EE61C}
 	EndGlobalSection
 EndGlobal

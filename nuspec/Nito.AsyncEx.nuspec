@@ -16,6 +16,7 @@
     <tags>async await async-await task asynchronous nito</tags>
     <dependencies>
       <dependency id="Nito.AsyncEx.Tasks" version="5.0.0-pre-01" />
+      <dependency id="Nito.AsyncEx.Coordination" version="5.0.0-pre-01" />
     </dependencies>
   </metadata>
 </package>
