@@ -4,6 +4,8 @@
 
 A helper library for async/await.
 
+Note: This README is for AsyncEx v5. For AsyncEx v4 (the current version), see [here](https://github.com/StephenCleary/AsyncEx/tree/v4).
+
 Supports `netstandard1.3` (including .NET 4.6, .NET Core 1.0, Xamarin.iOS 10, Xamarin.Android 7, Mono 4.6, and Universal Windows 10).
 
 [![AppVeyor](https://img.shields.io/appveyor/ci/StephenCleary/AsyncEx.svg?style=plastic)](https://ci.appveyor.com/project/StephenCleary/AsyncEx) [![Coveralls](https://img.shields.io/coveralls/StephenCleary/AsyncEx.svg?style=plastic)](https://coveralls.io/r/StephenCleary/AsyncEx)
