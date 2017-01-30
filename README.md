@@ -65,7 +65,7 @@ A lot of developers start using this library for `AsyncLock`, an async-compatibl
 
 ## Other Coordination Primitives
 
-`AsyncLock` is just the beginning. The AsyncEx library contains a full suite of coordination primitives: `AsyncManualResetEvent`, `AsyncAutoResetEvent`, `AsyncConditionVariable`, `AsyncMonitor`, `AsyncSemaphore`, `AsyncCountdownEvent`, `AsyncBarrier`, and `AsyncReaderWriterLock`.
+`AsyncLock` is just the beginning. The AsyncEx library contains a full suite of coordination primitives: `AsyncManualResetEvent`, `AsyncAutoResetEvent`, `AsyncConditionVariable`, `AsyncMonitor`, `AsyncSemaphore`, `AsyncCountdownEvent`, and `AsyncReaderWriterLock`.
 
 ## More Stuff
 
