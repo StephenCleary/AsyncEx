@@ -32,10 +32,6 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Nito.AsyncEx.Oop", "src\Nit
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AsyncEx.Oop.UnitTests", "test\AsyncEx.Oop.UnitTests\AsyncEx.Oop.UnitTests.xproj", "{0200B033-606D-4FD1-9FF1-345A2B7972AF}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Nito.AsyncEx.Interop.Eap", "src\Nito.AsyncEx.Interop.Eap\Nito.AsyncEx.Interop.Eap.xproj", "{3CB5C091-B92B-44B3-8AC8-9CF14BF341C7}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AsyncEx.Interop.Eap.UnitTests", "test\AsyncEx.Interop.Eap.UnitTests\AsyncEx.Interop.Eap.UnitTests.xproj", "{A123136B-DE55-4478-9484-2B2DEF262E9A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,14 +70,6 @@ Global
 		{0200B033-606D-4FD1-9FF1-345A2B7972AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0200B033-606D-4FD1-9FF1-345A2B7972AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0200B033-606D-4FD1-9FF1-345A2B7972AF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3CB5C091-B92B-44B3-8AC8-9CF14BF341C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3CB5C091-B92B-44B3-8AC8-9CF14BF341C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3CB5C091-B92B-44B3-8AC8-9CF14BF341C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3CB5C091-B92B-44B3-8AC8-9CF14BF341C7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A123136B-DE55-4478-9484-2B2DEF262E9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A123136B-DE55-4478-9484-2B2DEF262E9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A123136B-DE55-4478-9484-2B2DEF262E9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A123136B-DE55-4478-9484-2B2DEF262E9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,7 +83,5 @@ Global
 		{9A13AE97-F68C-4162-A0CA-82AAFC8672D8} = {32CD8875-1709-4428-816A-FA840C2EE61C}
 		{AED7BF8F-2538-4A9E-8A98-B45191221C4B} = {D87FA556-6FC7-4A87-BDA2-4B5A3993C39B}
 		{0200B033-606D-4FD1-9FF1-345A2B7972AF} = {32CD8875-1709-4428-816A-FA840C2EE61C}
-		{3CB5C091-B92B-44B3-8AC8-9CF14BF341C7} = {D87FA556-6FC7-4A87-BDA2-4B5A3993C39B}
-		{A123136B-DE55-4478-9484-2B2DEF262E9A} = {32CD8875-1709-4428-816A-FA840C2EE61C}
 	EndGlobalSection
 EndGlobal
