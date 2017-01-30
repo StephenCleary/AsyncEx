@@ -175,4 +175,5 @@ FakesAssemblies/
 
 .localhistory/
 *.userprefs
+*.lock.json
 /.vs
