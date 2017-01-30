@@ -1,5 +1,5 @@
 {
-  "version": "1.0.3",
+  "version": "5.0.0-pre-01",
   "description": "Asynchronous coordination primitives.",
   "authors": [ "Stephen Cleary" ],
   "buildOptions": {
@@ -33,6 +33,6 @@
   },
   "dependencies": {
     "Nito.Collections.Deque": "1.0.0",
-    "Nito.AsyncEx.Tasks": "1.0.1"
+    "Nito.AsyncEx.Tasks": "5.0.0-pre-01"
   }
 }

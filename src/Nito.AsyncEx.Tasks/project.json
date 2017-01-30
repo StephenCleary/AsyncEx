@@ -1,5 +1,5 @@
 {
-  "version": "2.0.0-alpha-01",
+  "version": "5.0.0-pre-01",
   "description": "Common helper methods for tasks as used in asynchronous programming.",
   "authors": [ "Stephen Cleary" ],
   "buildOptions": {

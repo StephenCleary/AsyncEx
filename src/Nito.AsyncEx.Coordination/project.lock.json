@@ -3,18 +3,6 @@
   "version": 2,
   "targets": {
     ".NETFramework,Version=v4.6": {
-      "Nito.AsyncEx.Tasks/1.0.1": {
-        "type": "package",
-        "dependencies": {
-          "Nito.Disposables": "1.0.0"
-        },
-        "compile": {
-          "lib/net46/Nito.AsyncEx.Tasks.dll": {}
-        },
-        "runtime": {
-          "lib/net46/Nito.AsyncEx.Tasks.dll": {}
-        }
-      },
       "Nito.Collections.Deque/1.0.0": {
         "type": "package",
         "compile": {
@@ -31,6 +19,22 @@
         },
         "runtime": {
           "lib/portable45-net45+win8+wp8+wpa81/Nito.Disposables.dll": {}
+        }
+      },
+      "Nito.AsyncEx.Tasks/5.0.0-pre-01": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "Nito.Disposables": "1.0.0"
+        },
+        "frameworkAssemblies": [
+          "System.Threading.Tasks"
+        ],
+        "compile": {
+          "net46/Nito.AsyncEx.Tasks.dll": {}
+        },
+        "runtime": {
+          "net46/Nito.AsyncEx.Tasks.dll": {}
         }
       }
     },
@@ -51,19 +55,6 @@
         },
         "runtime": {
           "lib/netstandard1.0/_._": {}
-        }
-      },
-      "Nito.AsyncEx.Tasks/1.0.1": {
-        "type": "package",
-        "dependencies": {
-          "Nito.Disposables": "1.0.0",
-          "System.Threading.Tasks": "4.0.11"
-        },
-        "compile": {
-          "lib/netstandard1.3/Nito.AsyncEx.Tasks.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard1.3/Nito.AsyncEx.Tasks.dll": {}
         }
       },
       "Nito.Collections.Deque/1.0.0": {
@@ -147,6 +138,20 @@
         "compile": {
           "ref/netstandard1.3/System.Threading.Tasks.dll": {}
         }
+      },
+      "Nito.AsyncEx.Tasks/5.0.0-pre-01": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.3",
+        "dependencies": {
+          "Nito.Disposables": "1.0.0",
+          "System.Threading.Tasks": "4.0.11"
+        },
+        "compile": {
+          "netstandard1.3/Nito.AsyncEx.Tasks.dll": {}
+        },
+        "runtime": {
+          "netstandard1.3/Nito.AsyncEx.Tasks.dll": {}
+        }
       }
     }
   },
@@ -173,19 +178,6 @@
         "dotnet_library_license.txt",
         "lib/netstandard1.0/_._",
         "runtime.json"
-      ]
-    },
-    "Nito.AsyncEx.Tasks/1.0.1": {
-      "sha512": "FtQi5Qj22kxHNQv8XPYXp2xc4PPTfyr5jGATgDqRml9BF8OEYwuntSRrbGbxlbWpp0ossrXyUq2gIV1CTQQB2w==",
-      "type": "package",
-      "path": "Nito.AsyncEx.Tasks/1.0.1",
-      "files": [
-        "Nito.AsyncEx.Tasks.1.0.1.nupkg.sha512",
-        "Nito.AsyncEx.Tasks.nuspec",
-        "lib/net46/Nito.AsyncEx.Tasks.dll",
-        "lib/net46/Nito.AsyncEx.Tasks.xml",
-        "lib/netstandard1.3/Nito.AsyncEx.Tasks.dll",
-        "lib/netstandard1.3/Nito.AsyncEx.Tasks.xml"
       ]
     },
     "Nito.Collections.Deque/1.0.0": {
@@ -565,11 +557,16 @@
         "ref/xamarintvos10/_._",
         "ref/xamarinwatchos10/_._"
       ]
+    },
+    "Nito.AsyncEx.Tasks/5.0.0-pre-01": {
+      "type": "project",
+      "path": "../Nito.AsyncEx.Tasks/project.json",
+      "msbuildProject": "../Nito.AsyncEx.Tasks/Nito.AsyncEx.Tasks.xproj"
     }
   },
   "projectFileDependencyGroups": {
     "": [
-      "Nito.AsyncEx.Tasks >= 1.0.1",
+      "Nito.AsyncEx.Tasks >= 5.0.0-pre-01",
       "Nito.Collections.Deque >= 1.0.0"
     ],
     ".NETFramework,Version=v4.6": [

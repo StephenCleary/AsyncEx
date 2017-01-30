@@ -526,19 +526,6 @@
           "lib/netstandard1.0/Newtonsoft.Json.dll": {}
         }
       },
-      "Nito.AsyncEx.Tasks/1.1.0": {
-        "type": "package",
-        "dependencies": {
-          "Nito.Disposables": "1.0.0",
-          "System.Threading.Tasks": "4.0.11"
-        },
-        "compile": {
-          "lib/netstandard1.3/Nito.AsyncEx.Tasks.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard1.3/Nito.AsyncEx.Tasks.dll": {}
-        }
-      },
       "Nito.AsyncEx.Testing/1.0.0": {
         "type": "package",
         "dependencies": {
@@ -2587,11 +2574,11 @@
           "lib/netstandard1.1/xunit.runner.utility.dotnet.dll": {}
         }
       },
-      "Nito.AsyncEx.Context/1.1.0": {
+      "Nito.AsyncEx.Context/5.0.0-pre-01": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.3",
         "dependencies": {
-          "Nito.AsyncEx.Tasks": "1.1.0",
+          "Nito.AsyncEx.Tasks": "5.0.0-pre-01",
           "System.Collections.Concurrent": "4.0.12",
           "System.Diagnostics.Debug": "4.0.11",
           "System.Threading": "4.0.11"
@@ -2601,6 +2588,20 @@
         },
         "runtime": {
           "netstandard1.3/Nito.AsyncEx.Context.dll": {}
+        }
+      },
+      "Nito.AsyncEx.Tasks/5.0.0-pre-01": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.3",
+        "dependencies": {
+          "Nito.Disposables": "1.0.0",
+          "System.Threading.Tasks": "4.0.11"
+        },
+        "compile": {
+          "netstandard1.3/Nito.AsyncEx.Tasks.dll": {}
+        },
+        "runtime": {
+          "netstandard1.3/Nito.AsyncEx.Tasks.dll": {}
         }
       }
     }
@@ -3106,19 +3107,6 @@
         "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll",
         "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.xml",
         "tools/install.ps1"
-      ]
-    },
-    "Nito.AsyncEx.Tasks/1.1.0": {
-      "sha512": "ZGEhr3J/4ODYhWqOgciqELvZd6A+UV380rHGoz697RkZs98WEwzUjRh38s2xwDqvCSytBqRJDMYyr3STCG3wgQ==",
-      "type": "package",
-      "path": "Nito.AsyncEx.Tasks/1.1.0",
-      "files": [
-        "Nito.AsyncEx.Tasks.1.1.0.nupkg.sha512",
-        "Nito.AsyncEx.Tasks.nuspec",
-        "lib/net46/Nito.AsyncEx.Tasks.dll",
-        "lib/net46/Nito.AsyncEx.Tasks.xml",
-        "lib/netstandard1.3/Nito.AsyncEx.Tasks.dll",
-        "lib/netstandard1.3/Nito.AsyncEx.Tasks.xml"
       ]
     },
     "Nito.AsyncEx.Testing/1.0.0": {
@@ -7699,10 +7687,15 @@
         "xunit.runner.utility.nuspec"
       ]
     },
-    "Nito.AsyncEx.Context/1.1.0": {
+    "Nito.AsyncEx.Context/5.0.0-pre-01": {
       "type": "project",
       "path": "../../src/Nito.AsyncEx.Context/project.json",
       "msbuildProject": "../../src/Nito.AsyncEx.Context/Nito.AsyncEx.Context.xproj"
+    },
+    "Nito.AsyncEx.Tasks/5.0.0-pre-01": {
+      "type": "project",
+      "path": "../../src/Nito.AsyncEx.Tasks/project.json",
+      "msbuildProject": "../../src/Nito.AsyncEx.Tasks/Nito.AsyncEx.Tasks.xproj"
     }
   },
   "projectFileDependencyGroups": {

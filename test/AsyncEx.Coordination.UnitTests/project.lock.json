@@ -2588,11 +2588,11 @@
           "lib/netstandard1.1/xunit.runner.utility.dotnet.dll": {}
         }
       },
-      "Nito.AsyncEx.Coordination/1.0.3": {
+      "Nito.AsyncEx.Coordination/5.0.0-pre-01": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.3",
         "dependencies": {
-          "Nito.AsyncEx.Tasks": "1.0.1",
+          "Nito.AsyncEx.Tasks": "5.0.0-pre-01",
           "Nito.Collections.Deque": "1.0.0",
           "System.Runtime": "4.1.0",
           "System.Threading": "4.0.11",
@@ -2605,7 +2605,7 @@
           "netstandard1.3/Nito.AsyncEx.Coordination.dll": {}
         }
       },
-      "Nito.AsyncEx.Tasks/2.0.0-alpha-01": {
+      "Nito.AsyncEx.Tasks/5.0.0-pre-01": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.3",
         "dependencies": {
@@ -7724,12 +7724,12 @@
         "xunit.runner.utility.nuspec"
       ]
     },
-    "Nito.AsyncEx.Coordination/1.0.3": {
+    "Nito.AsyncEx.Coordination/5.0.0-pre-01": {
       "type": "project",
       "path": "../../src/Nito.AsyncEx.Coordination/project.json",
       "msbuildProject": "../../src/Nito.AsyncEx.Coordination/Nito.AsyncEx.Coordination.xproj"
     },
-    "Nito.AsyncEx.Tasks/2.0.0-alpha-01": {
+    "Nito.AsyncEx.Tasks/5.0.0-pre-01": {
       "type": "project",
       "path": "../../src/Nito.AsyncEx.Tasks/project.json",
       "msbuildProject": "../../src/Nito.AsyncEx.Tasks/Nito.AsyncEx.Tasks.xproj"
