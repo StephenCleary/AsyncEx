@@ -20,6 +20,7 @@
       <dependency id="Nito.AsyncEx.Context" version="5.0.0-pre-01" />
       <dependency id="Nito.AsyncEx.Oop" version="5.0.0-pre-01" />
       <dependency id="Nito.AsyncEx.Interop.WaitHandles" version="5.0.0-pre-01" />
+      <dependency id="Nito.Cancellation" version="1.0.1" />
     </dependencies>
   </metadata>
 </package>
