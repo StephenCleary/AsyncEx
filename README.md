@@ -6,6 +6,11 @@ A helper library for async/await.
 
 Supports `netstandard1.3` (including .NET 4.6, .NET Core 1.0, Xamarin.iOS 10, Xamarin.Android 7, Mono 4.6, and Universal Windows 10).
 
+[![AppVeyor](https://img.shields.io/appveyor/ci/StephenCleary/AsyncEx.svg?style=plastic)](https://ci.appveyor.com/project/StephenCleary/AsyncEx) [![Coveralls](https://img.shields.io/coveralls/StephenCleary/AsyncEx.svg?style=plastic)](https://coveralls.io/r/StephenCleary/AsyncEx)
+[![NuGet Pre Release](https://img.shields.io/nuget/vpre/Nito.AsyncEx.svg?style=plastic)](https://www.nuget.org/packages/Nito.AsyncEx/)
+
+[API Docs](http://dotnetapis.com/pkg/Nito.AsyncEx)
+
 ## Getting Started
 
 Install the [NuGet package](http://www.nuget.org/packages/Nito.AsyncEx).
