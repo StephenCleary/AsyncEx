@@ -1,0 +1,24 @@
+﻿{
+  "version": "5.0.0-pre-01",
+  "description": "Interfaces and utility methods for combining async with OOP.",
+  "authors": [ "Stephen Cleary" ],
+  "buildOptions": {
+    "warningsAsErrors": true,
+    "xmlDoc": true
+  },
+  "packOptions": {
+    "tags": [ "async" ],
+    "projectUrl": "https://github.com/StephenCleary/AsyncEx.Oop",
+    "licenseUrl": "https://raw.githubusercontent.com/StephenCleary/AsyncEx.Oop/master/LICENSE",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/StephenCleary/AsyncEx.Oop.git"
+    }
+  },
+  "frameworks": {
+    "netstandard1.3": {}
+  },
+  "dependencies": {
+    "Nito.AsyncEx.Coordination": "5.0.0-pre-01"
+  }
+}
