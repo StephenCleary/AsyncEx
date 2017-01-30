@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Nito.AsyncEx
+namespace Nito.AsyncEx.Interop
 {
     /// <summary>
     /// Provides interop utilities for <see cref="WaitHandle"/> types.
     /// </summary>
-    public static class WaitHandleInterop
+    public static class WaitHandleAsyncFactory
     {
         /// <summary>
         /// Wraps a <see cref="WaitHandle"/> with a <see cref="Task"/>. When the <see cref="WaitHandle"/> is signalled, the returned <see cref="Task"/> is completed. If the handle is already signalled, this method acts synchronously.

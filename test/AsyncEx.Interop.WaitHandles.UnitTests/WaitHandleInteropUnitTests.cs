@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Nito.AsyncEx;
+using Nito.AsyncEx.Interop;
 using System.Linq;
 using System.Threading;
 using System.Diagnostics;
@@ -16,7 +16,7 @@ namespace UnitTests
         public void FromWaitHandle_SignaledHandle_SynchronouslyCompletes()
         {
             var mre = new ManualResetEvent(true);
-            var task = WaitHandleInterop.FromWaitHandle(mre);
+            var task = WaitHandleAsyncFactory.FromWaitHandle(mre);
             Assert.True(task.IsCompleted);
         }
 
@@ -24,7 +24,7 @@ namespace UnitTests
         public void FromWaitHandle_SignaledHandleWithZeroTimeout_SynchronouslyCompletesWithTrueResult()
         {
             var mre = new ManualResetEvent(true);
-            var task = WaitHandleInterop.FromWaitHandle(mre, TimeSpan.Zero);
+            var task = WaitHandleAsyncFactory.FromWaitHandle(mre, TimeSpan.Zero);
             Assert.True(task.IsCompleted);
             Assert.True(task.Result);
         }
@@ -33,7 +33,7 @@ namespace UnitTests
         public void FromWaitHandle_UnsignaledHandleWithZeroTimeout_SynchronouslyCompletesWithFalseResult()
         {
             var mre = new ManualResetEvent(false);
-            var task = WaitHandleInterop.FromWaitHandle(mre, TimeSpan.Zero);
+            var task = WaitHandleAsyncFactory.FromWaitHandle(mre, TimeSpan.Zero);
             Assert.True(task.IsCompleted);
             Assert.False(task.Result);
         }
@@ -42,7 +42,7 @@ namespace UnitTests
         public void FromWaitHandle_SignaledHandleWithCanceledToken_SynchronouslyCompletes()
         {
             var mre = new ManualResetEvent(true);
-            var task = WaitHandleInterop.FromWaitHandle(mre, new CancellationToken(true));
+            var task = WaitHandleAsyncFactory.FromWaitHandle(mre, new CancellationToken(true));
             Assert.True(task.IsCompleted);
         }
 
@@ -50,7 +50,7 @@ namespace UnitTests
         public void FromWaitHandle_UnsignaledHandleWithCanceledToken_SynchronouslyCancels()
         {
             var mre = new ManualResetEvent(false);
-            var task = WaitHandleInterop.FromWaitHandle(mre, new CancellationToken(true));
+            var task = WaitHandleAsyncFactory.FromWaitHandle(mre, new CancellationToken(true));
             Assert.True(task.IsCompleted);
             Assert.True(task.IsCanceled);
         }
@@ -59,7 +59,7 @@ namespace UnitTests
         public void FromWaitHandle_SignaledHandleWithZeroTimeoutAndCanceledToken_SynchronouslyCompletesWithTrueResult()
         {
             var mre = new ManualResetEvent(true);
-            var task = WaitHandleInterop.FromWaitHandle(mre, TimeSpan.Zero, new CancellationToken(true));
+            var task = WaitHandleAsyncFactory.FromWaitHandle(mre, TimeSpan.Zero, new CancellationToken(true));
             Assert.True(task.IsCompleted);
             Assert.True(task.Result);
         }
@@ -68,7 +68,7 @@ namespace UnitTests
         public void FromWaitHandle_UnsignaledHandleWithZeroTimeoutAndCanceledToken_SynchronouslyCompletesWithFalseResult()
         {
             var mre = new ManualResetEvent(false);
-            var task = WaitHandleInterop.FromWaitHandle(mre, TimeSpan.Zero, new CancellationToken(true));
+            var task = WaitHandleAsyncFactory.FromWaitHandle(mre, TimeSpan.Zero, new CancellationToken(true));
             Assert.True(task.IsCompleted);
             Assert.False(task.Result);
         }
@@ -77,7 +77,7 @@ namespace UnitTests
         public async Task FromWaitHandle_HandleSignalled_Completes()
         {
             var mre = new ManualResetEvent(false);
-            var task = WaitHandleInterop.FromWaitHandle(mre);
+            var task = WaitHandleAsyncFactory.FromWaitHandle(mre);
             Assert.False(task.IsCompleted);
             mre.Set();
             await task;
@@ -87,7 +87,7 @@ namespace UnitTests
         public async Task FromWaitHandle_HandleSignalledBeforeTimeout_CompletesWithTrueResult()
         {
             var mre = new ManualResetEvent(false);
-            var task = WaitHandleInterop.FromWaitHandle(mre, Timeout.InfiniteTimeSpan);
+            var task = WaitHandleAsyncFactory.FromWaitHandle(mre, Timeout.InfiniteTimeSpan);
             Assert.False(task.IsCompleted);
             mre.Set();
             var result = await task;
@@ -98,7 +98,7 @@ namespace UnitTests
         public async Task FromWaitHandle_TimeoutBeforeHandleSignalled_CompletesWithFalseResult()
         {
             var mre = new ManualResetEvent(false);
-            var task = WaitHandleInterop.FromWaitHandle(mre, TimeSpan.FromMilliseconds(10));
+            var task = WaitHandleAsyncFactory.FromWaitHandle(mre, TimeSpan.FromMilliseconds(10));
             var result = await task;
             Assert.False(result);
         }
@@ -108,7 +108,7 @@ namespace UnitTests
         {
             var mre = new ManualResetEvent(false);
             var cts = new CancellationTokenSource();
-            var task = WaitHandleInterop.FromWaitHandle(mre, cts.Token);
+            var task = WaitHandleAsyncFactory.FromWaitHandle(mre, cts.Token);
             Assert.False(task.IsCompleted);
             mre.Set();
             await task;
@@ -119,7 +119,7 @@ namespace UnitTests
         {
             var mre = new ManualResetEvent(false);
             var cts = new CancellationTokenSource();
-            var task = WaitHandleInterop.FromWaitHandle(mre, cts.Token);
+            var task = WaitHandleAsyncFactory.FromWaitHandle(mre, cts.Token);
             Assert.False(task.IsCompleted);
             cts.Cancel();
             await AsyncAssert.CancelsAsync(task);
@@ -130,7 +130,7 @@ namespace UnitTests
         {
             var mre = new ManualResetEvent(false);
             var cts = new CancellationTokenSource();
-            var task = WaitHandleInterop.FromWaitHandle(mre, Timeout.InfiniteTimeSpan, cts.Token);
+            var task = WaitHandleAsyncFactory.FromWaitHandle(mre, Timeout.InfiniteTimeSpan, cts.Token);
             Assert.False(task.IsCompleted);
             mre.Set();
             var result = await task;
@@ -142,7 +142,7 @@ namespace UnitTests
         {
             var mre = new ManualResetEvent(false);
             var cts = new CancellationTokenSource();
-            var task = WaitHandleInterop.FromWaitHandle(mre, TimeSpan.FromMilliseconds(10), cts.Token);
+            var task = WaitHandleAsyncFactory.FromWaitHandle(mre, TimeSpan.FromMilliseconds(10), cts.Token);
             var result = await task;
             Assert.False(result);
         }
@@ -152,7 +152,7 @@ namespace UnitTests
         {
             var mre = new ManualResetEvent(false);
             var cts = new CancellationTokenSource();
-            var task = WaitHandleInterop.FromWaitHandle(mre, Timeout.InfiniteTimeSpan, cts.Token);
+            var task = WaitHandleAsyncFactory.FromWaitHandle(mre, Timeout.InfiniteTimeSpan, cts.Token);
             Assert.False(task.IsCompleted);
             cts.Cancel();
             await AsyncAssert.CancelsAsync(task);
