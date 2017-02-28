@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "Nito.Collections.Deque": "1.0.0",
+	"Nito.Disposables": "1.1.0-alpha-02",
     "Nito.AsyncEx.Tasks": "5.0.0-pre-01"
   }
 }
