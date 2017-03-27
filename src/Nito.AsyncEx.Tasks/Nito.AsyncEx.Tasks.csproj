@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Common helper methods for tasks as used in asynchronous programming.</Description>
+    <VersionPrefix>5.0.0-pre-01</VersionPrefix>
+    <Authors>Stephen Cleary</Authors>
+    <TargetFrameworks>netstandard1.3;net46</TargetFrameworks>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>Nito.AsyncEx.Tasks</AssemblyName>
+    <PackageId>Nito.AsyncEx.Tasks</PackageId>
+    <PackageTags>task;taskfactory;cancellationtoken;taskcompletionsource</PackageTags>
+    <PackageProjectUrl>https://github.com/StephenCleary/AsyncEx.Tasks</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/StephenCleary/AsyncEx.Tasks/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/StephenCleary/AsyncEx.Tasks.git</RepositoryUrl>
+
+    <!-- Don't reference the full NETStandard.Library -->
+    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Nito.Disposables" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
+    <PackageReference Include="System.Threading.Tasks" Version="4.0.11" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
+    <Reference Include="System.Threading.Tasks" />
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+</Project>

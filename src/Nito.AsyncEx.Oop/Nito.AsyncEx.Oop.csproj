@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Interfaces and utility methods for combining async with OOP.</Description>
+    <VersionPrefix>5.0.0-pre-01</VersionPrefix>
+    <Authors>Stephen Cleary</Authors>
+    <TargetFramework>netstandard1.3</TargetFramework>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>Nito.AsyncEx.Oop</AssemblyName>
+    <PackageId>Nito.AsyncEx.Oop</PackageId>
+    <PackageTags>async</PackageTags>
+    <PackageProjectUrl>https://github.com/StephenCleary/AsyncEx.Oop</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/StephenCleary/AsyncEx.Oop/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/StephenCleary/AsyncEx.Oop.git</RepositoryUrl>
+
+    <!-- Don't reference the full NETStandard.Library -->
+    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nito.AsyncEx.Coordination\Nito.AsyncEx.Coordination.csproj" />
+  </ItemGroup>
+
+</Project>

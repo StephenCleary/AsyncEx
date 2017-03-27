@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Asynchronous coordination primitives.</Description>
+    <VersionPrefix>5.0.0-pre-01</VersionPrefix>
+    <Authors>Stephen Cleary</Authors>
+    <TargetFrameworks>netstandard1.3;net46</TargetFrameworks>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>Nito.AsyncEx.Coordination</AssemblyName>
+    <PackageId>Nito.AsyncEx.Coordination</PackageId>
+    <PackageTags>async;asynclock;asynclazy</PackageTags>
+    <PackageProjectUrl>https://github.com/StephenCleary/AsyncEx.Coordination</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/StephenCleary/AsyncEx.Coordination/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/StephenCleary/AsyncEx.Coordination.git</RepositoryUrl>
+
+    <!-- Don't reference the full NETStandard.Library -->
+    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nito.AsyncEx.Tasks\Nito.AsyncEx.Tasks.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Nito.Collections.Deque" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
+    <PackageReference Include="System.Runtime" Version="4.1.0" />
+    <PackageReference Include="System.Threading" Version="4.0.11" />
+    <PackageReference Include="System.Threading.Tasks" Version="4.0.11" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Threading" />
+    <Reference Include="System.Threading.Tasks" />
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+</Project>

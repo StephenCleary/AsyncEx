@@ -1,7 +1,7 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26114.2
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{55E42050-6495-4544-9761-308EDC0D31AC}"
 	ProjectSection(SolutionItems) = preProject
@@ -14,27 +14,27 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D87FA556-6FC7-4A87-BDA2-4B5A3993C39B}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Nito.AsyncEx.Tasks", "src\Nito.AsyncEx.Tasks\Nito.AsyncEx.Tasks.xproj", "{A59E8416-844C-4489-9761-3A5F0BDD6A46}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nito.AsyncEx.Tasks", "src\Nito.AsyncEx.Tasks\Nito.AsyncEx.Tasks.csproj", "{A59E8416-844C-4489-9761-3A5F0BDD6A46}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{32CD8875-1709-4428-816A-FA840C2EE61C}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AsyncEx.Tasks.UnitTests", "test\AsyncEx.Tasks.UnitTests\AsyncEx.Tasks.UnitTests.xproj", "{C24252CE-031C-4A2E-93D1-B0C94D4A7CC3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncEx.Tasks.UnitTests", "test\AsyncEx.Tasks.UnitTests\AsyncEx.Tasks.UnitTests.csproj", "{C24252CE-031C-4A2E-93D1-B0C94D4A7CC3}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Nito.AsyncEx.Coordination", "src\Nito.AsyncEx.Coordination\Nito.AsyncEx.Coordination.xproj", "{530CF156-31F2-433D-96A7-181E8E10AA2E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nito.AsyncEx.Coordination", "src\Nito.AsyncEx.Coordination\Nito.AsyncEx.Coordination.csproj", "{530CF156-31F2-433D-96A7-181E8E10AA2E}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AsyncEx.Coordination.UnitTests", "test\AsyncEx.Coordination.UnitTests\AsyncEx.Coordination.UnitTests.xproj", "{51F8EF6D-12BE-43B1-BF65-C834E944A546}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncEx.Coordination.UnitTests", "test\AsyncEx.Coordination.UnitTests\AsyncEx.Coordination.UnitTests.csproj", "{51F8EF6D-12BE-43B1-BF65-C834E944A546}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Nito.AsyncEx.Context", "src\Nito.AsyncEx.Context\Nito.AsyncEx.Context.xproj", "{A9CFBC56-27A5-4596-B63A-E67FAF5F174B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nito.AsyncEx.Context", "src\Nito.AsyncEx.Context\Nito.AsyncEx.Context.csproj", "{A9CFBC56-27A5-4596-B63A-E67FAF5F174B}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AsyncEx.Context.UnitTests", "test\AsyncEx.Context.UnitTests\AsyncEx.Context.UnitTests.xproj", "{9A13AE97-F68C-4162-A0CA-82AAFC8672D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncEx.Context.UnitTests", "test\AsyncEx.Context.UnitTests\AsyncEx.Context.UnitTests.csproj", "{9A13AE97-F68C-4162-A0CA-82AAFC8672D8}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Nito.AsyncEx.Oop", "src\Nito.AsyncEx.Oop\Nito.AsyncEx.Oop.xproj", "{AED7BF8F-2538-4A9E-8A98-B45191221C4B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nito.AsyncEx.Oop", "src\Nito.AsyncEx.Oop\Nito.AsyncEx.Oop.csproj", "{AED7BF8F-2538-4A9E-8A98-B45191221C4B}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AsyncEx.Oop.UnitTests", "test\AsyncEx.Oop.UnitTests\AsyncEx.Oop.UnitTests.xproj", "{0200B033-606D-4FD1-9FF1-345A2B7972AF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncEx.Oop.UnitTests", "test\AsyncEx.Oop.UnitTests\AsyncEx.Oop.UnitTests.csproj", "{0200B033-606D-4FD1-9FF1-345A2B7972AF}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Nito.AsyncEx.Interop.WaitHandles", "src\Nito.AsyncEx.Interop.WaitHandles\Nito.AsyncEx.Interop.WaitHandles.xproj", "{0767ED20-329A-42F2-AFED-C9CA901B6F19}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nito.AsyncEx.Interop.WaitHandles", "src\Nito.AsyncEx.Interop.WaitHandles\Nito.AsyncEx.Interop.WaitHandles.csproj", "{0767ED20-329A-42F2-AFED-C9CA901B6F19}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AsyncEx.Interop.WaitHandles.UnitTests", "test\AsyncEx.Interop.WaitHandles.UnitTests\AsyncEx.Interop.WaitHandles.UnitTests.xproj", "{95862269-04B8-4F37-8DBC-26198F6E50FB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncEx.Interop.WaitHandles.UnitTests", "test\AsyncEx.Interop.WaitHandles.UnitTests\AsyncEx.Interop.WaitHandles.UnitTests.csproj", "{95862269-04B8-4F37-8DBC-26198F6E50FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
