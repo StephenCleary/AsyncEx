@@ -1,5 +1,5 @@
 version: '{build}'
-os: Visual Studio 2015
+os: Visual Studio 2017
 configuration: Debug
 environment:
   COVERALLS_REPO_TOKEN:
@@ -11,11 +11,11 @@ install:
 - ps: >-
     nuget update -self
 
-    Invoke-WebRequest "https://raw.githubusercontent.com/dotnet/cli/rel/1.0.0-preview2/scripts/obtain/dotnet-install.ps1" -OutFile ".\dotnet-install.ps1"
+    Invoke-WebRequest "https://raw.githubusercontent.com/dotnet/cli/rel/1.0.1/scripts/obtain/dotnet-install.ps1" -OutFile ".\dotnet-install.ps1"
 
     $env:DOTNET_INSTALL_DIR = "$pwd\.dotnetcli"
 
-    & .\dotnet-install.ps1 -Channel "preview" -Version "1.0.0-preview2-003121" -InstallDir "$env:DOTNET_INSTALL_DIR"
+    & .\dotnet-install.ps1 -Version "1.0.1" -InstallDir "$env:DOTNET_INSTALL_DIR"
 
 build_script:
 - ps: >-
