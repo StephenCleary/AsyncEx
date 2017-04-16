@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>Common helper methods for tasks as used in asynchronous programming.</Description>
     <VersionPrefix>5.0.0</VersionPrefix>
-    <VersionSuffix>pre-01</VersionSuffix>
+    <VersionSuffix>pre-02</VersionSuffix>
     <Authors>Stephen Cleary</Authors>
     <TargetFramework>netstandard1.3</TargetFramework>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
