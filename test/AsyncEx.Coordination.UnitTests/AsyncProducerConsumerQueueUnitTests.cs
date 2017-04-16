@@ -5,7 +5,6 @@ using Nito.AsyncEx;
 using System.Linq;
 using System.Threading;
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.Extensions.Testing.Abstractions;
 using Xunit;
 using Nito.AsyncEx.Testing;
 

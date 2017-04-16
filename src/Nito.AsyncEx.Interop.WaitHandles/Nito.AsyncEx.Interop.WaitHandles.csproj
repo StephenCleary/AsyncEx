@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Task wrappers for WaitHandles.</Description>
+    <VersionPrefix>5.0.0</VersionPrefix>
+    <VersionSuffix>pre-01</VersionSuffix>
+    <Authors>Stephen Cleary</Authors>
+    <TargetFramework>netstandard1.3</TargetFramework>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>Nito.AsyncEx.Interop.WaitHandles</AssemblyName>
+    <PackageId>Nito.AsyncEx.Interop.WaitHandles</PackageId>
+    <PackageTags>task;async;waithandle</PackageTags>
+    <PackageProjectUrl>https://github.com/StephenCleary/AsyncEx.Interop.WaitHandles</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/StephenCleary/AsyncEx.Interop.WaitHandles/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/StephenCleary/AsyncEx.Interop.WaitHandles.git</RepositoryUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard1.3|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>True</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Threading.ThreadPool" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nito.AsyncEx.Tasks\Nito.AsyncEx.Tasks.csproj" />
+  </ItemGroup>
+
+</Project>

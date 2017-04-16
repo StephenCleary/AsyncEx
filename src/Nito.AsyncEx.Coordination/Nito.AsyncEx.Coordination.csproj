@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Asynchronous coordination primitives.</Description>
+    <VersionPrefix>5.0.0</VersionPrefix>
+    <VersionSuffix>pre-01</VersionSuffix>
+    <Authors>Stephen Cleary</Authors>
+    <TargetFramework>netstandard1.3</TargetFramework>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>Nito.AsyncEx.Coordination</AssemblyName>
+    <PackageId>Nito.AsyncEx.Coordination</PackageId>
+    <PackageTags>async;asynclock;asynclazy</PackageTags>
+    <PackageProjectUrl>https://github.com/StephenCleary/AsyncEx.Coordination</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/StephenCleary/AsyncEx.Coordination/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/StephenCleary/AsyncEx.Coordination.git</RepositoryUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard1.3|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>True</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nito.AsyncEx.Tasks\Nito.AsyncEx.Tasks.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Nito.Collections.Deque" Version="1.0.0" />
+    <PackageReference Include="Nito.Disposables" Version="1.1.0" />
+  </ItemGroup>
+
+</Project>

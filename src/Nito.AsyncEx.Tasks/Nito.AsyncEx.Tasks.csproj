@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Common helper methods for tasks as used in asynchronous programming.</Description>
+    <VersionPrefix>5.0.0</VersionPrefix>
+    <VersionSuffix>pre-01</VersionSuffix>
+    <Authors>Stephen Cleary</Authors>
+    <TargetFramework>netstandard1.3</TargetFramework>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>Nito.AsyncEx.Tasks</AssemblyName>
+    <PackageId>Nito.AsyncEx.Tasks</PackageId>
+    <PackageTags>task;taskfactory;cancellationtoken;taskcompletionsource</PackageTags>
+    <PackageProjectUrl>https://github.com/StephenCleary/AsyncEx.Tasks</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/StephenCleary/AsyncEx.Tasks/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/StephenCleary/AsyncEx.Tasks.git</RepositoryUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard1.3|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>True</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Nito.Disposables" Version="1.0.0" />
+  </ItemGroup>
+
+</Project>
