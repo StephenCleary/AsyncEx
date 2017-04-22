@@ -11,10 +11,11 @@
     <AssemblyName>Nito.AsyncEx.Oop</AssemblyName>
     <PackageId>Nito.AsyncEx.Oop</PackageId>
     <PackageTags>async</PackageTags>
-    <PackageProjectUrl>https://github.com/StephenCleary/AsyncEx.Oop</PackageProjectUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/StephenCleary/AsyncEx.Oop/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/StephenCleary/AsyncEx</PackageProjectUrl>
+    <PackageIconUrl>https://github.com/StephenCleary/AsyncEx/raw/master/AsyncEx.128.png</PackageIconUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/StephenCleary/AsyncEx/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/StephenCleary/AsyncEx.Oop.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/StephenCleary/AsyncEx.git</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
