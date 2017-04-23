@@ -16,6 +16,7 @@
     <PackageLicenseUrl>https://raw.githubusercontent.com/StephenCleary/AsyncEx/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/StephenCleary/AsyncEx.git</RepositoryUrl>
+    <RootNamespace>Nito.AsyncEx</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
