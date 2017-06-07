@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Nito.AsyncEx.Synchronous;
 
@@ -73,6 +74,20 @@ namespace Nito.AsyncEx
                 }
             }
             return @this.TrySetResult(resultFunc());
+        }
+
+        public static async Task<bool> LinkCompletionFromTask<TResult, TSourceResult>(this TaskCompletionSource<TResult> @this, Task<TSourceResult> task) where TSourceResult : TResult
+        {
+            bool result;
+            try
+            {
+                await task.ConfigureAwait(false);
+            }
+            finally
+            {
+                result = TryCompleteFromCompletedTask(@this, task);
+            }
+            return result;
         }
 
         /// <summary>
