@@ -44,10 +44,10 @@ namespace Nito.AsyncEx
         }
 
         /// <summary>
-        /// Executes an asynchronous delegate without the current <see cref="SynchronizationContext"/>. The current context is restored when this function returns its task.
+        /// Executes a synchronous or asynchronous delegate without the current <see cref="SynchronizationContext"/>. The current context is restored when this function synchronously returns.
         /// </summary>
         /// <param name="action">The delegate to execute.</param>
-        public static Task NoContextAsync(Func<Task> action)
+        public static T NoContext<T>(Func<T> action)
         {
             using (new SynchronizationContextSwitcher(null))
                 return action();
