@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Nito.AsyncEx</id>
-    <version>5.0.0-pre-02</version>
+    <version>5.0.0-pre-03</version>
     <title>Async and Task Helpers</title>
     <authors>Stephen Cleary</authors>
     <owners>Stephen Cleary</owners>
@@ -15,12 +15,12 @@
     <description>A helper library for the Task-Based Asynchronous Pattern (TAP).</description>
     <tags>async await async-await task asynchronous nito</tags>
     <dependencies>
-      <dependency id="Nito.AsyncEx.Tasks" version="5.0.0-pre-02" />
-      <dependency id="Nito.AsyncEx.Coordination" version="5.0.0-pre-02" />
-      <dependency id="Nito.AsyncEx.Context" version="5.0.0-pre-02" />
-      <dependency id="Nito.AsyncEx.Oop" version="5.0.0-pre-02" />
-      <dependency id="Nito.AsyncEx.Interop.WaitHandles" version="5.0.0-pre-02" />
-      <dependency id="Nito.Cancellation" version="1.0.1" />
+      <dependency id="Nito.AsyncEx.Tasks" version="5.0.0-pre-03" />
+      <dependency id="Nito.AsyncEx.Coordination" version="5.0.0-pre-03" />
+      <dependency id="Nito.AsyncEx.Context" version="5.0.0-pre-03" />
+      <dependency id="Nito.AsyncEx.Oop" version="5.0.0-pre-03" />
+      <dependency id="Nito.AsyncEx.Interop.WaitHandles" version="5.0.0-pre-03" />
+      <dependency id="Nito.Cancellation" version="1.0.3" />
     </dependencies>
   </metadata>
 </package>

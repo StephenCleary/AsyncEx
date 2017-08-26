@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>Common helper methods for tasks as used in asynchronous programming.</Description>
     <VersionPrefix>5.0.0</VersionPrefix>
-    <VersionSuffix>pre-02</VersionSuffix>
+    <VersionSuffix>pre-03</VersionSuffix>
     <Authors>Stephen Cleary</Authors>
     <TargetFramework>netstandard1.3</TargetFramework>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -17,6 +17,10 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/StephenCleary/AsyncEx.git</RepositoryUrl>
     <RootNamespace>Nito.AsyncEx</RootNamespace>
+    <NetStandardImplicitPackageVersion>2.0.0</NetStandardImplicitPackageVersion>
+    <PublicSign>True</PublicSign>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard1.3|AnyCPU'">
@@ -25,7 +29,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Nito.Disposables" Version="1.1.0" />
+    <PackageReference Include="Nito.Disposables" Version="1.2.1" />
   </ItemGroup>
 
 </Project>
