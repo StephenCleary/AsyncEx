@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -133,5 +134,90 @@ namespace Nito.AsyncEx
 
             return Task.WhenAll(@this);
         }
+
+        /// <summary>
+        /// Creates a new collection of tasks that complete in order.
+        /// </summary>
+        /// <typeparam name="T">The type of the results of the tasks.</typeparam>
+        /// <param name="this">The tasks to order by completion. May not be <c>null</c>.</param>
+        public static List<Task<T>> OrderByCompletion<T>(this IEnumerable<Task<T>> @this)
+        {
+            if (@this == null)
+                throw new ArgumentNullException(nameof(@this));
+
+            // This is a combination of Jon Skeet's approach and Stephen Toub's approach:
+            //  http://msmvps.com/blogs/jon_skeet/archive/2012/01/16/eduasync-part-19-ordering-by-completion-ahead-of-time.aspx
+            //  http://blogs.msdn.com/b/pfxteam/archive/2012/08/02/processing-tasks-as-they-complete.aspx
+
+            // Reify the source task sequence. TODO: better reification.
+            var taskArray = @this.ToArray();
+
+            // Allocate a TCS array and an array of the resulting tasks.
+            var numTasks = taskArray.Length;
+            var tcs = new TaskCompletionSource<T>[numTasks];
+            var ret = new List<Task<T>>(numTasks);
+
+            // As each task completes, complete the next tcs.
+            var lastIndex = -1;
+            // ReSharper disable once ConvertToLocalFunction
+            Action<Task<T>> continuation = task =>
+            {
+                var index = Interlocked.Increment(ref lastIndex);
+                tcs[index].TryCompleteFromCompletedTask(task);
+            };
+
+            // Fill out the arrays and attach the continuations.
+            for (var i = 0; i != numTasks; ++i)
+            {
+                tcs[i] = new TaskCompletionSource<T>();
+                ret.Add(tcs[i].Task);
+                taskArray[i].ContinueWith(continuation, CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously | TaskContinuationOptions.DenyChildAttach, TaskScheduler.Default);
+            }
+
+            return ret;
+        }
+
+        /// <summary>
+        /// Creates a new collection of tasks that complete in order.
+        /// </summary>
+        /// <param name="this">The tasks to order by completion. May not be <c>null</c>.</param>
+        public static List<Task> OrderByCompletion(this IEnumerable<Task> @this)
+        {
+            if (@this == null)
+                throw new ArgumentNullException(nameof(@this));
+
+            // This is a combination of Jon Skeet's approach and Stephen Toub's approach:
+            //  http://msmvps.com/blogs/jon_skeet/archive/2012/01/16/eduasync-part-19-ordering-by-completion-ahead-of-time.aspx
+            //  http://blogs.msdn.com/b/pfxteam/archive/2012/08/02/processing-tasks-as-they-complete.aspx
+
+            // Reify the source task sequence. TODO: better reification.
+            var taskArray = @this.ToArray();
+
+            // Allocate a TCS array and an array of the resulting tasks.
+            var numTasks = taskArray.Length;
+            var tcs = new TaskCompletionSource<object>[numTasks];
+            var ret = new List<Task>(numTasks);
+
+            // As each task completes, complete the next tcs.
+            var lastIndex = -1;
+            // ReSharper disable once ConvertToLocalFunction
+            Action<Task> continuation = task =>
+            {
+                var index = Interlocked.Increment(ref lastIndex);
+                tcs[index].TryCompleteFromCompletedTask(task, NullResultFunc);
+            };
+
+            // Fill out the arrays and attach the continuations.
+            for (var i = 0; i != numTasks; ++i)
+            {
+                tcs[i] = new TaskCompletionSource<object>();
+                ret.Add(tcs[i].Task);
+                taskArray[i].ContinueWith(continuation, CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously | TaskContinuationOptions.DenyChildAttach, TaskScheduler.Default);
+            }
+
+            return ret;
+        }
+         
+        private static Func<object> NullResultFunc { get; } = () => null;
     }
 }

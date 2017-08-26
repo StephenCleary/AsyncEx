@@ -209,6 +209,108 @@ namespace UnitTests
             await task;
         }
 
+        [Fact]
+        public async Task OrderByCompletion_OrdersByCompletion()
+        {
+            var tcs = new TaskCompletionSource<int>[] {new TaskCompletionSource<int>(), new TaskCompletionSource<int>()};
+            var results = tcs.Select(x => x.Task).OrderByCompletion();
+
+            Assert.False(results[0].IsCompleted);
+            Assert.False(results[1].IsCompleted);
+
+            tcs[1].SetResult(13);
+            var result0 = await results[0];
+            Assert.False(results[1].IsCompleted);
+            Assert.Equal(13, result0);
+
+            tcs[0].SetResult(17);
+            var result1 = await results[1];
+            Assert.Equal(13, result0);
+            Assert.Equal(17, result1);
+        }
+
+        [Fact]
+        public async Task OrderByCompletion_PropagatesFaultOnFirstCompletion()
+        {
+            var tcs = new TaskCompletionSource<int>[] {new TaskCompletionSource<int>(), new TaskCompletionSource<int>()};
+            var results = tcs.Select(x => x.Task).OrderByCompletion();
+
+            tcs[1].SetException(new InvalidOperationException("test message"));
+            try
+            {
+                await results[0];
+            }
+            catch (InvalidOperationException ex)
+            {
+                Assert.Equal("test message", ex.Message);
+                return;
+            }
+
+            Assert.True(false);
+        }
+
+        [Fact]
+        public async Task OrderByCompletion_PropagatesFaultOnSecondCompletion()
+        {
+            var tcs = new TaskCompletionSource<int>[] {new TaskCompletionSource<int>(), new TaskCompletionSource<int>()};
+            var results = tcs.Select(x => x.Task).OrderByCompletion();
+
+            tcs[0].SetResult(13);
+            tcs[1].SetException(new InvalidOperationException("test message"));
+            await results[0];
+            try
+            {
+                await results[1];
+            }
+            catch (InvalidOperationException ex)
+            {
+                Assert.Equal("test message", ex.Message);
+                return;
+            }
+
+            Assert.True(false);
+        }
+
+        [Fact]
+        public async Task OrderByCompletion_PropagatesCancelOnFirstCompletion()
+        {
+            var tcs = new TaskCompletionSource<int>[] {new TaskCompletionSource<int>(), new TaskCompletionSource<int>()};
+            var results = tcs.Select(x => x.Task).OrderByCompletion();
+
+            tcs[1].SetCanceled();
+            try
+            {
+                await results[0];
+            }
+            catch (OperationCanceledException)
+            {
+                return;
+            }
+
+            Assert.True(false);
+        }
+
+        [Fact]
+        public async Task OrderByCompletion_PropagatesCancelOnSecondCompletion()
+        {
+            var tcs = new TaskCompletionSource<int>[] {new TaskCompletionSource<int>(), new TaskCompletionSource<int>()};
+            var results = tcs.Select(x => x.Task).OrderByCompletion();
+
+            tcs[0].SetResult(13);
+            tcs[1].SetCanceled();
+            await results[0];
+            try
+            {
+                await results[1];
+            }
+            catch (OperationCanceledException)
+            {
+                return;
+            }
+
+            Assert.True(false);
+        }
+
         private static CancellationToken GetCancellationTokenFromTask(Task task)
         {
             try
