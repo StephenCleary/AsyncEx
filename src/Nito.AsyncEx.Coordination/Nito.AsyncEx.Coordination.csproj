@@ -17,9 +17,6 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/StephenCleary/AsyncEx.git</RepositoryUrl>
     <RootNamespace>Nito.AsyncEx</RootNamespace>
-    <PublicSign>True</PublicSign>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -32,8 +29,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Nito.Collections.Deque" Version="1.0.2" />
-    <PackageReference Include="Nito.Disposables" Version="1.2.2" />
+    <PackageReference Include="Nito.Collections.Deque" Version="1.0.4" />
+    <PackageReference Include="Nito.Disposables" Version="1.2.3" />
   </ItemGroup>
 
 </Project>

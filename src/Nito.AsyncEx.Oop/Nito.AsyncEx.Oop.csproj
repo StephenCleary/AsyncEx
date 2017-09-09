@@ -17,9 +17,6 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/StephenCleary/AsyncEx.git</RepositoryUrl>
     <RootNamespace>Nito.AsyncEx</RootNamespace>
-    <PublicSign>True</PublicSign>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
