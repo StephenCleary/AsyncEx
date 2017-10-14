@@ -1,6 +1,6 @@
 ![Logo](AsyncEx.128.png)
 
-# AsyncEx
+# AsyncEx v4
 
 A helper library for async/await.
 
