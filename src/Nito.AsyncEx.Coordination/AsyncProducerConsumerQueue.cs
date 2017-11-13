@@ -245,16 +245,10 @@ namespace Nito.AsyncEx
         {
             while (true)
             {
-                T item;
-                try
-                {
-                    item = Dequeue(cancellationToken);
-                }
-                catch (InvalidOperationException)
-                {
+                var result = TryDoDequeueAsync(cancellationToken, sync: true).WaitAndUnwrapException();
+                if (!result.Item1)
                     yield break;
-                }
-                yield return item;
+                yield return result.Item2;
             }
         }
 
@@ -267,6 +261,32 @@ namespace Nito.AsyncEx
         }
 
         /// <summary>
+        /// Attempts to dequeue an item from the producer/consumer queue. Returns <c>false</c> if the producer/consumer queue has completed adding and is empty.
+        /// </summary>
+        /// <param name="cancellationToken">A cancellation token that can be used to abort the dequeue operation.</param>
+        /// <param name="sync">Whether to run this method synchronously.</param>
+        private async Task<Tuple<bool, T>> TryDoDequeueAsync(CancellationToken cancellationToken, bool sync)
+        {
+            using (sync ? _mutex.Lock() : await _mutex.LockAsync().ConfigureAwait(false))
+            {
+                while (Empty && !_completed)
+                {
+                    if (sync)
+                        _completedOrNotEmpty.Wait(cancellationToken);
+                    else
+                        await _completedOrNotEmpty.WaitAsync(cancellationToken).ConfigureAwait(false);
+                }
+
+                if (_completed && Empty)
+                    return Tuple.Create(false, default(T));
+
+                var item = _queue.Dequeue();
+                _completedOrNotFull.Notify();
+                return Tuple.Create(true, item);
+            }
+        }
+
+        /// <summary>
         /// Dequeues an item from the producer/consumer queue. Throws <see cref="InvalidOperationException"/> if the producer/consumer queue has completed adding and is empty.
         /// </summary>
         /// <param name="cancellationToken">A cancellation token that can be used to abort the dequeue operation.</param>
@@ -274,23 +294,10 @@ namespace Nito.AsyncEx
         /// <exception cref="InvalidOperationException">The producer/consumer queue has been marked complete for adding and is empty.</exception>
         private async Task<T> DoDequeueAsync(CancellationToken cancellationToken, bool sync)
         {
-            using (sync ? _mutex.Lock() : await _mutex.LockAsync().ConfigureAwait(false))
-            {
-                while (Empty && !_completed)
-                {
-                    if (sync)
-                        _completedOrNotEmpty.Wait();
-                    else
-                        await _completedOrNotEmpty.WaitAsync(cancellationToken).ConfigureAwait(false);
-                }
-
-                if (_completed && Empty)
-                    throw new InvalidOperationException("Dequeue failed; the producer/consumer queue has completed adding and is empty.");
-
-                var item = _queue.Dequeue();
-                _completedOrNotFull.Notify();
-                return item;
-            }
+            var result = await TryDoDequeueAsync(cancellationToken, sync).ConfigureAwait(false);
+            if (result.Item1)
+                return result.Item2;
+            throw new InvalidOperationException("Dequeue failed; the producer/consumer queue has completed adding and is empty.");
         }
 
         /// <summary>
