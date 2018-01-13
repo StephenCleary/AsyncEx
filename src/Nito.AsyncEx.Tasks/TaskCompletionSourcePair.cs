@@ -16,6 +16,9 @@ namespace Nito.AsyncEx
         private readonly TaskCompletionSource<T> _asynchronous;
         private readonly Task<bool> _linkingContinuation;
 
+        /// <summary>
+        /// Creates a new pair of TCSs.
+        /// </summary>
         public TaskCompletionSourcePair()
         {
             _synchronous = new TaskCompletionSource<T>();
@@ -23,10 +26,32 @@ namespace Nito.AsyncEx
             _linkingContinuation = _asynchronous.LinkCompletionFromTask(_synchronous.Task);
         }
 
+        /// <summary>
+        /// The synchronously-completed task. This is appropriate for waiting on in internal code.
+        /// </summary>
         public Task<T> SynchronousTask => _synchronous.Task;
+
+        /// <summary>
+        /// The asynchronously-completed task. This is appropriate for returning to end-user APIs.
+        /// </summary>
         public Task<T> AsynchronousTask => _asynchronous.Task;
+
+        /// <summary>
+        /// Completes the task with the specified result.
+        /// </summary>
+        /// <param name="result">The task's result.</param>
         public bool TrySetResult(T result) => _synchronous.TrySetResult(result);
+
+        /// <summary>
+        /// Completes the task with the specified exception.
+        /// </summary>
+        /// <param name="exception">The task's exception.</param>
         public bool TrySetException(Exception exception) => _synchronous.TrySetException(exception);
+
+        /// <summary>
+        /// Completes the task as canceled by the specified cancellation token.
+        /// </summary>
+        /// <param name="cancellationToken">The task's cancelling token.</param>
         public bool TrySetCancel(CancellationToken cancellationToken) => _synchronous.TrySetCanceled(cancellationToken);
     }
 }

@@ -76,6 +76,14 @@ namespace Nito.AsyncEx
             return @this.TrySetResult(resultFunc());
         }
 
+        /// <summary>
+        /// Asynchronously waits until <paramref name="task"/> is complete, and then attempts to complete this <see cref="TaskCompletionSource{TResult}"/>, propagating the completion of <paramref name="task"/>.
+        /// </summary>
+        /// <typeparam name="TResult">The type of the result of the target asynchronous operation.</typeparam>
+        /// <typeparam name="TSourceResult">The type of the result of the source asynchronous operation.</typeparam>
+        /// <param name="this">The task completion source. May not be <c>null</c>.</param>
+        /// <param name="task">The task. May not be <c>null</c>.</param>
+        /// <returns><c>true</c> if this method completed the task completion source; <c>false</c> if it was already completed.</returns>
         public static async Task<bool> LinkCompletionFromTask<TResult, TSourceResult>(this TaskCompletionSource<TResult> @this, Task<TSourceResult> task) where TSourceResult : TResult
         {
             bool result;
