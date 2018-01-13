@@ -22,7 +22,7 @@ namespace Nito.AsyncEx
         /// Creates a new entry and queues it to this wait queue. The synchronous returned task must support both synchronous and asynchronous waits.
         /// </summary>
         /// <returns>The queued task.</returns>
-        (Task<T> SynchronousTask, Task<T> AsynchronousTask) Enqueue();
+        ITaskSyncAsyncPair<T> Enqueue();
 
         /// <summary>
         /// Removes a single entry in the wait queue and completes it. This method may only be called if <see cref="IsEmpty"/> is <c>false</c>. The task continuations for the completed task must be executed asynchronously.
@@ -41,7 +41,7 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="task">The task to cancel.</param>
         /// <param name="cancellationToken">The cancellation token to use to cancel the task.</param>
-        bool TryCancel(Task task, CancellationToken cancellationToken);
+        bool TryCancel(ITaskSyncAsyncPair<T> task, CancellationToken cancellationToken);
 
         /// <summary>
         /// Removes all entries from the wait queue and cancels them. The task continuations for the completed tasks must be executed asynchronously.
@@ -62,10 +62,14 @@ namespace Nito.AsyncEx
         /// <param name="mutex">A synchronization object taken while cancelling the entry.</param>
         /// <param name="token">The token used to cancel the wait.</param>
         /// <returns>The queued task.</returns>
-        public static (Task<T> SynchronousTask, Task<T> AsynchronousTask) Enqueue<T>(this IAsyncWaitQueue<T> @this, object mutex, CancellationToken token)
+        public static ITaskSyncAsyncPair<T> Enqueue<T>(this IAsyncWaitQueue<T> @this, object mutex, CancellationToken token)
         {
             if (token.IsCancellationRequested)
-                return (Task.FromCanceled<T>(token), Task.FromCanceled<T>(token));
+            {
+                var tcs = new TaskCompletionSourceSyncAsyncPair<T>();
+                tcs.TrySetCanceled(token);
+                return tcs;
+            }
 
             var ret = @this.Enqueue();
             if (!token.CanBeCanceled)
@@ -76,7 +80,7 @@ namespace Nito.AsyncEx
                 lock (mutex)
                     @this.TryCancel(ret, token);
             }, useSynchronizationContext: false);
-            ret.ContinueWith(_ => registration.Dispose(), CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
+            ret.SynchronousTask.ContinueWith(_ => registration.Dispose(), CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
             return ret;
         }
     }
@@ -89,7 +93,7 @@ namespace Nito.AsyncEx
     [DebuggerTypeProxy(typeof(DefaultAsyncWaitQueue<>.DebugView))]
     public sealed class DefaultAsyncWaitQueue<T> : IAsyncWaitQueue<T>
     {
-        private readonly Deque<TaskCompletionSourcePair<T>> _queue = new Deque<TaskCompletionSourcePair<T>>();
+        private readonly Deque<TaskCompletionSourceSyncAsyncPair<T>> _queue = new Deque<TaskCompletionSourceSyncAsyncPair<T>>();
 
         private int Count
         {
@@ -101,11 +105,11 @@ namespace Nito.AsyncEx
             get { return Count == 0; }
         }
 
-        (Task<T> SynchronousTask, Task<T> AsynchronousTask) IAsyncWaitQueue<T>.Enqueue()
+        ITaskSyncAsyncPair<T> IAsyncWaitQueue<T>.Enqueue()
         {
-            var tcs = new TaskCompletionSourcePair<T>();
+            var tcs = new TaskCompletionSourceSyncAsyncPair<T>();
             _queue.AddToBack(tcs);
-            return (tcs.SynchronousTask, tcs.AsynchronousTask);
+            return tcs;
         }
 
         void IAsyncWaitQueue<T>.Dequeue(T result)
@@ -120,18 +124,14 @@ namespace Nito.AsyncEx
             _queue.Clear();
         }
 
-        bool IAsyncWaitQueue<T>.TryCancel(Task task, CancellationToken cancellationToken)
+        bool IAsyncWaitQueue<T>.TryCancel(ITaskSyncAsyncPair<T> task, CancellationToken cancellationToken)
         {
-            for (int i = 0; i != _queue.Count; ++i)
-            {
-                if (_queue[i].Task == task)
-                {
-                    _queue[i].TrySetCanceled(cancellationToken);
-                    _queue.RemoveAt(i);
-                    return true;
-                }
-            }
-            return false;
+            if (!(task is TaskCompletionSourceSyncAsyncPair<T> tcs))
+                return false;
+            var result = _queue.Remove(tcs);
+            if (result)
+                tcs.TrySetCanceled(cancellationToken);
+            return result;
         }
 
         void IAsyncWaitQueue<T>.CancelAll(CancellationToken cancellationToken)
@@ -158,7 +158,7 @@ namespace Nito.AsyncEx
                 {
                     var result = new List<Task<T>>(_queue._queue.Count);
                     foreach (var entry in _queue._queue)
-                        result.Add(entry.Task);
+                        result.Add(entry.SynchronousTask);
                     return result.ToArray();
                 }
             }

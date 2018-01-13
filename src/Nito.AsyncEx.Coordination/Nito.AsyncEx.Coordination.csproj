@@ -31,7 +31,6 @@
   <ItemGroup>
     <PackageReference Include="Nito.Collections.Deque" Version="1.0.4" />
     <PackageReference Include="Nito.Disposables" Version="1.2.3" />
-    <PackageReference Include="System.ValueTuple" Version="4.4.0" />
   </ItemGroup>
 
 </Project>

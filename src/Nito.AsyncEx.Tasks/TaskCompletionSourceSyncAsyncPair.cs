@@ -10,7 +10,7 @@ namespace Nito.AsyncEx
     /// A synchronous <see cref="TaskCompletionSource{TResult}"/> paired with an asynchronous <see cref="TaskCompletionSource{TResult}"/>.
     /// </summary>
     /// <typeparam name="T">The type of the result.</typeparam>
-    public sealed class TaskCompletionSourcePair<T>
+    public sealed class TaskCompletionSourceSyncAsyncPair<T>: ITaskSyncAsyncPair<T>
     {
         private readonly TaskCompletionSource<T> _synchronous;
         private readonly TaskCompletionSource<T> _asynchronous;
@@ -19,7 +19,7 @@ namespace Nito.AsyncEx
         /// <summary>
         /// Creates a new pair of TCSs.
         /// </summary>
-        public TaskCompletionSourcePair()
+        public TaskCompletionSourceSyncAsyncPair()
         {
             _synchronous = new TaskCompletionSource<T>();
             _asynchronous = new TaskCompletionSource<T>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -52,6 +52,6 @@ namespace Nito.AsyncEx
         /// Completes the task as canceled by the specified cancellation token.
         /// </summary>
         /// <param name="cancellationToken">The task's cancelling token.</param>
-        public bool TrySetCancel(CancellationToken cancellationToken) => _synchronous.TrySetCanceled(cancellationToken);
+        public bool TrySetCanceled(CancellationToken cancellationToken) => _synchronous.TrySetCanceled(cancellationToken);
     }
 }
