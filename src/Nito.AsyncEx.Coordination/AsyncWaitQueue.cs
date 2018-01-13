@@ -19,10 +19,10 @@ namespace Nito.AsyncEx
         bool IsEmpty { get; }
 
         /// <summary>
-        /// Creates a new entry and queues it to this wait queue. The returned task must support both synchronous and asynchronous waits.
+        /// Creates a new entry and queues it to this wait queue. The synchronous returned task must support both synchronous and asynchronous waits.
         /// </summary>
         /// <returns>The queued task.</returns>
-        Task<T> Enqueue();
+        (Task<T> SynchronousTask, Task<T> AsynchronousTask) Enqueue();
 
         /// <summary>
         /// Removes a single entry in the wait queue and completes it. This method may only be called if <see cref="IsEmpty"/> is <c>false</c>. The task continuations for the completed task must be executed asynchronously.
@@ -62,10 +62,10 @@ namespace Nito.AsyncEx
         /// <param name="mutex">A synchronization object taken while cancelling the entry.</param>
         /// <param name="token">The token used to cancel the wait.</param>
         /// <returns>The queued task.</returns>
-        public static Task<T> Enqueue<T>(this IAsyncWaitQueue<T> @this, object mutex, CancellationToken token)
+        public static (Task<T> SynchronousTask, Task<T> AsynchronousTask) Enqueue<T>(this IAsyncWaitQueue<T> @this, object mutex, CancellationToken token)
         {
             if (token.IsCancellationRequested)
-                return Task.FromCanceled<T>(token);
+                return (Task.FromCanceled<T>(token), Task.FromCanceled<T>(token));
 
             var ret = @this.Enqueue();
             if (!token.CanBeCanceled)
@@ -89,7 +89,7 @@ namespace Nito.AsyncEx
     [DebuggerTypeProxy(typeof(DefaultAsyncWaitQueue<>.DebugView))]
     public sealed class DefaultAsyncWaitQueue<T> : IAsyncWaitQueue<T>
     {
-        private readonly Deque<TaskCompletionSource<T>> _queue = new Deque<TaskCompletionSource<T>>();
+        private readonly Deque<TaskCompletionSourcePair<T>> _queue = new Deque<TaskCompletionSourcePair<T>>();
 
         private int Count
         {
@@ -101,11 +101,11 @@ namespace Nito.AsyncEx
             get { return Count == 0; }
         }
 
-        Task<T> IAsyncWaitQueue<T>.Enqueue()
+        (Task<T> SynchronousTask, Task<T> AsynchronousTask) IAsyncWaitQueue<T>.Enqueue()
         {
-            var tcs = TaskCompletionSourceExtensions.CreateAsyncTaskSource<T>();
+            var tcs = new TaskCompletionSourcePair<T>();
             _queue.AddToBack(tcs);
-            return tcs.Task;
+            return (tcs.SynchronousTask, tcs.AsynchronousTask);
         }
 
         void IAsyncWaitQueue<T>.Dequeue(T result)
