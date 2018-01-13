@@ -76,16 +76,16 @@ namespace Nito.AsyncEx
         /// Asynchronously waits for a slot in the semaphore to be available.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token used to cancel the wait. If this is already set, then this method will attempt to take the slot immediately (succeeding if a slot is currently available).</param>
-        public Task WaitAsync(CancellationToken cancellationToken)
+        private ITaskSyncAsyncPair<object> DoWaitAsync(CancellationToken cancellationToken)
         {
-            Task ret;
+            ITaskSyncAsyncPair<object> ret;
             lock (_mutex)
             {
                 // If the semaphore is available, take it immediately and return.
                 if (_count != 0)
                 {
                     --_count;
-                    ret = TaskConstants.Completed;
+                    ret = TaskCompletionSourceSyncAsyncPair<object>.FromResult(null);
                 }
                 else
                 {
@@ -96,6 +96,12 @@ namespace Nito.AsyncEx
 
             return ret;
         }
+
+        /// <summary>
+        /// Asynchronously waits for a slot in the semaphore to be available.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token used to cancel the wait. If this is already set, then this method will attempt to take the slot immediately (succeeding if a slot is currently available).</param>
+        //public Task WaitAsync(CancellationToken cancellationToken)
 
         /// <summary>
         /// Asynchronously waits for a slot in the semaphore to be available.
@@ -111,7 +117,7 @@ namespace Nito.AsyncEx
         /// <param name="cancellationToken">The cancellation token used to cancel the wait. If this is already set, then this method will attempt to take the slot immediately (succeeding if a slot is currently available).</param>
         public void Wait(CancellationToken cancellationToken)
         {
-            WaitAsync(cancellationToken).WaitAndUnwrapException();
+            DoWaitAsync(cancellationToken).SynchronousTask.WaitAndUnwrapException();
         }
 
         /// <summary>
@@ -154,9 +160,9 @@ namespace Nito.AsyncEx
             Release(1);
         }
 
-        private async Task<IDisposable> DoLockAsync(CancellationToken cancellationToken)
+        private async ITaskSyncAsyncPair<IDisposable> DoLockAsync(CancellationToken cancellationToken)
         {
-            await WaitAsync(cancellationToken).ConfigureAwait(false);
+            await DoWaitAsync(cancellationToken).AsynchronousTask.ConfigureAwait(false);
             return Disposables.AnonymousDisposable.Create(Release);
         }
 
