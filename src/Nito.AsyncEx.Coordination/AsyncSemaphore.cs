@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Nito.AsyncEx.Synchronous;
+using Nito.AsyncEx.SynchronousAsynchronousPair;
 
 // Original idea from Stephen Toub: http://blogs.msdn.com/b/pfxteam/archive/2012/02/12/10266983.aspx
 
@@ -76,16 +77,16 @@ namespace Nito.AsyncEx
         /// Asynchronously waits for a slot in the semaphore to be available.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token used to cancel the wait. If this is already set, then this method will attempt to take the slot immediately (succeeding if a slot is currently available).</param>
-        private ITaskSyncAsyncPair<object> DoWaitAsync(CancellationToken cancellationToken)
+        private ISynchronousAsynchronousTaskPair<object> DoWaitAsync(CancellationToken cancellationToken)
         {
-            ITaskSyncAsyncPair<object> ret;
+            ISynchronousAsynchronousTaskPair<object> ret;
             lock (_mutex)
             {
                 // If the semaphore is available, take it immediately and return.
                 if (_count != 0)
                 {
                     --_count;
-                    ret = TaskCompletionSourceSyncAsyncPair<object>.FromResult(null);
+                    ret = SynchronousAsynchronousTaskCompletionSourcePair<object>.FromResult(null);
                 }
                 else
                 {
@@ -101,7 +102,7 @@ namespace Nito.AsyncEx
         /// Asynchronously waits for a slot in the semaphore to be available.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token used to cancel the wait. If this is already set, then this method will attempt to take the slot immediately (succeeding if a slot is currently available).</param>
-        //public Task WaitAsync(CancellationToken cancellationToken)
+        public Task WaitAsync(CancellationToken cancellationToken) => DoWaitAsync(cancellationToken).AsynchronousTask;
 
         /// <summary>
         /// Asynchronously waits for a slot in the semaphore to be available.
@@ -160,9 +161,9 @@ namespace Nito.AsyncEx
             Release(1);
         }
 
-        private async ITaskSyncAsyncPair<IDisposable> DoLockAsync(CancellationToken cancellationToken)
+        private async ISynchronousAsynchronousTaskPair<IDisposable> DoLockAsync(CancellationToken cancellationToken)
         {
-            await DoWaitAsync(cancellationToken).AsynchronousTask.ConfigureAwait(false);
+            await DoWaitAsync(cancellationToken).ConfigureAwait(false);
             return Disposables.AnonymousDisposable.Create(Release);
         }
 
@@ -172,7 +173,7 @@ namespace Nito.AsyncEx
         /// <param name="cancellationToken">The cancellation token used to cancel the wait. If this is already set, then this method will attempt to take the slot immediately (succeeding if a slot is currently available).</param>
         public AwaitableDisposable<IDisposable> LockAsync(CancellationToken cancellationToken)
         {
-            return new AwaitableDisposable<IDisposable>(DoLockAsync(cancellationToken));
+            return new AwaitableDisposable<IDisposable>(DoLockAsync(cancellationToken).AsynchronousTask);
         }
 
         /// <summary>
