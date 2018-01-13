@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading;
-using System.Threading.Tasks;
 using Nito.AsyncEx.Synchronous;
+using Nito.AsyncEx.SynchronousAsynchronousPair;
 
 // Original idea from Stephen Toub: http://blogs.msdn.com/b/pfxteam/archive/2012/02/12/10266988.aspx
 
@@ -97,7 +97,7 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="cancellationToken">The cancellation token used to cancel the lock. If this is already set, then this method will attempt to take the lock immediately (succeeding if the lock is currently available).</param>
         /// <returns>A disposable that releases the lock when disposed.</returns>
-        private ITaskSyncAsyncPair<IDisposable> RequestLockAsync(CancellationToken cancellationToken)
+        private ISynchronousAsynchronousTaskPair<IDisposable> RequestLockAsync(CancellationToken cancellationToken)
         {
             lock (_mutex)
             {
@@ -105,7 +105,7 @@ namespace Nito.AsyncEx
                 {
                     // If the lock is available, take it immediately.
                     _taken = true;
-                    return TaskCompletionSourceSyncAsyncPair<IDisposable>.FromResult(new Key(this));
+                    return SynchronousAsynchronousTaskCompletionSourcePair<IDisposable>.FromResult(new Key(this));
                 }
                 else
                 {
