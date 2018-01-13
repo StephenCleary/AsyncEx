@@ -53,5 +53,41 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="cancellationToken">The task's cancelling token.</param>
         public bool TrySetCanceled(CancellationToken cancellationToken) => _synchronous.TrySetCanceled(cancellationToken);
+
+        /// <summary>
+        /// Creates and completes a TCS pair from a result value.
+        /// </summary>
+        /// <param name="result">The result value.</param>
+        /// <returns>The completed TCS pair.</returns>
+        public static TaskCompletionSourceSyncAsyncPair<T> FromResult(T result)
+        {
+            var tcs = new TaskCompletionSourceSyncAsyncPair<T>();
+            tcs.TrySetResult(result);
+            return tcs;
+        }
+
+        /// <summary>
+        /// Creates and completes a TCS pair from an exception.
+        /// </summary>
+        /// <param name="exception">The exception.</param>
+        /// <returns>The completed TCS pair.</returns>
+        public static TaskCompletionSourceSyncAsyncPair<T> FromException(Exception exception)
+        {
+            var tcs = new TaskCompletionSourceSyncAsyncPair<T>();
+            tcs.TrySetException(exception);
+            return tcs;
+        }
+
+        /// <summary>
+        /// Creates and completes a TCS pair from a cancellation token.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The completed TCS pair.</returns>
+        public static TaskCompletionSourceSyncAsyncPair<T> FromCanceled(CancellationToken cancellationToken)
+        {
+            var tcs = new TaskCompletionSourceSyncAsyncPair<T>();
+            tcs.TrySetCanceled(cancellationToken);
+            return tcs;
+        }
     }
 }

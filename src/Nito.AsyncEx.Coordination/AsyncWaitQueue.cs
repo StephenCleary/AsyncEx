@@ -65,11 +65,7 @@ namespace Nito.AsyncEx
         public static ITaskSyncAsyncPair<T> Enqueue<T>(this IAsyncWaitQueue<T> @this, object mutex, CancellationToken token)
         {
             if (token.IsCancellationRequested)
-            {
-                var tcs = new TaskCompletionSourceSyncAsyncPair<T>();
-                tcs.TrySetCanceled(token);
-                return tcs;
-            }
+                return TaskCompletionSourceSyncAsyncPair<T>.FromCanceled(token);
 
             var ret = @this.Enqueue();
             if (!token.CanBeCanceled)
