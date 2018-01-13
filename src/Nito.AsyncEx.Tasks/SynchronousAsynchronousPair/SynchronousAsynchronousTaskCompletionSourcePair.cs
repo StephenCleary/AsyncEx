@@ -4,13 +4,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Nito.AsyncEx
+namespace Nito.AsyncEx.SynchronousAsynchronousPair
 {
     /// <summary>
     /// A synchronous <see cref="TaskCompletionSource{TResult}"/> paired with an asynchronous <see cref="TaskCompletionSource{TResult}"/>.
     /// </summary>
     /// <typeparam name="T">The type of the result.</typeparam>
-    public sealed class TaskCompletionSourceSyncAsyncPair<T>: ITaskSyncAsyncPair<T>
+    public sealed class SynchronousAsynchronousTaskCompletionSourcePair<T>: ISynchronousAsynchronousTaskPair<T>
     {
         private readonly TaskCompletionSource<T> _synchronous;
         private readonly TaskCompletionSource<T> _asynchronous;
@@ -19,7 +19,7 @@ namespace Nito.AsyncEx
         /// <summary>
         /// Creates a new pair of TCSs.
         /// </summary>
-        public TaskCompletionSourceSyncAsyncPair()
+        public SynchronousAsynchronousTaskCompletionSourcePair()
         {
             _synchronous = new TaskCompletionSource<T>();
             _asynchronous = new TaskCompletionSource<T>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -59,9 +59,9 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="result">The result value.</param>
         /// <returns>The completed TCS pair.</returns>
-        public static TaskCompletionSourceSyncAsyncPair<T> FromResult(T result)
+        public static SynchronousAsynchronousTaskCompletionSourcePair<T> FromResult(T result)
         {
-            var tcs = new TaskCompletionSourceSyncAsyncPair<T>();
+            var tcs = new SynchronousAsynchronousTaskCompletionSourcePair<T>();
             tcs.TrySetResult(result);
             return tcs;
         }
@@ -71,9 +71,9 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="exception">The exception.</param>
         /// <returns>The completed TCS pair.</returns>
-        public static TaskCompletionSourceSyncAsyncPair<T> FromException(Exception exception)
+        public static SynchronousAsynchronousTaskCompletionSourcePair<T> FromException(Exception exception)
         {
-            var tcs = new TaskCompletionSourceSyncAsyncPair<T>();
+            var tcs = new SynchronousAsynchronousTaskCompletionSourcePair<T>();
             tcs.TrySetException(exception);
             return tcs;
         }
@@ -83,9 +83,9 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The completed TCS pair.</returns>
-        public static TaskCompletionSourceSyncAsyncPair<T> FromCanceled(CancellationToken cancellationToken)
+        public static SynchronousAsynchronousTaskCompletionSourcePair<T> FromCanceled(CancellationToken cancellationToken)
         {
-            var tcs = new TaskCompletionSourceSyncAsyncPair<T>();
+            var tcs = new SynchronousAsynchronousTaskCompletionSourcePair<T>();
             tcs.TrySetCanceled(cancellationToken);
             return tcs;
         }
