@@ -3,9 +3,9 @@
   <PropertyGroup>
     <Description>Common helper methods for tasks as used in asynchronous programming.</Description>
     <VersionPrefix>5.0.0</VersionPrefix>
-    <VersionSuffix>pre-02</VersionSuffix>
+    <VersionSuffix>pre-05</VersionSuffix>
     <Authors>Stephen Cleary</Authors>
-    <TargetFramework>netstandard1.3</TargetFramework>
+    <TargetFrameworks>netstandard1.3;netstandard2.0</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>Nito.AsyncEx.Tasks</AssemblyName>
@@ -19,13 +19,13 @@
     <RootNamespace>Nito.AsyncEx</RootNamespace>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard1.3|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>full</DebugType>
     <DebugSymbols>True</DebugSymbols>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Nito.Disposables" Version="1.1.0" />
+    <PackageReference Include="Nito.Disposables" Version="1.2.3" />
   </ItemGroup>
 
 </Project>
