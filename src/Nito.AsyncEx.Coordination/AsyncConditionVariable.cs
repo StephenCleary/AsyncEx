@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Nito.AsyncEx.Synchronous;
+using Nito.AsyncEx.SynchronousAsynchronousPair;
 
 namespace Nito.AsyncEx
 {
@@ -85,13 +86,9 @@ namespace Nito.AsyncEx
             }
         }
 
-        /// <summary>
-        /// Asynchronously waits for a signal on this condition variable. The associated lock MUST be held when calling this method, and it will still be held when this method returns, even if the method is cancelled.
-        /// </summary>
-        /// <param name="cancellationToken">The cancellation signal used to cancel this wait.</param>
-        public Task WaitAsync(CancellationToken cancellationToken)
+        private ISynchronousAsynchronousTaskPair<object> DoWaitAsync(CancellationToken cancellationToken)
         {
-            Task task;
+            ISynchronousAsynchronousTaskPair<object> task;
             lock (_mutex)
             {
                 // Begin waiting for either a signal or cancellation.
@@ -107,7 +104,13 @@ namespace Nito.AsyncEx
             }
         }
 
-        private static async Task WaitAndRetakeLockAsync(Task task, AsyncLock asyncLock)
+        /// <summary>
+        /// Asynchronously waits for a signal on this condition variable. The associated lock MUST be held when calling this method, and it will still be held when this method returns, even if the method is cancelled.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation signal used to cancel this wait.</param>
+        public Task WaitAsync(CancellationToken cancellationToken) => DoWaitAsync(cancellationToken).AsynchronousTask;
+
+        private static async ISynchronousAsynchronousTaskPair<object> WaitAndRetakeLockAsync(ISynchronousAsynchronousTaskPair<object> task, AsyncLock asyncLock)
         {
             try
             {
@@ -118,6 +121,7 @@ namespace Nito.AsyncEx
                 // Re-take the lock.
                 await asyncLock.LockAsync().ConfigureAwait(false);
             }
+            return null;
         }
 
         /// <summary>
@@ -134,7 +138,7 @@ namespace Nito.AsyncEx
         /// <param name="cancellationToken">The cancellation signal used to cancel this wait.</param>
         public void Wait(CancellationToken cancellationToken)
         {
-            WaitAsync(cancellationToken).WaitAndUnwrapException();
+            DoWaitAsync(cancellationToken).SynchronousTask.WaitAndUnwrapException();
         }
 
         /// <summary>

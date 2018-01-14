@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Nito.AsyncEx.SynchronousAsynchronousPair;
 
 // Original idea from Stephen Toub: http://blogs.msdn.com/b/pfxteam/archive/2012/02/12/building-async-coordination-primitives-part-7-asyncreaderwriterlock.aspx
 
@@ -108,7 +109,7 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="cancellationToken">The cancellation token used to cancel the lock. If this is already set, then this method will attempt to take the lock immediately (succeeding if the lock is currently available).</param>
         /// <returns>A disposable that releases the lock when disposed.</returns>
-        private Task<IDisposable> RequestReaderLockAsync(CancellationToken cancellationToken)
+        private ISynchronousAsynchronousTaskPair<IDisposable> RequestReaderLockAsync(CancellationToken cancellationToken)
         {
             lock (_mutex)
             {
@@ -116,7 +117,7 @@ namespace Nito.AsyncEx
                 if (_locksHeld >= 0 && _writerQueue.IsEmpty)
                 {
                     ++_locksHeld;
-                    return Task.FromResult<IDisposable>(new ReaderKey(this));
+                    return SynchronousAsynchronousTaskCompletionSourcePair<IDisposable>.FromResult(new ReaderKey(this));
                 }
                 else
                 {
@@ -133,7 +134,7 @@ namespace Nito.AsyncEx
         /// <returns>A disposable that releases the lock when disposed.</returns>
         public AwaitableDisposable<IDisposable> ReaderLockAsync(CancellationToken cancellationToken)
         {
-            return new AwaitableDisposable<IDisposable>(RequestReaderLockAsync(cancellationToken));
+            return new AwaitableDisposable<IDisposable>(RequestReaderLockAsync(cancellationToken).AsynchronousTask);
         }
 
         /// <summary>
@@ -152,7 +153,7 @@ namespace Nito.AsyncEx
         /// <returns>A disposable that releases the lock when disposed.</returns>
         public IDisposable ReaderLock(CancellationToken cancellationToken)
         {
-            return RequestReaderLockAsync(cancellationToken).WaitAndUnwrapException();
+            return RequestReaderLockAsync(cancellationToken).SynchronousTask.WaitAndUnwrapException();
         }
 
         /// <summary>
@@ -169,16 +170,16 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="cancellationToken">The cancellation token used to cancel the lock. If this is already set, then this method will attempt to take the lock immediately (succeeding if the lock is currently available).</param>
         /// <returns>A disposable that releases the lock when disposed.</returns>
-        private Task<IDisposable> RequestWriterLockAsync(CancellationToken cancellationToken)
+        private ISynchronousAsynchronousTaskPair<IDisposable> RequestWriterLockAsync(CancellationToken cancellationToken)
         {
-            Task<IDisposable> ret;
+            ISynchronousAsynchronousTaskPair<IDisposable> ret;
             lock (_mutex)
             {
                 // If the lock is available, take it immediately.
                 if (_locksHeld == 0)
                 {
                     _locksHeld = -1;
-                    ret = Task.FromResult<IDisposable>(new WriterKey(this));
+                    ret = SynchronousAsynchronousTaskCompletionSourcePair<IDisposable>.FromResult(new WriterKey(this));
                 }
                 else
                 {
@@ -187,7 +188,7 @@ namespace Nito.AsyncEx
                 }
             }
 
-            ReleaseWaitersWhenCanceled(ret);
+            ReleaseWaitersWhenCanceled(ret.SynchronousTask);
             return ret;
         }
 
@@ -198,7 +199,7 @@ namespace Nito.AsyncEx
         /// <returns>A disposable that releases the lock when disposed.</returns>
         public AwaitableDisposable<IDisposable> WriterLockAsync(CancellationToken cancellationToken)
         {
-            return new AwaitableDisposable<IDisposable>(RequestWriterLockAsync(cancellationToken));
+            return new AwaitableDisposable<IDisposable>(RequestWriterLockAsync(cancellationToken).AsynchronousTask);
         }
 
         /// <summary>
@@ -217,7 +218,7 @@ namespace Nito.AsyncEx
         /// <returns>A disposable that releases the lock when disposed.</returns>
         public IDisposable WriterLock(CancellationToken cancellationToken)
         {
-            return RequestWriterLockAsync(cancellationToken).WaitAndUnwrapException();
+            return RequestWriterLockAsync(cancellationToken).SynchronousTask.WaitAndUnwrapException();
         }
 
         /// <summary>

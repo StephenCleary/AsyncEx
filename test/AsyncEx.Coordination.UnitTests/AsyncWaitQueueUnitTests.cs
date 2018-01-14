@@ -40,7 +40,8 @@ namespace UnitTests
             var queue = new DefaultAsyncWaitQueue<object>() as IAsyncWaitQueue<object>;
             var task = queue.Enqueue();
             queue.Dequeue();
-            Assert.True(task.IsCompleted);
+            Assert.True(task.SynchronousTask.IsCompleted);
+            Assert.True(task.AsynchronousTask.IsCompleted);
         }
 
         [Fact]
@@ -50,8 +51,10 @@ namespace UnitTests
             var task1 = queue.Enqueue();
             var task2 = queue.Enqueue();
             queue.Dequeue();
-            Assert.True(task1.IsCompleted);
-            await AsyncAssert.NeverCompletesAsync(task2);
+            Assert.True(task1.SynchronousTask.IsCompleted);
+            Assert.True(task1.AsynchronousTask.IsCompleted);
+            await AsyncAssert.NeverCompletesAsync(task2.SynchronousTask);
+            await AsyncAssert.NeverCompletesAsync(task2.AsynchronousTask);
         }
 
         [Fact]
@@ -61,7 +64,8 @@ namespace UnitTests
             var result = new object();
             var task = queue.Enqueue();
             queue.Dequeue(result);
-            Assert.Same(result, task.Result);
+            Assert.Same(result, task.SynchronousTask.Result);
+            Assert.Same(result, task.AsynchronousTask.Result);
         }
 
         [Fact]
@@ -70,7 +74,8 @@ namespace UnitTests
             var queue = new DefaultAsyncWaitQueue<object>() as IAsyncWaitQueue<object>;
             var task = queue.Enqueue();
             queue.Dequeue();
-            Assert.Equal(default(object), task.Result);
+            Assert.Equal(default(object), task.SynchronousTask.Result);
+            Assert.Equal(default(object), task.AsynchronousTask.Result);
         }
 
         [Fact]
@@ -80,8 +85,10 @@ namespace UnitTests
             var task1 = queue.Enqueue();
             var task2 = queue.Enqueue();
             queue.DequeueAll();
-            Assert.True(task1.IsCompleted);
-            Assert.True(task2.IsCompleted);
+            Assert.True(task1.SynchronousTask.IsCompleted);
+            Assert.True(task1.AsynchronousTask.IsCompleted);
+            Assert.True(task2.SynchronousTask.IsCompleted);
+            Assert.True(task2.AsynchronousTask.IsCompleted);
         }
 
         [Fact]
@@ -91,8 +98,10 @@ namespace UnitTests
             var task1 = queue.Enqueue();
             var task2 = queue.Enqueue();
             queue.DequeueAll();
-            Assert.Equal(default(object), task1.Result);
-            Assert.Equal(default(object), task2.Result);
+            Assert.Equal(default(object), task1.SynchronousTask.Result);
+            Assert.Equal(default(object), task1.AsynchronousTask.Result);
+            Assert.Equal(default(object), task2.SynchronousTask.Result);
+            Assert.Equal(default(object), task2.AsynchronousTask.Result);
         }
 
         [Fact]
@@ -103,8 +112,10 @@ namespace UnitTests
             var task1 = queue.Enqueue();
             var task2 = queue.Enqueue();
             queue.DequeueAll(result);
-            Assert.Same(result, task1.Result);
-            Assert.Same(result, task2.Result);
+            Assert.Same(result, task1.SynchronousTask.Result);
+            Assert.Same(result, task1.AsynchronousTask.Result);
+            Assert.Same(result, task2.SynchronousTask.Result);
+            Assert.Same(result, task2.AsynchronousTask.Result);
         }
 
         [Fact]
@@ -113,7 +124,8 @@ namespace UnitTests
             var queue = new DefaultAsyncWaitQueue<object>() as IAsyncWaitQueue<object>;
             var task = queue.Enqueue();
             queue.TryCancel(task, new CancellationToken(true));
-            Assert.True(task.IsCanceled);
+            Assert.True(task.SynchronousTask.IsCanceled);
+            Assert.True(task.AsynchronousTask.IsCanceled);
         }
 
         [Fact]
@@ -143,7 +155,8 @@ namespace UnitTests
             var cts = new CancellationTokenSource();
             var task = queue.Enqueue(new object(), cts.Token);
             cts.Cancel();
-            await AsyncAssert.ThrowsAsync<OperationCanceledException>(task);
+            await AsyncAssert.ThrowsAsync<OperationCanceledException>(task.SynchronousTask);
+            await AsyncAssert.ThrowsAsync<OperationCanceledException>(task.AsynchronousTask);
         }
 
         [Fact]
@@ -153,7 +166,8 @@ namespace UnitTests
             var cts = new CancellationTokenSource();
             var task = queue.Enqueue(new object(), cts.Token);
             cts.Cancel();
-            await AsyncAssert.ThrowsAsync<OperationCanceledException>(task);
+            await AsyncAssert.ThrowsAsync<OperationCanceledException>(task.SynchronousTask);
+            await AsyncAssert.ThrowsAsync<OperationCanceledException>(task.AsynchronousTask);
             Assert.True(queue.IsEmpty);
         }
 
@@ -176,7 +190,8 @@ namespace UnitTests
             var cts = new CancellationTokenSource();
             cts.Cancel();
             var task = queue.Enqueue(new object(), cts.Token);
-            Assert.True(task.IsCanceled);
+            Assert.True(task.SynchronousTask.IsCanceled);
+            Assert.True(task.AsynchronousTask.IsCanceled);
         }
 
         [Fact]

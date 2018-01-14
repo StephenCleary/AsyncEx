@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Nito.AsyncEx.Synchronous;
+using Nito.AsyncEx.SynchronousAsynchronousPair;
 
 // Original idea by Stephen Toub: http://blogs.msdn.com/b/pfxteam/archive/2012/02/11/10266923.aspx
 
@@ -80,19 +81,15 @@ namespace Nito.AsyncEx
             get { lock (_mutex) return _set; }
         }
 
-        /// <summary>
-        /// Asynchronously waits for this event to be set. If the event is set, this method will auto-reset it and return immediately, even if the cancellation token is already signalled. If the wait is canceled, then it will not auto-reset this event.
-        /// </summary>
-        /// <param name="cancellationToken">The cancellation token used to cancel this wait.</param>
-        public Task WaitAsync(CancellationToken cancellationToken)
+        private ISynchronousAsynchronousTaskPair<object> DoWaitAsync(CancellationToken cancellationToken)
         {
-            Task ret;
+            ISynchronousAsynchronousTaskPair<object> ret;
             lock (_mutex)
             {
                 if (_set)
                 {
                     _set = false;
-                    ret = TaskConstants.Completed;
+                    ret = SynchronousAsynchronousTaskCompletionSourcePair<object>.FromResult(null);
                 }
                 else
                 {
@@ -102,6 +99,12 @@ namespace Nito.AsyncEx
 
             return ret;
         }
+
+        /// <summary>
+        /// Asynchronously waits for this event to be set. If the event is set, this method will auto-reset it and return immediately, even if the cancellation token is already signalled. If the wait is canceled, then it will not auto-reset this event.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token used to cancel this wait.</param>
+        public Task WaitAsync(CancellationToken cancellationToken) => DoWaitAsync(cancellationToken).AsynchronousTask;
 
         /// <summary>
         /// Asynchronously waits for this event to be set. If the event is set, this method will auto-reset it and return immediately.
@@ -117,7 +120,7 @@ namespace Nito.AsyncEx
         /// <param name="cancellationToken">The cancellation token used to cancel this wait.</param>
         public void Wait(CancellationToken cancellationToken)
         {
-            WaitAsync(cancellationToken).WaitAndUnwrapException();
+            DoWaitAsync(cancellationToken).SynchronousTask.WaitAndUnwrapException();
         }
 
         /// <summary>
