@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Nito.AsyncEx.Synchronous;
+using Nito.AsyncEx.SynchronousAsynchronousPair;
 
 // Original idea by Stephen Toub: http://blogs.msdn.com/b/pfxteam/archive/2012/02/11/10266920.aspx
 
@@ -22,7 +23,7 @@ namespace Nito.AsyncEx
         /// <summary>
         /// The current state of the event.
         /// </summary>
-        private TaskCompletionSource<object> _tcs;
+        private SynchronousAsynchronousTaskCompletionSourcePair<object> _tcs;
 
         /// <summary>
         /// The semi-unique identifier for this instance. This is 0 if the id has not yet been created.
@@ -34,7 +35,7 @@ namespace Nito.AsyncEx
         {
             get
             {
-                return _tcs.Task.IsCompleted;
+                return _tcs.SynchronousTask.IsCompleted;
             }
         }
 
@@ -45,7 +46,7 @@ namespace Nito.AsyncEx
         public AsyncManualResetEvent(bool set)
         {
             _mutex = new object();
-            _tcs = TaskCompletionSourceExtensions.CreateAsyncTaskSource<object>();
+            _tcs = new SynchronousAsynchronousTaskCompletionSourcePair<object>();
             if (set)
                 _tcs.TrySetResult(null);
         }
@@ -71,19 +72,21 @@ namespace Nito.AsyncEx
         /// </summary>
         public bool IsSet
         {
-            get { lock (_mutex) return _tcs.Task.IsCompleted; }
+            get { lock (_mutex) return _tcs.SynchronousTask.IsCompleted; }
+        }
+
+        private ISynchronousAsynchronousTaskPair<object> DoWaitAsync()
+        {
+            lock (_mutex)
+            {
+                return _tcs;
+            }
         }
 
         /// <summary>
         /// Asynchronously waits for this event to be set.
         /// </summary>
-        public Task WaitAsync()
-        {
-            lock (_mutex)
-            {
-                return _tcs.Task;
-            }
-        }
+        public Task WaitAsync() => DoWaitAsync().AsynchronousTask;
 
         /// <summary>
         /// Asynchronously waits for this event to be set or for the wait to be canceled.
@@ -102,7 +105,7 @@ namespace Nito.AsyncEx
         /// </summary>
         public void Wait()
         {
-            WaitAsync().WaitAndUnwrapException();
+            DoWaitAsync().SynchronousTask.WaitAndUnwrapException();
         }
 
         /// <summary>
@@ -111,10 +114,10 @@ namespace Nito.AsyncEx
         /// <param name="cancellationToken">The cancellation token used to cancel the wait. If this token is already canceled, this method will first check whether the event is set.</param>
         public void Wait(CancellationToken cancellationToken)
         {
-            var ret = WaitAsync();
-            if (ret.IsCompleted)
+            var ret = DoWaitAsync();
+            if (ret.SynchronousTask.IsCompleted)
                 return;
-            ret.WaitAndUnwrapException(cancellationToken);
+            ret.SynchronousTask.WaitAndUnwrapException(cancellationToken);
         }
 
         /// <summary>
@@ -135,8 +138,8 @@ namespace Nito.AsyncEx
         {
             lock (_mutex)
             {
-                if (_tcs.Task.IsCompleted)
-                    _tcs = TaskCompletionSourceExtensions.CreateAsyncTaskSource<object>();
+                if (_tcs.SynchronousTask.IsCompleted)
+                    _tcs = new SynchronousAsynchronousTaskCompletionSourcePair<object>();
             }
         }
 
@@ -155,7 +158,7 @@ namespace Nito.AsyncEx
 
             public bool IsSet { get { return _mre.GetStateForDebugger; } }
 
-            public Task CurrentTask { get { return _mre._tcs.Task; } }
+            public Task CurrentTask { get { return _mre._tcs.AsynchronousTask; } }
         }
         // ReSharper restore UnusedMember.Local
     }
