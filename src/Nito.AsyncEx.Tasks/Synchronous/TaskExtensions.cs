@@ -10,6 +10,9 @@ namespace Nito.AsyncEx.Synchronous
     /// </summary>
     public static class TaskExtensions
     {
+        // All async coordination primitives code that calls WaitAndUnwrapException must do so on a synchronous task. Either one
+        //  retrieved from a method where `sync: true`, or a `SynchronousTask` from a task pair.
+
         /// <summary>
         /// Waits for the task to complete, unwrapping any exceptions.
         /// </summary>
