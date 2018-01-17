@@ -97,7 +97,7 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="cancellationToken">The cancellation token used to cancel the lock. If this is already set, then this method will attempt to take the lock immediately (succeeding if the lock is currently available).</param>
         /// <returns>A disposable that releases the lock when disposed.</returns>
-        private ISynchronousAsynchronousTaskPair<IDisposable> RequestLockAsync(CancellationToken cancellationToken)
+        internal ISynchronousAsynchronousTaskPair<IDisposable> RequestLockAsync(CancellationToken cancellationToken)
         {
             lock (_mutex)
             {

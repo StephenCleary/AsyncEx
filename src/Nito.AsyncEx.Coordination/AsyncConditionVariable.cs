@@ -119,7 +119,7 @@ namespace Nito.AsyncEx
             finally
             {
                 // Re-take the lock.
-                await asyncLock.LockAsync().ConfigureAwait(false);
+                await asyncLock.RequestLockAsync(CancellationToken.None).ConfigureAwait(false);
             }
             return null;
         }

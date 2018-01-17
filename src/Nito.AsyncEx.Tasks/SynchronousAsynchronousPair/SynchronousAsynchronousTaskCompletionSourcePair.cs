@@ -14,7 +14,6 @@ namespace Nito.AsyncEx.SynchronousAsynchronousPair
     {
         private readonly TaskCompletionSource<T> _synchronous;
         private readonly TaskCompletionSource<T> _asynchronous;
-        private readonly Task<bool> _linkingContinuation;
 
         /// <summary>
         /// Creates a new pair of TCSs.
@@ -23,7 +22,6 @@ namespace Nito.AsyncEx.SynchronousAsynchronousPair
         {
             _synchronous = new TaskCompletionSource<T>();
             _asynchronous = new TaskCompletionSource<T>(TaskCreationOptions.RunContinuationsAsynchronously);
-            _linkingContinuation = _asynchronous.LinkCompletionFromTask(_synchronous.Task);
         }
 
         /// <summary>
@@ -40,19 +38,31 @@ namespace Nito.AsyncEx.SynchronousAsynchronousPair
         /// Completes the task with the specified result.
         /// </summary>
         /// <param name="result">The task's result.</param>
-        public bool TrySetResult(T result) => _synchronous.TrySetResult(result);
+        public bool TrySetResult(T result)
+        {
+            _synchronous.TrySetResult(result);
+            return _asynchronous.TrySetResult(result);
+        }
 
         /// <summary>
         /// Completes the task with the specified exception.
         /// </summary>
         /// <param name="exception">The task's exception.</param>
-        public bool TrySetException(Exception exception) => _synchronous.TrySetException(exception);
+        public bool TrySetException(Exception exception)
+        {
+            _synchronous.TrySetException(exception);
+            return _asynchronous.TrySetException(exception);
+        }
 
         /// <summary>
         /// Completes the task as canceled by the specified cancellation token.
         /// </summary>
         /// <param name="cancellationToken">The task's cancelling token.</param>
-        public bool TrySetCanceled(CancellationToken cancellationToken) => _synchronous.TrySetCanceled(cancellationToken);
+        public bool TrySetCanceled(CancellationToken cancellationToken)
+        {
+            _synchronous.TrySetCanceled(cancellationToken);
+            return _asynchronous.TrySetCanceled(cancellationToken);
+        }
 
         /// <summary>
         /// Creates and completes a TCS pair from a result value.

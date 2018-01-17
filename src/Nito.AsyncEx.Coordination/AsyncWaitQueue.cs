@@ -111,14 +111,19 @@ namespace Nito.AsyncEx
 
         void IAsyncWaitQueue<T>.Dequeue(T result)
         {
-            _queue.RemoveFromFront().TrySetResult(result);
+            var item = _queue.RemoveFromFront();
+            SynchronizationContextSwitcher.NoContext(() => item.TrySetResult(result));
         }
 
         void IAsyncWaitQueue<T>.DequeueAll(T result)
         {
-            foreach (var source in _queue)
-                source.TrySetResult(result);
+            var items = new List<SynchronousAsynchronousTaskCompletionSourcePair<T>>(_queue);
             _queue.Clear();
+            SynchronizationContextSwitcher.NoContext(() =>
+            {
+                foreach (var source in items)
+                    source.TrySetResult(result);
+            });
         }
 
         bool IAsyncWaitQueue<T>.TryCancel(ISynchronousAsynchronousTaskPair<T> task, CancellationToken cancellationToken)
@@ -127,15 +132,21 @@ namespace Nito.AsyncEx
                 return false;
             var result = _queue.Remove(tcs);
             if (result)
-                tcs.TrySetCanceled(cancellationToken);
+            {
+                SynchronizationContextSwitcher.NoContext(() => tcs.TrySetCanceled(cancellationToken));
+            }
             return result;
         }
 
         void IAsyncWaitQueue<T>.CancelAll(CancellationToken cancellationToken)
         {
-            foreach (var source in _queue)
-                source.TrySetCanceled(cancellationToken);
+            var items = new List<SynchronousAsynchronousTaskCompletionSourcePair<T>>(_queue);
             _queue.Clear();
+            SynchronizationContextSwitcher.NoContext(() =>
+            {
+                foreach (var source in items)
+                    source.TrySetCanceled(cancellationToken);
+            });
         }
 
         [DebuggerNonUserCode]
