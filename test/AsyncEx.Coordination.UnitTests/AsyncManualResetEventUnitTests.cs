@@ -143,5 +143,46 @@ namespace UnitTests
             var mre = new AsyncManualResetEvent();
             Assert.NotEqual(0, mre.Id);
         }
+
+        [Fact]
+        public async Task WaitTimeoutReturnsFalse()
+        {
+            var target = new AsyncManualResetEvent();
+
+            bool actual = await target.WaitAsync(10);
+
+            Assert.Equal(false, actual);
+        }
+
+        [Fact]
+        public async Task WaitReturnsTrue()
+        {
+            var target = new AsyncManualResetEvent();
+
+            var waitTask = target.WaitAsync(10000);
+            target.Set();
+
+            await waitTask.WaitAsync(CancellationToken.None);
+
+            bool actual = target.IsSet;
+
+            Assert.Equal(true, actual);
+        }
+
+        [Fact]
+        public async Task ResetWaitTimeout()
+        {
+            var target = new AsyncManualResetEvent();
+
+            // Wait timeout
+            var actual = await target.WaitAsync(10);
+
+            // Reset and try again
+            target.Reset();
+
+            actual = target.IsSet;
+
+            Assert.Equal(false, actual);
+        }
     }
 }
