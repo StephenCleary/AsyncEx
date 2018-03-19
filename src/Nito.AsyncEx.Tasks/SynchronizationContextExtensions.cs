@@ -47,6 +47,10 @@ namespace Nito.AsyncEx
                     ((Action) state)();
                     tcs.TrySetResult(null);
                 }
+                catch(OperationCanceledException ex)
+                {
+                    tcs.TrySetCanceled(ex.CancellationToken);
+                }
                 catch (Exception ex)
                 {
                     tcs.TrySetException(ex);
@@ -69,6 +73,10 @@ namespace Nito.AsyncEx
                 try
                 {
                     tcs.SetResult(((Func<T>) state)());
+                }
+                catch (OperationCanceledException ex)
+                {
+                    tcs.TrySetCanceled(ex.CancellationToken);
                 }
                 catch (Exception ex)
                 {
@@ -93,6 +101,10 @@ namespace Nito.AsyncEx
                     await ((Func<Task>)state)().ConfigureAwait(false);
                     tcs.TrySetResult(null);
                 }
+                catch (OperationCanceledException ex)
+                {
+                    tcs.TrySetCanceled(ex.CancellationToken);
+                }
                 catch (Exception ex)
                 {
                     tcs.TrySetException(ex);
@@ -115,6 +127,10 @@ namespace Nito.AsyncEx
                 try
                 {
                     tcs.SetResult(await ((Func<Task<T>>)state)().ConfigureAwait(false));
+                }
+                catch (OperationCanceledException ex)
+                {
+                    tcs.TrySetCanceled(ex.CancellationToken);
                 }
                 catch (Exception ex)
                 {
