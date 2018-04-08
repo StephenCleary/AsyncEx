@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Nito.AsyncEx.Synchronous;
+using static Nito.AsyncEx.Internal.AsyncWaitQueueContinuationThread;
 
 // Original idea by Stephen Toub: http://blogs.msdn.com/b/pfxteam/archive/2012/02/11/10266920.aspx
 
@@ -45,7 +46,7 @@ namespace Nito.AsyncEx
         public AsyncManualResetEvent(bool set)
         {
             _mutex = new object();
-            _tcs = TaskCompletionSourceExtensions.CreateAsyncTaskSource<object>();
+            _tcs = TaskCompletionSourceExtensions.CreateSyncTaskSource<object>();
             if (set)
                 _tcs.TrySetResult(null);
         }
@@ -79,10 +80,16 @@ namespace Nito.AsyncEx
         /// </summary>
         public Task WaitAsync()
         {
-            lock (_mutex)
+            return ResumeOnDedicatedThread(async () =>
             {
-                return _tcs.Task;
-            }
+                Task task;
+                lock (_mutex)
+                {
+                    task = _tcs.Task;
+                }
+
+                await task;
+            });
         }
 
         /// <summary>

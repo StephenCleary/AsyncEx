@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Nito.AsyncEx.Synchronous;
+using static Nito.AsyncEx.Internal.AsyncWaitQueueContinuationThread;
 
 // Original idea from Stephen Toub: http://blogs.msdn.com/b/pfxteam/archive/2012/02/12/10266988.aspx
 
@@ -99,20 +100,23 @@ namespace Nito.AsyncEx
         /// <returns>A disposable that releases the lock when disposed.</returns>
         private Task<IDisposable> RequestLockAsync(CancellationToken cancellationToken)
         {
-            lock (_mutex)
+            return ResumeOnDedicatedThread(() =>
             {
-                if (!_taken)
+                lock (_mutex)
                 {
-                    // If the lock is available, take it immediately.
-                    _taken = true;
-                    return Task.FromResult<IDisposable>(new Key(this));
+                    if (!_taken)
+                    {
+                        // If the lock is available, take it immediately.
+                        _taken = true;
+                        return Task.FromResult<IDisposable>(new Key(this));
+                    }
+                    else
+                    {
+                        // Wait for the lock to become available or cancellation.
+                        return _queue.Enqueue(_mutex, cancellationToken);
+                    }
                 }
-                else
-                {
-                    // Wait for the lock to become available or cancellation.
-                    return _queue.Enqueue(_mutex, cancellationToken);
-                }
-            }
+            });
         }
 
         /// <summary>

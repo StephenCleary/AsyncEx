@@ -83,5 +83,10 @@ namespace Nito.AsyncEx
         {
             return new TaskCompletionSource<TResult>(TaskCreationOptions.RunContinuationsAsynchronously);
         }
+
+        public static TaskCompletionSource<TResult> CreateSyncTaskSource<TResult>()
+        {
+            return new TaskCompletionSource<TResult>(TaskCreationOptions.DenyChildAttach | TaskCreationOptions.HideScheduler);
+        }
     }
 }

@@ -18,5 +18,13 @@ namespace Nito.AsyncEx.Internal
         /// </summary>
         public static AsyncContextThread Thread { get; } = new AsyncContextThread();
 
+        /// <summary>
+        /// Executes async continuations on the dedicated continuation thread by default.
+        /// </summary>
+        /// <param name="action">The delegate to execute.</param>
+        public static T ResumeOnDedicatedThread<T>(Func<T> action)
+        {
+            return SynchronizationContextSwitcher.ApplyContext(Thread.Context.SynchronizationContext, action);
+        }
     }
 }
