@@ -143,5 +143,34 @@ namespace UnitTests
             var mre = new AsyncManualResetEvent();
             Assert.NotEqual(0, mre.Id);
         }
+
+        [Fact]
+        public void kljlkjl() {
+
+            var mre = new AsyncManualResetEvent(false);
+            var result = false;
+            var t1 = Task.Run(async () => {
+                await Task.Delay(100);
+                mre.Set();
+            });
+            var t2 = Task.Run(async () => {
+                using (var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(200)))
+                    result = await mre.TryWaitAsync(cts.Token);
+            });
+            Task.WhenAll(t1, t2).Wait();
+            Assert.True(result);
+
+            mre.Reset();
+            var t3 = Task.Run(async () => {
+                await Task.Delay(200);
+                mre.Set();
+            });
+            var t4 = Task.Run(async () => {
+                using (var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(100)))
+                    result = await mre.TryWaitAsync(cts.Token);
+            });
+            Task.WhenAll(t3, t4).Wait();
+            Assert.False(result);
+        }
     }
 }
