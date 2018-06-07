@@ -145,7 +145,7 @@ namespace UnitTests
         }
 
         [Fact]
-        public void kljlkjl() {
+        public void Try_Wait() {
 
             var mre = new AsyncManualResetEvent(false);
             var result = false;
