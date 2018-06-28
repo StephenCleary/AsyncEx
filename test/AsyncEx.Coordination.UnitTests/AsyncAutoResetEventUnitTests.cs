@@ -161,7 +161,7 @@ namespace UnitTests
         [Fact]
         public void Try_Wait() {
 
-            var mre = new AsyncManualResetEvent(false);
+            var mre = new AsyncAutoResetEvent(false);
             var result = false;
             var t1 = Task.Run(async () => {
                 await Task.Delay(100);
