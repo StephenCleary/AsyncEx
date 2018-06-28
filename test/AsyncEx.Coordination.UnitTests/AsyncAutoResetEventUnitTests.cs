@@ -157,5 +157,41 @@ namespace UnitTests
             var are = new AsyncAutoResetEvent();
             Assert.NotEqual(0, are.Id);
         }
+
+        [Fact]
+        public void TryWaitAsync_Success_ReturnsTrue() {
+
+            var are = new AsyncAutoResetEvent(false);
+            
+            /// Setup a task to set the event in 100ms from now
+            var t1 = Task.Run(async () => {
+                await Task.Delay(100);
+                are.Set();
+            });
+            
+            using (var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(200))) {
+                /// result should be true because we waited up to 200ms for something that would happen in 100ms
+                var result = are.TryWaitAsync(cts.Token).Result;
+                Assert.True(result);
+            }
+        }
+
+        [Fact]
+        public void TryWaitAsync_Failed_ReturnsFalse() {
+
+            var are = new AsyncAutoResetEvent(false);
+            
+            /// Setup a task to set the event in 200ms from now
+            var t3 = Task.Run(async () => {
+                await Task.Delay(200);
+                are.Set();
+            });
+
+            using (var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(100))) {
+                /// result should be false because we waited only 100ms for something that would happen in 200ms
+                var result = are.TryWaitAsync(cts.Token).Result;
+                Assert.False(result);
+            }
+        }
     }
 }

@@ -98,6 +98,21 @@ namespace Nito.AsyncEx
         }
 
         /// <summary>
+        /// Asynchronously waits for this event to be set or for the wait to be canceled.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token used to cancel the wait. If this token is already canceled, this method will first check whether the event is set.</param>
+        /// <returns>True if the event was set, False if the cancellation token was canceled.</returns>
+        public async Task<bool> TryWaitAsync(CancellationToken cancellationToken) 
+        {
+            try {
+                await WaitAsync(cancellationToken);
+                return true;
+            }catch (TaskCanceledException) {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Synchronously waits for this event to be set. This method may block the calling thread.
         /// </summary>
         public void Wait()

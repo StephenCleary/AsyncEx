@@ -143,5 +143,43 @@ namespace UnitTests
             var mre = new AsyncManualResetEvent();
             Assert.NotEqual(0, mre.Id);
         }
+
+        [Fact]
+        public void Try_Wait1() {
+
+            /// We'll be testing the TryWaitAsync extension methods on this manual reset event.
+            var mre = new AsyncManualResetEvent(false);
+            
+            /// Setup a task to set the event in 100ms from now
+            var t1 = Task.Run(async () => {
+                await Task.Delay(100);
+                mre.Set();
+            });
+            
+            using (var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(200))) {
+                /// result should be true because we waited up to 200ms for something that would happen in 100ms
+                var result = mre.TryWaitAsync(cts.Token).Result;
+                Assert.True(result);
+            }
+        }
+
+        [Fact]
+        public void Try_Wait2() {
+
+            /// We'll be testing the TryWaitAsync extension methods on this manual reset event.
+            var mre = new AsyncManualResetEvent(false);
+            
+            /// Setup a task to set the event in 100ms from now
+            var t3 = Task.Run(async () => {
+                await Task.Delay(200);
+                mre.Set();
+            });
+
+            using (var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(100))) {
+                /// result should be false because we waited only 100ms for something that would happen in 200ms
+                var result = mre.TryWaitAsync(cts.Token).Result;
+                Assert.False(result);
+            }
+        }
     }
 }
