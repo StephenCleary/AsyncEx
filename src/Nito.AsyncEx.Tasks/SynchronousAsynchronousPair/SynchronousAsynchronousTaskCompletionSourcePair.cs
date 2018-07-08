@@ -20,8 +20,8 @@ namespace Nito.AsyncEx.SynchronousAsynchronousPair
         /// </summary>
         public SynchronousAsynchronousTaskCompletionSourcePair()
         {
-            _synchronous = new TaskCompletionSource<T>(TaskCreationOptions.DenyChildAttach);
-            _asynchronous = new TaskCompletionSource<T>(TaskCreationOptions.DenyChildAttach | TaskCreationOptions.RunContinuationsAsynchronously);
+            _synchronous = new TaskCompletionSource<T>();
+            _asynchronous = new TaskCompletionSource<T>(TaskCreationOptions.RunContinuationsAsynchronously);
         }
 
         /// <summary>

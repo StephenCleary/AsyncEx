@@ -1,8 +1,8 @@
 ﻿using System.Threading;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Nito.AsyncEx.Internal;
 using Nito.AsyncEx.Synchronous;
-using Nito.AsyncEx.SynchronousAsynchronousPair;
 
 // Original idea by Stephen Toub: http://blogs.msdn.com/b/pfxteam/archive/2012/02/11/10266920.aspx
 
@@ -23,7 +23,7 @@ namespace Nito.AsyncEx
         /// <summary>
         /// The current state of the event.
         /// </summary>
-        private SynchronousAsynchronousTaskCompletionSourcePair<object> _tcs;
+        private DedicatedTaskCompletionSourcePair<object> _tcs;
 
         /// <summary>
         /// The semi-unique identifier for this instance. This is 0 if the id has not yet been created.
@@ -46,7 +46,7 @@ namespace Nito.AsyncEx
         public AsyncManualResetEvent(bool set)
         {
             _mutex = new object();
-            _tcs = new SynchronousAsynchronousTaskCompletionSourcePair<object>();
+            _tcs = new DedicatedTaskCompletionSourcePair<object>();
             if (set)
                 _tcs.TrySetResult(null);
         }
@@ -75,7 +75,7 @@ namespace Nito.AsyncEx
             get { lock (_mutex) return _tcs.SynchronousTask.IsCompleted; }
         }
 
-        private ISynchronousAsynchronousTaskPair<object> DoWaitAsync()
+        private DedicatedTaskCompletionSourcePair<object> DoWaitAsync()
         {
             lock (_mutex)
             {
@@ -97,7 +97,7 @@ namespace Nito.AsyncEx
             var waitTask = WaitAsync();
             if (waitTask.IsCompleted)
                 return waitTask;
-            return waitTask.WaitAsync(cancellationToken);
+            return waitTask.WaitAsync(cancellationToken); // TODO: requires threadpool thread
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Nito.AsyncEx
             lock (_mutex)
             {
                 if (_tcs.SynchronousTask.IsCompleted)
-                    _tcs = new SynchronousAsynchronousTaskCompletionSourcePair<object>();
+                    _tcs = new DedicatedTaskCompletionSourcePair<object>();
             }
         }
 

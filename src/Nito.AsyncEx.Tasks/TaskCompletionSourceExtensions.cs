@@ -83,19 +83,23 @@ namespace Nito.AsyncEx
         /// <typeparam name="TSourceResult">The type of the result of the source asynchronous operation.</typeparam>
         /// <param name="this">The task completion source. May not be <c>null</c>.</param>
         /// <param name="task">The task. May not be <c>null</c>.</param>
+        /// <param name="context">The context in which to execute the continuation. May be <c>null</c>.</param>
         /// <returns><c>true</c> if this method completed the task completion source; <c>false</c> if it was already completed.</returns>
-        public static async Task<bool> LinkCompletionFromTask<TResult, TSourceResult>(this TaskCompletionSource<TResult> @this, Task<TSourceResult> task) where TSourceResult : TResult
+        public static Task<bool> LinkCompletionFromTask<TResult, TSourceResult>(this TaskCompletionSource<TResult> @this, Task<TSourceResult> task, SynchronizationContext context = null) where TSourceResult : TResult
         {
-            bool result;
-            try
+            return SynchronizationContextSwitcher.ApplyContext(context, async () =>
             {
-                await task.ConfigureAwait(false);
-            }
-            finally
-            {
-                result = TryCompleteFromCompletedTask(@this, task);
-            }
-            return result;
+                bool result;
+                try
+                {
+                    await task.ConfigureAwait(false);
+                }
+                finally
+                {
+                    result = TryCompleteFromCompletedTask(@this, task);
+                }
+                return result;
+            });
         }
 
         /// <summary>
