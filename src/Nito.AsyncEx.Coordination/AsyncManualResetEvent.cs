@@ -122,9 +122,18 @@ namespace Nito.AsyncEx
         /// </summary>
         public void Set()
         {
+            Set(out _);
+        }
+
+        /// <summary>
+        /// Sets the event, atomically completing every task returned by <see cref="O:Nito.AsyncEx.AsyncManualResetEvent.WaitAsync"/>. If the event is already set, this method does nothing.
+        /// </summary>
+        /// <param name="wasSet">Indicates whether the event was set actually, or was already set.</param>
+        public void Set(out bool wasSet)
+        {
             lock (_mutex)
             {
-                _tcs.TrySetResult(null);
+                wasSet = _tcs.TrySetResult(null);
             }
         }
 

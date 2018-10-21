@@ -67,10 +67,7 @@ namespace Nito.AsyncEx
         /// <summary>
         /// Gets a semi-unique identifier for this asynchronous auto-reset event.
         /// </summary>
-        public int Id
-        {
-            get { return IdManager<AsyncAutoResetEvent>.GetId(ref _id); }
-        }
+        public int Id => IdManager<AsyncAutoResetEvent>.GetId(ref _id);
 
         /// <summary>
         /// Whether this event is currently set. This member is seldom used; code using this member has a high possibility of race conditions.
@@ -133,12 +130,27 @@ namespace Nito.AsyncEx
         /// </summary>
         public void Set()
         {
+            Set(out _);
+        }
+
+        /// <summary>
+        /// Sets the event, atomically completing a task returned by <see cref="o:WaitAsync"/>. If the event is already set, this method does nothing.
+        /// </summary>
+        /// <param name="wasSet">Indicates whether the event was set actually, or was already set.</param>
+        public void Set(out bool wasSet)
+        {
             lock (_mutex)
             {
                 if (_queue.IsEmpty)
+                {
                     _set = true;
+                    wasSet = true;
+                }
                 else
+                {
                     _queue.Dequeue();
+                    wasSet = false;
+                }
             }
         }
 
@@ -153,11 +165,11 @@ namespace Nito.AsyncEx
                 _are = are;
             }
 
-            public int Id { get { return _are.Id; } }
+            public int Id => _are.Id;
 
-            public bool IsSet { get { return _are._set; } }
+            public bool IsSet => _are._set;
 
-            public IAsyncWaitQueue<object> WaitQueue { get { return _are._queue; } }
+            public IAsyncWaitQueue<object> WaitQueue => _are._queue;
         }
         // ReSharper restore UnusedMember.Local
     }
