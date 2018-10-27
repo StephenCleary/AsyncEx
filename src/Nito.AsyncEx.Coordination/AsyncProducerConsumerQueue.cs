@@ -127,7 +127,7 @@ namespace Nito.AsyncEx
                 while (Full && !_completed)
                 {
                     if (sync)
-                        _completedOrNotFull.Wait();
+                        _completedOrNotFull.Wait(cancellationToken);
                     else
                         await _completedOrNotFull.WaitAsync(cancellationToken).ConfigureAwait(false);
                 }
@@ -195,7 +195,7 @@ namespace Nito.AsyncEx
                 while (Empty && !_completed)
                 {
                     if (sync)
-                        _completedOrNotEmpty.Wait();
+                        _completedOrNotEmpty.Wait(cancellationToken);
                     else
                         await _completedOrNotEmpty.WaitAsync(cancellationToken).ConfigureAwait(false);
                 }
