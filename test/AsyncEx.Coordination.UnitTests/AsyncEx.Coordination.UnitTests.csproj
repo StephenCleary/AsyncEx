@@ -30,6 +30,7 @@
     <PackageReference Include="ReportGenerator" Version="4.0.4" />
     <PackageReference Include="coveralls.io" Version="1.4.2" />
     <PackageReference Include="OpenCover" Version="4.6.519" />
+    <PackageReference Include="Nito.Disposables" Version="2.0.0" />
   </ItemGroup>
 
 </Project>
