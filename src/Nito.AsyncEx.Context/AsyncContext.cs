@@ -210,12 +210,7 @@ namespace Nito.AsyncEx
             get
             {
                 var syncContext = SynchronizationContext.Current as AsyncContextSynchronizationContext;
-                if (syncContext == null)
-                {
-                    return null;
-                }
-
-                return syncContext.Context;
+                return syncContext?.Context;
             }
         }
 

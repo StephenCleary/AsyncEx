@@ -319,8 +319,7 @@ namespace UnitTests
             }
             catch (AggregateException ex)
             {
-                var oce = ex.InnerException as OperationCanceledException;
-                if (oce != null)
+                if (ex.InnerException is OperationCanceledException oce)
                     return oce.CancellationToken;
             }
             return CancellationToken.None;
