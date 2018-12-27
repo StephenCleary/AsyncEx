@@ -18,7 +18,7 @@ namespace Nito.AsyncEx
         /// Initializes a new instance of the <see cref="SynchronizationContextSwitcher"/> class, installing the new <see cref="SynchronizationContext"/>.
         /// </summary>
         /// <param name="newContext">The new <see cref="SynchronizationContext"/>. This can be <c>null</c> to remove an existing <see cref="SynchronizationContext"/>.</param>
-        public SynchronizationContextSwitcher(SynchronizationContext newContext)
+        private SynchronizationContextSwitcher(SynchronizationContext newContext)
             : base(new object())
         {
             _oldContext = SynchronizationContext.Current;
@@ -50,6 +50,28 @@ namespace Nito.AsyncEx
         public static T NoContext<T>(Func<T> action)
         {
             using (new SynchronizationContextSwitcher(null))
+                return action();
+        }
+
+        /// <summary>
+        /// Executes a synchronous delegate with the specified <see cref="SynchronizationContext"/> as "current". The previous current context is restored when this function returns.
+        /// </summary>
+        /// <param name="context">The context to treat as "current". May be <c>null</c> to indicate the thread pool context.</param>
+        /// <param name="action">The delegate to execute.</param>
+        public static void ApplyContext(SynchronizationContext context, Action action)
+        {
+            using (new SynchronizationContextSwitcher(context))
+                action();
+        }
+
+        /// <summary>
+        /// Executes a synchronous or asynchronous delegate without the specified <see cref="SynchronizationContext"/> as "current". The previous current context is restored when this function synchronously returns.
+        /// </summary>
+        /// <param name="context">The context to treat as "current". May be <c>null</c> to indicate the thread pool context.</param>
+        /// <param name="action">The delegate to execute.</param>
+        public static T ApplyContext<T>(SynchronizationContext context, Func<T> action)
+        {
+            using (new SynchronizationContextSwitcher(context))
                 return action();
         }
     }

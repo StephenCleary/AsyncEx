@@ -104,7 +104,7 @@ namespace Nito.AsyncEx
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public void Execute()
         {
-            using (new SynchronizationContextSwitcher(_synchronizationContext))
+            SynchronizationContextSwitcher.ApplyContext(_synchronizationContext, () =>
             {
                 var tasks = _queue.GetConsumingEnumerable();
                 foreach (var task in tasks)
@@ -115,7 +115,7 @@ namespace Nito.AsyncEx
                     if (task.Item2)
                         task.Item1.WaitAndUnwrapException();
                 }
-            }
+            });
         }
 
         /// <summary>
