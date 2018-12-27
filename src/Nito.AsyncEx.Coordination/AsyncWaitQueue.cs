@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Nito.AsyncEx.Internal;
 using Nito.Collections;
 
 namespace Nito.AsyncEx
@@ -76,7 +77,7 @@ namespace Nito.AsyncEx
                 lock (mutex)
                     @this.TryCancel(ret, token);
             }, useSynchronizationContext: false);
-            ret.ContinueWith(_ => registration.Dispose(), CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
+            ret.ContinueWith(_ => registration.Dispose(), CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously, AsyncWaitQueueContinuationThread.Thread.Factory.Scheduler);
             return ret;
         }
     }

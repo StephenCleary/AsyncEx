@@ -37,6 +37,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsyncEx.Oop.UnitTests", "te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsyncEx.Tasks.UnitTests", "test\AsyncEx.Tasks.UnitTests\AsyncEx.Tasks.UnitTests.csproj", "{8B6341C7-AF1F-4713-B7C9-D097B2378142}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullFrameworkTests", "test\FullFrameworkTests\FullFrameworkTests.csproj", "{6A08B8B9-F8F6-4A71-B670-3F9FFEA293DC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,10 @@ Global
 		{8B6341C7-AF1F-4713-B7C9-D097B2378142}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B6341C7-AF1F-4713-B7C9-D097B2378142}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B6341C7-AF1F-4713-B7C9-D097B2378142}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A08B8B9-F8F6-4A71-B670-3F9FFEA293DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A08B8B9-F8F6-4A71-B670-3F9FFEA293DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A08B8B9-F8F6-4A71-B670-3F9FFEA293DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A08B8B9-F8F6-4A71-B670-3F9FFEA293DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -98,5 +104,9 @@ Global
 		{8EF01C49-665F-481A-AF19-1335292BE59A} = {89C049C2-1211-4BB8-A2FA-D8ECB60676A1}
 		{F85ECD63-74E0-49EA-910F-0A27A915FDA2} = {89C049C2-1211-4BB8-A2FA-D8ECB60676A1}
 		{8B6341C7-AF1F-4713-B7C9-D097B2378142} = {89C049C2-1211-4BB8-A2FA-D8ECB60676A1}
+		{6A08B8B9-F8F6-4A71-B670-3F9FFEA293DC} = {89C049C2-1211-4BB8-A2FA-D8ECB60676A1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E510A3E4-0E5F-4F98-9059-28B6487F55D2}
 	EndGlobalSection
 EndGlobal
