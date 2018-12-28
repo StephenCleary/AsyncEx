@@ -8,6 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		appveyor.yml = appveyor.yml
 		Build.ps1 = Build.ps1
 		Coverage.ps1 = Coverage.ps1
+		global.json = global.json
 		nuspec\Nito.AsyncEx.nuspec = nuspec\Nito.AsyncEx.nuspec
 		README.md = README.md
 		Version.ps1 = Version.ps1
@@ -98,5 +99,8 @@ Global
 		{8EF01C49-665F-481A-AF19-1335292BE59A} = {89C049C2-1211-4BB8-A2FA-D8ECB60676A1}
 		{F85ECD63-74E0-49EA-910F-0A27A915FDA2} = {89C049C2-1211-4BB8-A2FA-D8ECB60676A1}
 		{8B6341C7-AF1F-4713-B7C9-D097B2378142} = {89C049C2-1211-4BB8-A2FA-D8ECB60676A1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B4638CC6-F431-4430-8FD0-C51DF9E9B77F}
 	EndGlobalSection
 EndGlobal
