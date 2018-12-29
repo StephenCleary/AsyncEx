@@ -2,7 +2,7 @@ AsyncEx is a library designed to assist with programming when using the `async` 
 
 ## Asynchronous Coordination Primitives
 
-Most people just need [[AsyncLock]], but AsyncEx also includes [[AsyncManualResetEvent]], [[AsyncAutoResetEvent]], [[AsyncConditionVariable]], [[AsyncMonitor]], [[AsyncSemaphore]], [[AsyncCountdownEvent]], and [[AsyncReaderWriterLock]].
+Most people just need (AsyncLock)[AsyncLock], but AsyncEx also includes [[AsyncManualResetEvent]], [[AsyncAutoResetEvent]], [[AsyncConditionVariable]], [[AsyncMonitor]], [[AsyncSemaphore]], [[AsyncCountdownEvent]], and [[AsyncReaderWriterLock]].
 
 ## Asynchronous and Concurrent Collections
 
