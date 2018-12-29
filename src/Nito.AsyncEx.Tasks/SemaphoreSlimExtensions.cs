@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Nito.Disposables;
 
 namespace Nito.AsyncEx
 {
@@ -14,7 +15,7 @@ namespace Nito.AsyncEx
         private static async Task<IDisposable> DoLockAsync(SemaphoreSlim @this, CancellationToken cancellationToken)
         {
             await @this.WaitAsync(cancellationToken).ConfigureAwait(false);
-            return Disposables.AnonymousDisposable.Create(() => @this.Release());
+            return AnonymousDisposable.Create(() => @this.Release());
         }
 
         /// <summary>
@@ -40,7 +41,7 @@ namespace Nito.AsyncEx
         public static IDisposable Lock(this SemaphoreSlim @this, CancellationToken cancellationToken)
         {
             @this.Wait(cancellationToken);
-            return Disposables.AnonymousDisposable.Create(() => @this.Release());
+            return AnonymousDisposable.Create(() => @this.Release());
         }
 
         /// <summary>
