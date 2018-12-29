@@ -1,6 +1,6 @@
 ## Overview
 
-This is the `async`-ready almost-equivalent of the `lock` keyword or the [[Mutex type|https://docs.microsoft.com/en-us/dotnet/api/system.threading.mutex]], similar to Stephen Toub's [[AsyncLock|https://blogs.msdn.microsoft.com/pfxteam/2012/02/12/building-async-coordination-primitives-part-6-asynclock/]]. It's only _almost_ equivalent because the `lock` keyword permits reentrancy, which is not currently possible to do with an `async`-ready lock.
+This is the `async`-ready almost-equivalent of the `lock` keyword or the [`Mutex` type](https://docs.microsoft.com/en-us/dotnet/api/system.threading.mutex), similar to Stephen Toub's [AsyncLock](https://blogs.msdn.microsoft.com/pfxteam/2012/02/12/building-async-coordination-primitives-part-6-asynclock/). It's only _almost_ equivalent because the `lock` keyword permits reentrancy, which is not currently possible to do with an `async`-ready lock.
 
 An `AsyncLock` is either taken or not. The lock can be asynchronously acquired by calling `LockAsync`, and it is released by disposing the result of that task. `AsyncLock` taken an optional `CancellationToken`, which can be used to cancel the acquiring of the lock.
 
@@ -40,7 +40,7 @@ public async Task DoStuffAsync()
 
 `AsyncLock` also supports synchronous locking with the `Lock` method.
 
-You can call `Lock` or `LockAsync` [with an already-cancelled `CancellationToken`](Cancellation) to attempt to acquire the `AsyncLock` immediately without actually entering the wait queue.
+You can call `Lock` or `LockAsync` [with an already-cancelled `CancellationToken`](Cancellation.md) to attempt to acquire the `AsyncLock` immediately without actually entering the wait queue.
 
 ## Really Advanced Usage
 

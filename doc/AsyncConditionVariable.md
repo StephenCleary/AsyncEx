@@ -1,8 +1,8 @@
 ## Overview
 
-This is an `async`-ready [[condition variable|http://en.wikipedia.org/wiki/Condition_variable]], a classical synchronization primitive in computer science without a direct .NET equivalent.
+This is an `async`-ready [condition variable](https://en.wikipedia.org/wiki/Condition_variable), a classical synchronization primitive in computer science without a direct .NET equivalent.
 
-An `AsyncConditionVariable` is associated with a single [[AsyncLock]]. All methods on the `AsyncConditionVariable` type ***require*** that you hold the associated lock before calling them. There's no runtime checks for these preconditions because there is no way to check them; you'll just have to be careful. I recommend you combine the `AsyncLock` with its associated `AsyncConditionVariable` instances into a higher-level custom lock/signal system. Note that the simple case of a single `AsyncLock` with a single `AsyncConditionVariable` is equivalent to [[AsyncMonitor]].
+An `AsyncConditionVariable` is associated with a single [AsyncLock](AsyncLock.md). All methods on the `AsyncConditionVariable` type ***require*** that you hold the associated lock before calling them. There's no runtime checks for these preconditions because there is no way to check them; you'll just have to be careful. I recommend you combine the `AsyncLock` with its associated `AsyncConditionVariable` instances into a higher-level custom lock/signal system. Note that the simple case of a single `AsyncLock` with a single `AsyncConditionVariable` is equivalent to [AsyncMonitor](AsyncMonitor.md).
 
 Waiting on an `AsyncConditionVariable` enables an `async` method to (asynchronously) wait for some condition to become true. While waiting, that `async` method gives up the `AsyncLock`. When the condition becomes true, another `async` method notifies the `AsyncConditionVariable`, which re-acquires the `AsyncLock` and releases the waiter.
 

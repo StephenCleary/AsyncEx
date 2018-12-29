@@ -2,40 +2,40 @@ AsyncEx is a library designed to assist with programming when using the `async` 
 
 ## Asynchronous Coordination Primitives
 
-Most people just need [AsyncLock](AsyncLock.md), but AsyncEx also includes [[AsyncManualResetEvent]], [[AsyncAutoResetEvent]], [[AsyncConditionVariable]], [[AsyncMonitor]], [[AsyncSemaphore]], [[AsyncCountdownEvent]], and [[AsyncReaderWriterLock]].
+Most people just need [AsyncLock](AsyncLock.md), but AsyncEx also includes [AsyncManualResetEvent](AsyncManualResetEvent.md), [AsyncAutoResetEvent](AsyncAutoResetEvent.md), [AsyncConditionVariable](AsyncConditionVariable.md), [AsyncMonitor](AsyncMonitor.md), [AsyncSemaphore](AsyncSemaphore.md), [AsyncCountdownEvent](AsyncCountdownEvent.md), and [AsyncReaderWriterLock](AsyncReaderWriterLock.md).
 
 ## Asynchronous and Concurrent Collections
 
-[[AsyncProducerConsumerQueue]] is an `async`-ready producer/consumer queue that works on all platforms.
+[AsyncProducerConsumerQueue](AsyncProducerConsumerQueue.md) is an `async`-ready producer/consumer queue that works on all platforms.
 
-[[AsyncCollection]] is an `async`-compatible wrapper around `IProducerConsumerCollection`, in the same way that [[BlockingCollection|https://docs.microsoft.com/en-us/dotnet/api/system.collections.concurrent.blockingcollection-1]] is a blocking wrapper around `IProducerConsumerCollection`.
+[AsyncCollection](AsyncCollection.md) is an `async`-compatible wrapper around `IProducerConsumerCollection`, in the same way that [BlockingCollection](https://docs.microsoft.com/en-us/dotnet/api/system.collections.concurrent.blockingcollection-1) is a blocking wrapper around `IProducerConsumerCollection`.
 
 ## AsyncLazy
 
-The [[AsyncLazy]] class provides support for [[asynchronous lazy initialization|https://blog.stephencleary.com/2012/08/asynchronous-lazy-initialization.html]].
+The [AsyncLazy](AsyncLazy.md) class provides support for [asynchronous lazy initialization](https://blog.stephencleary.com/2012/08/asynchronous-lazy-initialization.html).
 
 ## AsyncContext
 
-The [[AsyncContext]] class and the related `AsyncContextThread` class provide contexts for asynchronous operations for situations where such a context is lacking (i.e., Console applications and Win32 services).
+The [AsyncContext](AsyncContext.md) class and the related `AsyncContextThread` class provide contexts for asynchronous operations for situations where such a context is lacking (i.e., Console applications and Win32 services).
 
 ## Interop
 
-The [[ApmAsyncFactory]] classes interoperate between Task-based Asynchronous Programming (`async`) and the Asynchronous Programming Model (`IAsyncResult`).
+The [ApmAsyncFactory](ApmAsyncFactory.md) classes interoperate between Task-based Asynchronous Programming (`async`) and the Asynchronous Programming Model (`IAsyncResult`).
 
 ## Utility Types and Methods
 
-You can use [[OrderByCompletion|TaskExtensions]] to order tasks by when they complete.
+You can use [OrderByCompletion](TaskExtensions.md) to order tasks by when they complete.
 
 ## Miscellaneous
 
-[[TaskConstants]] provides static constant `Task<TResult>` values.
+[TaskConstants](TaskConstants.md) provides static constant `Task<TResult>` values.
 
 ## Extension Methods
 
-[[TaskCompletionSourceExtensions]] has several extension methods for `TaskCompletionSource<T>`, including propagating results from a completed `Task`.
+[TaskCompletionSourceExtensions](TaskCompletionSourceExtensions.md) has several extension methods for `TaskCompletionSource<T>`, including propagating results from a completed `Task`.
 
-[[TaskFactoryExtensions]] adds `Run` overloads to task factories.
+[TaskFactoryExtensions](TaskFactoryExtensions.md) adds `Run` overloads to task factories.
 
 ## Low-Level Building Blocks
 
-[[ExceptionHelpers.PrepareForRethrow|ExceptionHelpers]] will preserve the stack trace when rethrowing any exception.
+[ExceptionHelpers.PrepareForRethrow](ExceptionHelpers.md) will preserve the stack trace when rethrowing any exception.

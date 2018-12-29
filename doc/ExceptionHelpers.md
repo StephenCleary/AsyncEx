@@ -11,4 +11,4 @@ Exception ex = ...; // get saved exception
 throw ExceptionHelpers.PrepareForRethrow(ex);
 ```
 
-`PrepareForRethrow` uses [[ExceptionDispatchInfo|https://docs.microsoft.com/en-us/dotnet/api/system.runtime.exceptionservices.exceptiondispatchinfo]].
+`PrepareForRethrow` uses [ExceptionDispatchInfo](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.exceptionservices.exceptiondispatchinfo).
