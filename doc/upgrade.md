@@ -36,10 +36,6 @@ The obsolete `CompleteAddingAsync` has also been removed; use `CompleteAdding` i
 
 The semantics for `AsyncCountdownEvent` have been modified; its count can now be negative, and the event is only signalled when the count is `0`. Integer overflow or underflow now always cause exceptions, so the `TryAddCount` and `TrySignal` methods have been removed.
 
-### AsyncCollection
-
-`AsyncCollection<T>` has been removed. If your collection was used as a queue, then use `AsyncProducerConsumerQueue<T>` or `BufferBlock<T>` from [`System.Threading.Tasks.Dataflow`](https://www.nuget.org/packages/System.Threading.Tasks.Dataflow) instead. Otherwise, you'll need to write your own collection wrapper, using `AsyncLock` and `AsyncConditionVariable` appropriately.
-
 ### AsyncBarrier
 
 `AsyncBarrier` has been removed. Replace uses of `AsyncBarrier` with appropriate explicit synchronization primitives (e.g., `AsyncManualResetEvent`).
