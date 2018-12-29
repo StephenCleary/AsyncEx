@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -133,6 +134,40 @@ namespace Nito.AsyncEx
                 throw new ArgumentNullException(nameof(@this));
 
             return Task.WhenAll(@this);
+        }
+
+        /// <summary>
+        /// DANGEROUS! Ignores the completion of this task. Also ignores exceptions.
+        /// </summary>
+        /// <param name="this">The task to ignore.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static async void Ignore(this Task @this)
+        {
+            try
+            {
+                await @this.ConfigureAwait(false);
+            }
+            catch
+            {
+                // ignored
+            }
+        }
+
+        /// <summary>
+        /// DANGEROUS! Ignores the completion and results of this task. Also ignores exceptions.
+        /// </summary>
+        /// <param name="this">The task to ignore.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static async void Ignore<T>(this Task<T> @this)
+        {
+            try
+            {
+                await @this.ConfigureAwait(false);
+            }
+            catch
+            {
+                // ignored
+            }
         }
 
         /// <summary>
