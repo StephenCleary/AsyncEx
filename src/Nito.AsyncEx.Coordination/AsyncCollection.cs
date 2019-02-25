@@ -43,6 +43,11 @@ namespace Nito.AsyncEx
         private readonly AsyncConditionVariable _completedOrNotEmpty;
 
         /// <summary>
+        /// The underlying queue used to order the items handed out to Take calls.
+        /// </summary>
+        private readonly IAsyncWaitQueue<T> _queue;
+
+        /// <summary>
         /// Whether the collection has been marked completed for adding.
         /// </summary>
         private bool _completed;
@@ -52,7 +57,8 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="collection">The collection to wrap.</param>
         /// <param name="maxCount">The maximum element count. This must be greater than zero.</param>
-        public AsyncCollection(IProducerConsumerCollection<T> collection, int maxCount)
+        /// <param name="queue">The wait queue used to manage waiters. This may be <c>null</c> to use a default (FIFO) queue.</param>
+        public AsyncCollection(IProducerConsumerCollection<T> collection, int maxCount, IAsyncWaitQueue<T> queue)
         {
             collection = collection ?? new ConcurrentQueue<T>();
             if (maxCount <= 0)
@@ -64,6 +70,17 @@ namespace Nito.AsyncEx
             _mutex = new AsyncLock();
             _completedOrNotFull = new AsyncConditionVariable(_mutex);
             _completedOrNotEmpty = new AsyncConditionVariable(_mutex);
+            _queue = queue ?? new DefaultAsyncWaitQueue<T>();
+        }
+
+        /// <summary>
+        /// Creates a new async-compatible producer/consumer collection wrapping the specified collection and with a maximum element count.
+        /// </summary>
+        /// <param name="collection">The collection to wrap.</param>
+        /// <param name="maxCount">The maximum element count. This must be greater than zero.</param>
+        public AsyncCollection(IProducerConsumerCollection<T> collection, int maxCount)
+            : this(collection, maxCount, null)
+        {
         }
 
         /// <summary>
@@ -71,7 +88,7 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="collection">The collection to wrap.</param>
         public AsyncCollection(IProducerConsumerCollection<T> collection)
-            : this(collection, int.MaxValue)
+            : this(collection, int.MaxValue, null)
         {
         }
 
@@ -80,7 +97,7 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="maxCount">The maximum element count. This must be greater than zero.</param>
         public AsyncCollection(int maxCount)
-            : this(null, maxCount)
+            : this(null, maxCount, null)
         {
         }
 
@@ -88,7 +105,7 @@ namespace Nito.AsyncEx
         /// Creates a new async-compatible producer/consumer collection.
         /// </summary>
         public AsyncCollection()
-            : this(null, int.MaxValue)
+            : this(null, int.MaxValue, null)
         {
         }
 
@@ -250,6 +267,7 @@ namespace Nito.AsyncEx
         /// <exception cref="InvalidOperationException">The collection has been marked complete for adding and is empty.</exception>
         private async Task<T> DoTakeAsync(CancellationToken cancellationToken, bool sync)
         {
+            var queuedTask = _queue.Enqueue(_queue, cancellationToken);
             using (sync ? _mutex.Lock() : await _mutex.LockAsync().ConfigureAwait(false))
             {
                 while (Empty && !_completed)
@@ -265,10 +283,12 @@ namespace Nito.AsyncEx
 
                 if (!_collection.TryTake(out T item))
                     throw new InvalidOperationException("Take failed; the take from the underlying collection failed.");
+                _queue.Dequeue(item);
 
                 _completedOrNotFull.Notify();
-                return item;
             }
+
+            return await queuedTask.ConfigureAwait(false); // todo: sync == true
         }
 
         /// <summary>
