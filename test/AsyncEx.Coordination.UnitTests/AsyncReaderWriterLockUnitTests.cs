@@ -2,7 +2,6 @@
 using Nito.AsyncEx.Testing;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -194,6 +193,71 @@ namespace UnitTests
 
             await Task.WhenAll(AsyncAssert.NeverCompletesAsync(writeLock),
                 AsyncAssert.NeverCompletesAsync(readLock));
+        }
+
+        [Fact]
+        public async Task WaitingWriter_Canceled_SignalWaitingReaders()
+        {
+            var rwl = new AsyncReaderWriterLock();
+
+            // Thread A enters a read lock.
+            var readLock = rwl.ReaderLock();
+
+            // Thread B wants to enter a write lock within 600 ms. Because Thread A holds
+            // a read lock, Thread B will not get the write lock.
+            var taskB = Task.Run(async () =>
+            {
+                using (var source = new CancellationTokenSource(600))
+                {
+                    var writeLock = null as IDisposable;
+                    try
+                    {
+                        writeLock = rwl.WriterLock(source.Token);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                    }
+
+                    await Task.Delay(600);
+
+                    writeLock?.Dispose();
+                }
+            });
+
+            // Thread C wants to enter a read lock. It should get the lock after
+            // 600 ms because Thread B cancels its try to get the write lock after
+            // that time.
+            var taskC = Task.Run(async () =>
+            {
+                // Wait a bit before trying to enter the lock, to ensure Thread B is already
+                // in the TryEnter...() call.
+                await Task.Delay(300);
+
+                // Now try to get a read lock.
+                var readLock2 = rwl.ReaderLock();
+
+                readLock2.Dispose();
+            });
+
+            // Thread D wants to enter a read lock after Thread B canceled the try to get
+            // a write lock.
+            var taskD = Task.Run(async () =>
+            {
+                // Wait until Thread B canceled its try to get a write lock.
+                await Task.Delay(1000);
+
+                // Now try to get a read lock.
+                var readLock2 = rwl.ReaderLock();
+
+                readLock2.Dispose();
+            });
+
+            await taskB;
+
+            Assert.True(taskD.IsCompleted);
+            Assert.True(taskC.IsCompleted, "cancellation of writer lock did no signal waiting reader locks");
+
+            readLock.Dispose();
         }
 
         [Fact]
