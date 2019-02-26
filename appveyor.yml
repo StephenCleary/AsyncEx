@@ -2,11 +2,8 @@ version: '{build}'
 os: Visual Studio 2017
 configuration: Debug
 environment:
-  COVERALLS_REPO_TOKEN:
-    secure: J44I7BBE2zLjWu8pPKX15RiOmmohBvbMu+8fjtc1kIC08J0Ek051GLm6l6YDExIa
-branches:
-  only:
-    - master
+  COVERALLS_REPO_TOKEN: PdIoUw5qtbBoybXQE1gjcp29qrZSyqgX7
+skip_branch_with_pr: true
 build_script:
 - ps: >-
     ./Build.ps1
@@ -15,11 +12,14 @@ build_script:
 test_script:
 - ps: ./Coverage.ps1
 artifacts:
-  - path: '**\*.nupkg'
+  - path: '*.nupkg'
+  - path: 'src\**\*.nupkg'
     name: NuGet Packages
+  - path: 'src\**\*.snupkg'
+    name: NuGet Symbol Packages
 deploy:
   provider: NuGet
   api_key:
     secure: QeC34B7ohkvqbwCOKmavQWhitZNYLX/EFdgK8CfL5jEujWw2L85qrzuME8CQRBEb
   on:
-    appveyor_repo_tag: true
+    APPVEYOR_REPO_TAG: true

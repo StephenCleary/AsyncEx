@@ -7,22 +7,15 @@
     <Authors>Stephen Cleary</Authors>
     <TargetFrameworks>netstandard1.3;netstandard2.0</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <NoWarn>NU5125</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <AssemblyName>Nito.AsyncEx.Interop.WaitHandles</AssemblyName>
-    <PackageId>Nito.AsyncEx.Interop.WaitHandles</PackageId>
     <PackageTags>task;async;waithandle</PackageTags>
     <PackageProjectUrl>https://github.com/StephenCleary/AsyncEx</PackageProjectUrl>
     <PackageIconUrl>https://github.com/StephenCleary/AsyncEx/raw/master/AsyncEx.128.png</PackageIconUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/StephenCleary/AsyncEx/master/LICENSE</PackageLicenseUrl>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/StephenCleary/AsyncEx.git</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <RootNamespace>Nito.AsyncEx</RootNamespace>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DebugType>full</DebugType>
-    <DebugSymbols>True</DebugSymbols>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
@@ -31,6 +24,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Nito.AsyncEx.Tasks\Nito.AsyncEx.Tasks.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-18618-05">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

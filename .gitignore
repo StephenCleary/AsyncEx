@@ -177,3 +177,4 @@ FakesAssemblies/
 *.userprefs
 *.lock.json
 /.vs
+/tools
