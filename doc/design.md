@@ -13,3 +13,4 @@
   - `AutoResetEvent.Reset` is [an exception to this rule](https://github.com/StephenCleary/AsyncEx/issues/27#issuecomment-133921579).
 - Keep all synchronization primitives consistent. If you're adding something to one type, consider **all** other primitives and add it to all of them at the same time.
 - [Do not use explicit timeouts (`int` or `TimeSpan` parameters)](https://github.com/StephenCleary/AsyncEx/issues/46#issuecomment-187685580). These are only present on the synchronous primitives because they can be passed down to the Win32 API layer; in the asynchronous primitive world, use `CancellationToken` instead. If you really want overloads with timeout parameters, they are easy to add as extension methods in your own code.
+- When unit testing, do not have timing-dependent tests.
