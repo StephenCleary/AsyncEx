@@ -234,22 +234,26 @@ namespace Nito.AsyncEx
         /// </summary>
         private void ReleaseWaiters()
         {
-            if (_locksHeld != 0)
+            if (_locksHeld == -1)
                 return;
 
-            // Give priority to writers.
+            // Give priority to writers, then readers.
             if (!_writerQueue.IsEmpty)
             {
-                _locksHeld = -1;
-                _writerQueue.Dequeue(new WriterKey(this));
-                return;
+                if (_locksHeld == 0)
+                {
+                    _locksHeld = -1;
+                    _writerQueue.Dequeue(new WriterKey(this));
+                    return;
+                }
             }
-
-            // Then to readers.
-            while (!_readerQueue.IsEmpty)
+            else
             {
-                _readerQueue.Dequeue(new ReaderKey(this));
-                ++_locksHeld;
+                while (!_readerQueue.IsEmpty)
+                {
+                    _readerQueue.Dequeue(new ReaderKey(this));
+                    ++_locksHeld;
+                }
             }
         }
 
