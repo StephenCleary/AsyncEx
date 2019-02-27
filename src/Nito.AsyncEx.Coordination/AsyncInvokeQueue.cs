@@ -26,11 +26,12 @@ namespace Nito.AsyncEx
         /// <summary>
         /// Invokes the asynchronous operation.
         /// </summary>
-        public Task<T> InvokeAsync()
+        /// <param name="cancellationToken">The cancellation token to cancel the invocation. This is <i>not</i> passed to the asynchronous operation!</param>
+        public Task<T> InvokeAsync(CancellationToken cancellationToken)
         {
             lock (_mutex)
             {
-                var result = _queue.Enqueue();
+                var result = _queue.Enqueue(_mutex, cancellationToken);
                 if (!_executing)
                     Go();
                 return result;
@@ -77,17 +78,21 @@ namespace Nito.AsyncEx
             {
                 lock (_mutex)
                 {
-                    if (exception != null)
-                        _queue.DequeueException(exception);
-                    else if (cancellationToken != null)
-                        _queue.DequeueCancel(cancellationToken.Value);
-                    else
-                        _queue.Dequeue(result);
-
                     if (!_queue.IsEmpty)
+                    {
+                        if (exception != null)
+                            _queue.DequeueException(exception);
+                        else if (cancellationToken != null)
+                            _queue.DequeueCancel(cancellationToken.Value);
+                        else
+                            _queue.Dequeue(result);
+
                         Go();
+                    }
                     else
+                    {
                         _executing = false;
+                    }
                 }
             }
         }
