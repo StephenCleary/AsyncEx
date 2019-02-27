@@ -31,6 +31,18 @@ namespace Nito.AsyncEx
         void Dequeue(T result = default(T));
 
         /// <summary>
+        /// Removes a single entry in the wait queue and completes it as canceled. This method may only be called if <see cref="IsEmpty"/> is <c>false</c>. The task continuations for the completed task must be executed asynchronously.
+        /// </summary>
+        /// <param name="cancellationToken">The token used to complete the wait queue entry.</param>
+        void DequeueCancel(CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Removes a single entry in the wait queue and completes it as faulted. This method may only be called if <see cref="IsEmpty"/> is <c>false</c>. The task continuations for the completed task must be executed asynchronously.
+        /// </summary>
+        /// <param name="exception">The exception used to complete the wait queue entry.</param>
+        void DequeueException(Exception exception);
+
+        /// <summary>
         /// Removes all entries in the wait queue and completes them. The task continuations for the completed tasks must be executed asynchronously.
         /// </summary>
         /// <param name="result">The result used to complete the wait queue entries. If this isn't needed, use <c>default(T)</c>.</param>
@@ -112,6 +124,10 @@ namespace Nito.AsyncEx
         {
             _queue.RemoveFromFront().TrySetResult(result);
         }
+
+        void IAsyncWaitQueue<T>.DequeueCancel(CancellationToken cancellationToken) => _queue.RemoveFromFront().TrySetCanceled(cancellationToken);
+
+        void IAsyncWaitQueue<T>.DequeueException(Exception exception) => _queue.RemoveFromFront().TrySetException(exception);
 
         void IAsyncWaitQueue<T>.DequeueAll(T result)
         {
