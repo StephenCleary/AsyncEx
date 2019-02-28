@@ -64,7 +64,7 @@ namespace Nito.AsyncEx
             Exception exception = null;
             try
             {
-                result = await _func();
+                result = await task;
             }
             catch (OperationCanceledException ex)
             {
@@ -87,7 +87,10 @@ namespace Nito.AsyncEx
                         else
                             _queue.Dequeue(result);
 
-                        Go();
+                        if (!_queue.IsEmpty)
+                            Go();
+                        else
+                            _executing = false;
                     }
                     else
                     {
