@@ -68,7 +68,7 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="writerQueue">The wait queue used to manage waiters for writer locks. This may be <c>null</c> to use a default (FIFO) queue.</param>
         /// <param name="readerQueue">The wait queue used to manage waiters for reader locks. This may be <c>null</c> to use a default (FIFO) queue.</param>
-        public AsyncReaderWriterLock(IAsyncWaitQueue<IDisposable> writerQueue, IAsyncWaitQueue<IDisposable> readerQueue)
+        internal AsyncReaderWriterLock(IAsyncWaitQueue<IDisposable> writerQueue, IAsyncWaitQueue<IDisposable> readerQueue)
         {
             _writerQueue = writerQueue ?? new DefaultAsyncWaitQueue<IDisposable>();
             _readerQueue = readerQueue ?? new DefaultAsyncWaitQueue<IDisposable>();

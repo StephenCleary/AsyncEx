@@ -26,7 +26,7 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="lockQueue">The wait queue used to manage waiters for the lock. This may be <c>null</c> to use a default (FIFO) queue.</param>
         /// <param name="conditionVariableQueue">The wait queue used to manage waiters for the signal. This may be <c>null</c> to use a default (FIFO) queue.</param>
-        public AsyncMonitor(IAsyncWaitQueue<IDisposable> lockQueue, IAsyncWaitQueue<object> conditionVariableQueue)
+        internal AsyncMonitor(IAsyncWaitQueue<IDisposable> lockQueue, IAsyncWaitQueue<object> conditionVariableQueue)
         {
             _asyncLock = new AsyncLock(lockQueue);
             _conditionVariable = new AsyncConditionVariable(_asyncLock, conditionVariableQueue);

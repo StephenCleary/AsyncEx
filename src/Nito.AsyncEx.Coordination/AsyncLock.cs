@@ -78,7 +78,7 @@ namespace Nito.AsyncEx
         /// Creates a new async-compatible mutual exclusion lock using the specified wait queue.
         /// </summary>
         /// <param name="queue">The wait queue used to manage waiters. This may be <c>null</c> to use a default (FIFO) queue.</param>
-        public AsyncLock(IAsyncWaitQueue<IDisposable> queue)
+        internal AsyncLock(IAsyncWaitQueue<IDisposable> queue)
         {
             _queue = queue ?? new DefaultAsyncWaitQueue<IDisposable>();
             _mutex = new object();

@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Nito.Collections;
+
+[assembly:InternalsVisibleTo("AsyncEx.Coordination.UnitTests")]
 
 namespace Nito.AsyncEx
 {
@@ -11,7 +14,7 @@ namespace Nito.AsyncEx
     /// A collection of cancelable <see cref="TaskCompletionSource{T}"/> instances. Implementations must assume the caller is holding a lock.
     /// </summary>
     /// <typeparam name="T">The type of the results. If this isn't needed, use <see cref="Object"/>.</typeparam>
-    public interface IAsyncWaitQueue<T>
+    internal interface IAsyncWaitQueue<T>
     {
         /// <summary>
         /// Gets whether the queue is empty.
@@ -53,7 +56,7 @@ namespace Nito.AsyncEx
     /// <summary>
     /// Provides extension methods for wait queues.
     /// </summary>
-    public static class AsyncWaitQueueExtensions
+    internal static class AsyncWaitQueueExtensions
     {
         /// <summary>
         /// Creates a new entry and queues it to this wait queue. If the cancellation token is already canceled, this method immediately returns a canceled task without modifying the wait queue.
@@ -87,7 +90,7 @@ namespace Nito.AsyncEx
     /// <typeparam name="T">The type of the results. If this isn't needed, use <see cref="Object"/>.</typeparam>
     [DebuggerDisplay("Count = {Count}")]
     [DebuggerTypeProxy(typeof(DefaultAsyncWaitQueue<>.DebugView))]
-    public sealed class DefaultAsyncWaitQueue<T> : IAsyncWaitQueue<T>
+    internal sealed class DefaultAsyncWaitQueue<T> : IAsyncWaitQueue<T>
     {
         private readonly Deque<TaskCompletionSource<T>> _queue = new Deque<TaskCompletionSource<T>>();
 
