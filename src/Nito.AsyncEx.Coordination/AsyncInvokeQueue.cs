@@ -26,6 +26,11 @@ namespace Nito.AsyncEx
         /// <summary>
         /// Invokes the asynchronous operation.
         /// </summary>
+        public Task<T> InvokeAsync() => InvokeAsync(CancellationToken.None);
+
+        /// <summary>
+        /// Invokes the asynchronous operation.
+        /// </summary>
         /// <param name="cancellationToken">The cancellation token to cancel the invocation. This is <i>not</i> passed to the asynchronous operation!</param>
         public Task<T> InvokeAsync(CancellationToken cancellationToken)
         {
