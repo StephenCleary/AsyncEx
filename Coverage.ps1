@@ -29,7 +29,7 @@ if ($null -eq $testProjectLocations) {
 }
 
 Function ResolveAndForcePath([string]$relativePath) {
-	mkdir -Force $relativePath | Out-Null
+	New-Item -ItemType Directory -Force $relativePath | Out-Null
 	return (Resolve-Path $relativePath).Path
 }
 
