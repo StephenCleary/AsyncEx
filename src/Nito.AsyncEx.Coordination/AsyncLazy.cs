@@ -155,7 +155,6 @@ namespace Nito.AsyncEx
         /// <summary>
         /// Asynchronous infrastructure support. This method permits instances of <see cref="AsyncLazy&lt;T&gt;"/> to be await'ed.
         /// </summary>
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public ConfiguredTaskAwaitable<T> ConfigureAwait(bool continueOnCapturedContext)
         {
             return Task.ConfigureAwait(continueOnCapturedContext);
