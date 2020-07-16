@@ -1,4 +1,6 @@
-![Logo](AsyncEx.128.png)
+<p align="center">
+  <img src="AsyncEx.128.png" alt="Logo" />
+</p>
 
 # AsyncEx
 
