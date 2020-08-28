@@ -52,6 +52,11 @@ namespace Nito.AsyncEx
         private bool _taken;
 
         /// <summary>
+        /// Fires when lock is taken or released.
+        /// </summary>
+        public event Action<bool> Taken;
+
+        /// <summary>
         /// The queue of TCSs that other tasks are awaiting to acquire the lock.
         /// </summary>
         private readonly IAsyncWaitQueue<IDisposable> _queue;
@@ -105,6 +110,7 @@ namespace Nito.AsyncEx
                 {
                     // If the lock is available, take it immediately.
                     _taken = true;
+                    Taken?.Invoke(_taken);
                     return Task.FromResult<IDisposable>(new Key(this));
                 }
                 else
@@ -159,7 +165,10 @@ namespace Nito.AsyncEx
             lock (_mutex)
             {
                 if (_queue.IsEmpty)
+                {
                     _taken = false;
+                    Taken?.Invoke(_taken);
+                }
                 else
                     _queue.Dequeue(new Key(this));
             }

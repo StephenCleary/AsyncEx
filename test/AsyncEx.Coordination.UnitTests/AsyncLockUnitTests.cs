@@ -257,5 +257,42 @@ namespace UnitTests
                 task1.Wait();
             });
         }
+
+        [Fact]
+        public async Task AsyncLock_TakenFires()
+        {
+            int takenCount = 0;
+            int releasedCount = 0;
+            var mutex = new AsyncLock();
+
+            void OnTaken(bool taken)
+            {
+                if (taken)
+                {
+                    takenCount++;
+                }
+                else
+                {
+                    releasedCount++;
+                }
+            }
+            mutex.Taken += OnTaken;
+
+            using (mutex.Lock())
+            {
+                Assert.Equal(1, takenCount);
+                Assert.Equal(0, releasedCount);
+            }
+            Assert.Equal(1, takenCount);
+            Assert.Equal(1, releasedCount);
+
+            using (await mutex.LockAsync())
+            {
+                Assert.Equal(2, takenCount);
+                Assert.Equal(1, releasedCount);
+            }
+            Assert.Equal(2, takenCount);
+            Assert.Equal(2, releasedCount);
+        }
     }
 }
