@@ -221,7 +221,7 @@ namespace Nito.AsyncEx
         }
 
         /// <summary>
-        /// Asynchronously acquires the lock as a writer. Returns a disposable that releases the lock when disposed. This method may block the calling thread.
+        /// Synchronously acquires the lock as a writer. Returns a disposable that releases the lock when disposed. This method may block the calling thread.
         /// </summary>
         /// <returns>A disposable that releases the lock when disposed.</returns>
         public IDisposable WriterLock()
