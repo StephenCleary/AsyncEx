@@ -16,6 +16,7 @@ namespace Nito.AsyncEx
         public static async Task ExecuteAsTask(Action func)
 #pragma warning restore 1998
         {
+            _ = func ?? throw new ArgumentNullException(nameof(func));
             func();
         }
 
@@ -27,6 +28,7 @@ namespace Nito.AsyncEx
         public static async Task<T> ExecuteAsTask<T>(Func<T> func)
 #pragma warning restore 1998
         {
+            _ = func ?? throw new ArgumentNullException(nameof(func));
             return func();
         }
     }

@@ -22,7 +22,7 @@ namespace Nito.AsyncEx
         /// <summary>
         /// The current state of the event.
         /// </summary>
-        private TaskCompletionSource<object> _tcs;
+        private TaskCompletionSource<object?> _tcs;
 
         /// <summary>
         /// The semi-unique identifier for this instance. This is 0 if the id has not yet been created.
@@ -45,7 +45,7 @@ namespace Nito.AsyncEx
         public AsyncManualResetEvent(bool set)
         {
             _mutex = new object();
-            _tcs = TaskCompletionSourceExtensions.CreateAsyncTaskSource<object>();
+            _tcs = TaskCompletionSourceExtensions.CreateAsyncTaskSource<object?>();
             if (set)
                 _tcs.TrySetResult(null);
         }
@@ -111,15 +111,17 @@ namespace Nito.AsyncEx
         /// <param name="cancellationToken">The cancellation token used to cancel the wait. If this token is already canceled, this method will first check whether the event is set.</param>
         public void Wait(CancellationToken cancellationToken)
         {
-            var ret = WaitAsync();
+            var ret = WaitAsync(CancellationToken.None);
             if (ret.IsCompleted)
                 return;
             ret.WaitAndUnwrapException(cancellationToken);
         }
 
+#pragma warning disable CA1200 // Avoid using cref tags with a prefix
         /// <summary>
         /// Sets the event, atomically completing every task returned by <see cref="O:Nito.AsyncEx.AsyncManualResetEvent.WaitAsync"/>. If the event is already set, this method does nothing.
         /// </summary>
+#pragma warning restore CA1200 // Avoid using cref tags with a prefix
         public void Set()
         {
             lock (_mutex)
@@ -136,7 +138,7 @@ namespace Nito.AsyncEx
             lock (_mutex)
             {
                 if (_tcs.Task.IsCompleted)
-                    _tcs = TaskCompletionSourceExtensions.CreateAsyncTaskSource<object>();
+                    _tcs = TaskCompletionSourceExtensions.CreateAsyncTaskSource<object?>();
             }
         }
 

@@ -205,7 +205,7 @@ namespace Nito.AsyncEx
         /// <summary>
         /// Gets the current <see cref="AsyncContext"/> for this thread, or <c>null</c> if this thread is not currently running in an <see cref="AsyncContext"/>.
         /// </summary>
-        public static AsyncContext Current
+        public static AsyncContext? Current
         {
             get
             {
@@ -226,14 +226,19 @@ namespace Nito.AsyncEx
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public TaskScheduler Scheduler => _taskScheduler;
 
+
+#pragma warning disable CA1200 // Avoid using cref tags with a prefix
         /// <summary>
-        /// Gets the <see cref="TaskFactory"/> for this <see cref="AsyncContext"/>. Note that this factory has the <see cref="TaskCreationOptions.HideScheduler"/> option set. Be careful with async delegates; you may need to call <see cref="M:System.Threading.SynchronizationContext.OperationStarted"/> and <see cref="M:System.Threading.SynchronizationContext.OperationCompleted"/> to prevent early termination of this <see cref="AsyncContext"/>.
+        /// Gets the <see cref="TaskFactory"/> for this <see cref="AsyncContext"/>. Note that this factory has the <see cref="TaskCreationOptions.HideScheduler"/> option set. Be careful with async delegates; you may need to call <see cref="M:System.Threding.SynchronizationContext.OperationStarted"/> and <see cref="M:System.Threading.SynchronizationContext.OperationCompleted"/> to prevent early termination of this <see cref="AsyncContext"/>.
         /// </summary>
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+#pragma warning restore CA1200 // Avoid using cref tags with a prefix
         public TaskFactory Factory => _taskFactory;
 
         [DebuggerNonUserCode]
+#pragma warning disable CA1812 // Avoid uninstantiated internal classes
         internal sealed class DebugView
+#pragma warning restore CA1812 // Avoid uninstantiated internal classes
         {
             private readonly AsyncContext _context;
 

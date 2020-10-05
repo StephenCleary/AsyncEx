@@ -18,13 +18,13 @@ namespace Nito.AsyncEx.Interop
         /// <returns>The asynchronous operation, to be returned by the Begin method of the APM pattern.</returns>
         public static IAsyncResult ToBegin(Task task, AsyncCallback callback, object state)
         {
-            var tcs = new TaskCompletionSource<object>(state, TaskCreationOptions.RunContinuationsAsynchronously);
+            var tcs = new TaskCompletionSource<object?>(state, TaskCreationOptions.RunContinuationsAsynchronously);
             SynchronizationContextSwitcher.NoContext(() => CompleteAsync(task, callback, tcs));
             return tcs.Task;
         }
 
         // `async void` is on purpose, to raise `callback` exceptions directly on the thread pool.
-        private static async void CompleteAsync(Task task, AsyncCallback callback, TaskCompletionSource<object> tcs)
+        private static async void CompleteAsync(Task task, AsyncCallback callback, TaskCompletionSource<object?> tcs)
         {
             try
             {
@@ -35,7 +35,9 @@ namespace Nito.AsyncEx.Interop
             {
                 tcs.TrySetCanceled(ex.CancellationToken);
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception ex)
+#pragma warning restore CA1031 // Do not catch general exception types
             {
                 tcs.TrySetException(ex);
             }
@@ -80,7 +82,9 @@ namespace Nito.AsyncEx.Interop
             {
                 tcs.TrySetCanceled(ex.CancellationToken);
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception ex)
+#pragma warning restore CA1031 // Do not catch general exception types
             {
                 tcs.TrySetException(ex);
             }

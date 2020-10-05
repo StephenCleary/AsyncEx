@@ -38,7 +38,7 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="asyncLock">The lock associated with this condition variable.</param>
         /// <param name="queue">The wait queue used to manage waiters. This may be <c>null</c> to use a default (FIFO) queue.</param>
-        internal AsyncConditionVariable(AsyncLock asyncLock, IAsyncWaitQueue<object> queue)
+        internal AsyncConditionVariable(AsyncLock asyncLock, IAsyncWaitQueue<object>? queue)
         {
             _asyncLock = asyncLock;
             _queue = queue ?? new DefaultAsyncWaitQueue<object>();
@@ -134,7 +134,7 @@ namespace Nito.AsyncEx
         /// <param name="cancellationToken">The cancellation signal used to cancel this wait.</param>
         public void Wait(CancellationToken cancellationToken)
         {
-            WaitAsync(cancellationToken).WaitAndUnwrapException();
+            WaitAsync(cancellationToken).WaitAndUnwrapException(CancellationToken.None);
         }
 
         /// <summary>

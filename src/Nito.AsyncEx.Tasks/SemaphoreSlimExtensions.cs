@@ -15,7 +15,7 @@ namespace Nito.AsyncEx
         private static async Task<IDisposable> DoLockAsync(SemaphoreSlim @this, CancellationToken cancellationToken)
         {
             await @this.WaitAsync(cancellationToken).ConfigureAwait(false);
-            return AnonymousDisposable.Create(() => @this.Release());
+            return Disposable.Create(() => @this.Release());
         }
 
         /// <summary>
@@ -25,7 +25,10 @@ namespace Nito.AsyncEx
         /// <param name="cancellationToken">The cancellation token used to cancel the wait.</param>
         public static AwaitableDisposable<IDisposable> LockAsync(this SemaphoreSlim @this, CancellationToken cancellationToken)
         {
+            _ = @this ?? throw new ArgumentNullException(nameof(@this));
+#pragma warning disable CA2000 // Dispose objects before losing scope
             return new AwaitableDisposable<IDisposable>(DoLockAsync(@this, cancellationToken));
+#pragma warning restore CA2000 // Dispose objects before losing scope
         }
 
         /// <summary>
@@ -40,8 +43,9 @@ namespace Nito.AsyncEx
         /// <param name="cancellationToken">The cancellation token used to cancel the wait.</param>
         public static IDisposable Lock(this SemaphoreSlim @this, CancellationToken cancellationToken)
         {
+            _ = @this ?? throw new ArgumentNullException(nameof(@this));
             @this.Wait(cancellationToken);
-            return AnonymousDisposable.Create(() => @this.Release());
+            return Disposable.Create(() => @this.Release());
         }
 
         /// <summary>

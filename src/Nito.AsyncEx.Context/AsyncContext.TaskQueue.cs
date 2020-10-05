@@ -35,7 +35,7 @@ namespace Nito.AsyncEx
             }
 
             /// <summary>
-            /// Generates an enumerable of <see cref="T:System.Threading.Tasks.Task"/> instances currently queued to the scheduler waiting to be executed.
+            /// Generates an enumerable of <see cref="Task"/> instances currently queued to the scheduler waiting to be executed.
             /// </summary>
             /// <returns>An enumerable that allows traversal of tasks currently queued to this scheduler.</returns>
             [System.Diagnostics.DebuggerNonUserCode]

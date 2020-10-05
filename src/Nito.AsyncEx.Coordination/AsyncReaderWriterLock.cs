@@ -68,7 +68,7 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="writerQueue">The wait queue used to manage waiters for writer locks. This may be <c>null</c> to use a default (FIFO) queue.</param>
         /// <param name="readerQueue">The wait queue used to manage waiters for reader locks. This may be <c>null</c> to use a default (FIFO) queue.</param>
-        internal AsyncReaderWriterLock(IAsyncWaitQueue<IDisposable> writerQueue, IAsyncWaitQueue<IDisposable> readerQueue)
+        internal AsyncReaderWriterLock(IAsyncWaitQueue<IDisposable>? writerQueue, IAsyncWaitQueue<IDisposable>? readerQueue)
         {
             _writerQueue = writerQueue ?? new DefaultAsyncWaitQueue<IDisposable>();
             _readerQueue = readerQueue ?? new DefaultAsyncWaitQueue<IDisposable>();
@@ -178,7 +178,9 @@ namespace Nito.AsyncEx
                 if (_locksHeld == 0)
                 {
                     _locksHeld = -1;
+#pragma warning disable CA2000 // Dispose objects before losing scope
                     ret = Task.FromResult<IDisposable>(new WriterKey(this));
+#pragma warning restore CA2000 // Dispose objects before losing scope
                 }
                 else
                 {
@@ -243,7 +245,9 @@ namespace Nito.AsyncEx
                 if (_locksHeld == 0)
                 {
                     _locksHeld = -1;
+#pragma warning disable CA2000 // Dispose objects before losing scope
                     _writerQueue.Dequeue(new WriterKey(this));
+#pragma warning restore CA2000 // Dispose objects before losing scope
                     return;
                 }
             }
@@ -251,7 +255,9 @@ namespace Nito.AsyncEx
             {
                 while (!_readerQueue.IsEmpty)
                 {
+#pragma warning disable CA2000 // Dispose objects before losing scope
                     _readerQueue.Dequeue(new ReaderKey(this));
+#pragma warning restore CA2000 // Dispose objects before losing scope
                     ++_locksHeld;
                 }
             }

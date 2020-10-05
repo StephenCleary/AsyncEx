@@ -32,7 +32,7 @@ namespace Nito.AsyncEx
         private static async Task DoWaitAsync(Task task, CancellationToken cancellationToken)
         {
             using (var cancelTaskSource = new CancellationTokenTaskSource<object>(cancellationToken))
-                await await Task.WhenAny(task, cancelTaskSource.Task).ConfigureAwait(false);
+                await (await Task.WhenAny(task, cancelTaskSource.Task).ConfigureAwait(false)).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Nito.AsyncEx
         private static async Task<TResult> DoWaitAsync<TResult>(Task<TResult> task, CancellationToken cancellationToken)
         {
             using (var cancelTaskSource = new CancellationTokenTaskSource<TResult>(cancellationToken))
-                return await await Task.WhenAny(task, cancelTaskSource.Task).ConfigureAwait(false);
+                return await (await Task.WhenAny(task, cancelTaskSource.Task).ConfigureAwait(false)).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -143,11 +143,14 @@ namespace Nito.AsyncEx
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static async void Ignore(this Task @this)
         {
+            _ = @this ?? throw new ArgumentNullException(nameof(@this));
             try
             {
                 await @this.ConfigureAwait(false);
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch
+#pragma warning restore CA1031 // Do not catch general exception types
             {
                 // ignored
             }
@@ -160,11 +163,14 @@ namespace Nito.AsyncEx
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static async void Ignore<T>(this Task<T> @this)
         {
+            _ = @this ?? throw new ArgumentNullException(nameof(@this));
             try
             {
                 await @this.ConfigureAwait(false);
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch
+#pragma warning restore CA1031 // Do not catch general exception types
             {
                 // ignored
             }
@@ -230,7 +236,7 @@ namespace Nito.AsyncEx
 
             // Allocate a TCS array and an array of the resulting tasks.
             var numTasks = taskArray.Length;
-            var tcs = new TaskCompletionSource<object>[numTasks];
+            var tcs = new TaskCompletionSource<object?>[numTasks];
             var ret = new List<Task>(numTasks);
 
             // As each task completes, complete the next tcs.
@@ -245,7 +251,7 @@ namespace Nito.AsyncEx
             // Fill out the arrays and attach the continuations.
             for (var i = 0; i != numTasks; ++i)
             {
-                tcs[i] = new TaskCompletionSource<object>();
+                tcs[i] = new TaskCompletionSource<object?>();
                 ret.Add(tcs[i].Task);
                 taskArray[i].ContinueWith(continuation, CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously | TaskContinuationOptions.DenyChildAttach, TaskScheduler.Default);
             }
@@ -253,6 +259,6 @@ namespace Nito.AsyncEx
             return ret;
         }
          
-        private static Func<object> NullResultFunc { get; } = () => null;
+        private static Func<object?> NullResultFunc { get; } = () => null;
     }
 }

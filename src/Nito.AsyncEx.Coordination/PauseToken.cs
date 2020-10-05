@@ -41,7 +41,9 @@ namespace Nito.AsyncEx
     /// <summary>
     /// A type that allows an operation to be cooperatively paused.
     /// </summary>
+#pragma warning disable CA1815 // Override equals and operator equals on value types
     public struct PauseToken
+#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
         /// <summary>
         /// The MRE that manages the "pause" logic, or <c>null</c> if this token can never be paused. When the MRE is set, the token is not paused; when the MRE is not set, the token is paused.

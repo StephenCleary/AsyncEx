@@ -25,6 +25,10 @@ namespace Nito.AsyncEx.Interop
         public static async Task<TEventArguments> FromAnyEvent<TDelegate, TEventArguments>(Func<Action<TEventArguments>, TDelegate> convert,
             Action<TDelegate> subscribe, Action<TDelegate> unsubscribe, CancellationToken cancellationToken, bool unsubscribeOnCapturedContext)
         {
+            _ = convert ?? throw new ArgumentNullException(nameof(convert));
+            _ = subscribe ?? throw new ArgumentNullException(nameof(subscribe));
+            _ = unsubscribe ?? throw new ArgumentNullException(nameof(unsubscribe));
+
             cancellationToken.ThrowIfCancellationRequested();
             var tcs = TaskCompletionSourceExtensions.CreateAsyncTaskSource<TEventArguments>();
             var subscription = convert(result => tcs.TrySetResult(result));
@@ -285,7 +289,7 @@ namespace Nito.AsyncEx.Interop
         /// <para>Calling this method in a loop is often an anti-pattern, because the event is only subscribed to when this method is invoked, and is unsubscribed from when the task completes. From the time the task is completed until this method is called again, the event may fire and be "lost". If you find yourself needing a loop around this method, consider using Rx or TPL Dataflow instead.</para>
         /// </remarks>
         public static Task FromActionEvent(Action<Action> subscribe, Action<Action> unsubscribe, CancellationToken cancellationToken, bool unsubscribeOnCapturedContext)
-        => FromAnyEvent<Action, object>(x => () => x(null), subscribe, unsubscribe, cancellationToken, unsubscribeOnCapturedContext);
+        => FromAnyEvent<Action, object?>(x => () => x(null), subscribe, unsubscribe, cancellationToken, unsubscribeOnCapturedContext);
 
         /// <summary>
         /// Returns a <see cref="Task"/> that completes when a specified event next fires. This overload is for events that are of type <see cref="Action"/>.

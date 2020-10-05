@@ -50,7 +50,7 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="collection">The initial elements to place in the queue. This may be <c>null</c> to start with an empty collection.</param>
         /// <param name="maxCount">The maximum element count. This must be greater than zero, and greater than or equal to the number of elements in <paramref name="collection"/>.</param>
-        public AsyncProducerConsumerQueue(IEnumerable<T> collection, int maxCount)
+        public AsyncProducerConsumerQueue(IEnumerable<T>? collection, int maxCount)
         {
             if (maxCount <= 0)
                 throw new ArgumentOutOfRangeException(nameof(maxCount), "The maximum count must be greater than zero.");
@@ -68,7 +68,7 @@ namespace Nito.AsyncEx
         /// Creates a new async-compatible producer/consumer queue with the specified initial elements.
         /// </summary>
         /// <param name="collection">The initial elements to place in the queue. This may be <c>null</c> to start with an empty collection.</param>
-        public AsyncProducerConsumerQueue(IEnumerable<T> collection)
+        public AsyncProducerConsumerQueue(IEnumerable<T>? collection)
             : this(collection, int.MaxValue)
         {
         }
@@ -170,7 +170,7 @@ namespace Nito.AsyncEx
         /// <exception cref="InvalidOperationException">The producer/consumer queue has been marked complete for adding.</exception>
         public void Enqueue(T item, CancellationToken cancellationToken)
         {
-            DoEnqueueAsync(item, cancellationToken, sync: true).WaitAndUnwrapException();
+            DoEnqueueAsync(item, cancellationToken, sync: true).WaitAndUnwrapException(CancellationToken.None);
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace Nito.AsyncEx
                 }
 
                 if (_completed && Empty)
-                    return Tuple.Create(false, default(T));
+                    return Tuple.Create(false, default(T)!);
 
                 var item = _queue.Dequeue();
                 _completedOrNotFull.Notify();

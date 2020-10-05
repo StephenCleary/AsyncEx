@@ -40,7 +40,7 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="set">Whether the auto-reset event is initially set or unset.</param>
         /// <param name="queue">The wait queue used to manage waiters. This may be <c>null</c> to use a default (FIFO) queue.</param>
-        internal AsyncAutoResetEvent(bool set, IAsyncWaitQueue<object> queue)
+        internal AsyncAutoResetEvent(bool set, IAsyncWaitQueue<object>? queue)
         {
             _queue = queue ?? new DefaultAsyncWaitQueue<object>();
             _set = set;
@@ -117,7 +117,7 @@ namespace Nito.AsyncEx
         /// <param name="cancellationToken">The cancellation token used to cancel this wait.</param>
         public void Wait(CancellationToken cancellationToken)
         {
-            WaitAsync(cancellationToken).WaitAndUnwrapException();
+            WaitAsync(cancellationToken).WaitAndUnwrapException(CancellationToken.None);
         }
 
         /// <summary>
@@ -128,10 +128,13 @@ namespace Nito.AsyncEx
             Wait(CancellationToken.None);
         }
 
+
+#pragma warning disable CA1200 // Avoid using cref tags with a prefix
         /// <summary>
         /// Sets the event, atomically completing a task returned by <see cref="o:WaitAsync"/>. If the event is already set, this method does nothing.
         /// </summary>
         public void Set()
+#pragma warning restore CA1200 // Avoid using cref tags with a prefix
         {
             lock (_mutex)
             {

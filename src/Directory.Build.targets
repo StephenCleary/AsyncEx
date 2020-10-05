@@ -1,0 +1,18 @@
+<Project>
+  <!--
+      Directory.Build.targets v1.1
+      - 1.1 Add support for tool packages.
+      - 1.0 Initial release.
+  -->
+
+  <!-- Metapackage settings -->
+  <PropertyGroup Condition="'$(IsMetapackage)'=='true'">
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <IncludeSymbols>false</IncludeSymbols>
+    <NoWarn>NU5128</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(ToolCommandName)'!=''">
+    <PackAsTool>true</PackAsTool>
+  </PropertyGroup>
+</Project>

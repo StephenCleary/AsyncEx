@@ -46,6 +46,8 @@ namespace Nito.AsyncEx.Interop
         /// <param name="token">The cancellation token that cancels observing the <see cref="WaitHandle"/>.</param>
         public static Task<bool> FromWaitHandle(WaitHandle handle, TimeSpan timeout, CancellationToken token)
         {
+            _ = handle ?? throw new ArgumentNullException(nameof(handle));
+
             // Handle synchronous cases.
             var alreadySignalled = handle.WaitOne(0);
             if (alreadySignalled)

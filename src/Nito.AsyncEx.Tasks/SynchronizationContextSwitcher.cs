@@ -12,13 +12,13 @@ namespace Nito.AsyncEx
         /// <summary>
         /// The previous <see cref="SynchronizationContext"/>.
         /// </summary>
-        private readonly SynchronizationContext _oldContext;
+        private readonly SynchronizationContext? _oldContext;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SynchronizationContextSwitcher"/> class, installing the new <see cref="SynchronizationContext"/>.
         /// </summary>
         /// <param name="newContext">The new <see cref="SynchronizationContext"/>. This can be <c>null</c> to remove an existing <see cref="SynchronizationContext"/>.</param>
-        private SynchronizationContextSwitcher(SynchronizationContext newContext)
+        private SynchronizationContextSwitcher(SynchronizationContext? newContext)
             : base(new object())
         {
             _oldContext = SynchronizationContext.Current;
@@ -39,6 +39,7 @@ namespace Nito.AsyncEx
         /// <param name="action">The delegate to execute.</param>
         public static void NoContext(Action action)
         {
+            _ = action ?? throw new ArgumentNullException(nameof(action));
             using (new SynchronizationContextSwitcher(null))
                 action();
         }
@@ -49,6 +50,7 @@ namespace Nito.AsyncEx
         /// <param name="action">The delegate to execute.</param>
         public static T NoContext<T>(Func<T> action)
         {
+            _ = action ?? throw new ArgumentNullException(nameof(action));
             using (new SynchronizationContextSwitcher(null))
                 return action();
         }
@@ -60,6 +62,7 @@ namespace Nito.AsyncEx
         /// <param name="action">The delegate to execute.</param>
         public static void ApplyContext(SynchronizationContext context, Action action)
         {
+            _ = action ?? throw new ArgumentNullException(nameof(action));
             using (new SynchronizationContextSwitcher(context))
                 action();
         }
@@ -71,6 +74,7 @@ namespace Nito.AsyncEx
         /// <param name="action">The delegate to execute.</param>
         public static T ApplyContext<T>(SynchronizationContext context, Func<T> action)
         {
+            _ = action ?? throw new ArgumentNullException(nameof(action));
             using (new SynchronizationContextSwitcher(context))
                 return action();
         }

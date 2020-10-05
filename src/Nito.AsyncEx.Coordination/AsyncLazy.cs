@@ -138,7 +138,7 @@ namespace Nito.AsyncEx
             };
         }
 
-        private Func<Task<T>> RunOnThreadPool(Func<Task<T>> factory)
+        private static Func<Task<T>> RunOnThreadPool(Func<Task<T>> factory)
         {
             return () => System.Threading.Tasks.Task.Run(factory);
         }

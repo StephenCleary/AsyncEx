@@ -2,31 +2,11 @@
 
   <PropertyGroup>
     <Description>Interfaces and utility methods for combining async with OOP.</Description>
-    <VersionPrefix>5.0.0</VersionPrefix>
-    <VersionSuffix></VersionSuffix>
-    <Authors>Stephen Cleary</Authors>
     <TargetFrameworks>netstandard1.3;netstandard2.0</TargetFrameworks>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <PackageTags>async</PackageTags>
-    <PackageProjectUrl>https://github.com/StephenCleary/AsyncEx</PackageProjectUrl>
-    <PackageIconUrl>https://github.com/StephenCleary/AsyncEx/raw/master/AsyncEx.128.png</PackageIconUrl>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <RootNamespace>Nito.AsyncEx</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Nito.AsyncEx.Coordination\Nito.AsyncEx.Coordination.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-18618-05">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
   </ItemGroup>
 
 </Project>

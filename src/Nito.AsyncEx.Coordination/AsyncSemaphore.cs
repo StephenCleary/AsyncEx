@@ -40,7 +40,7 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="initialCount">The initial count for this semaphore. This must be greater than or equal to zero.</param>
         /// <param name="queue">The wait queue used to manage waiters. This may be <c>null</c> to use a default (FIFO) queue.</param>
-        internal AsyncSemaphore(long initialCount, IAsyncWaitQueue<object> queue)
+        internal AsyncSemaphore(long initialCount, IAsyncWaitQueue<object>? queue)
         {
             _queue = queue ?? new DefaultAsyncWaitQueue<object>();
             _count = initialCount;
@@ -111,7 +111,7 @@ namespace Nito.AsyncEx
         /// <param name="cancellationToken">The cancellation token used to cancel the wait. If this is already set, then this method will attempt to take the slot immediately (succeeding if a slot is currently available).</param>
         public void Wait(CancellationToken cancellationToken)
         {
-            WaitAsync(cancellationToken).WaitAndUnwrapException();
+            WaitAsync(cancellationToken).WaitAndUnwrapException(CancellationToken.None);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Nito.AsyncEx
         private async Task<IDisposable> DoLockAsync(CancellationToken cancellationToken)
         {
             await WaitAsync(cancellationToken).ConfigureAwait(false);
-            return Disposables.AnonymousDisposable.Create(Release);
+            return Disposables.Disposable.Create(Release);
         }
 
         /// <summary>
@@ -166,7 +166,9 @@ namespace Nito.AsyncEx
         /// <param name="cancellationToken">The cancellation token used to cancel the wait. If this is already set, then this method will attempt to take the slot immediately (succeeding if a slot is currently available).</param>
         public AwaitableDisposable<IDisposable> LockAsync(CancellationToken cancellationToken)
         {
+#pragma warning disable CA2000 // Dispose objects before losing scope
             return new AwaitableDisposable<IDisposable>(DoLockAsync(cancellationToken));
+#pragma warning restore CA2000 // Dispose objects before losing scope
         }
 
         /// <summary>
@@ -181,7 +183,7 @@ namespace Nito.AsyncEx
         public IDisposable Lock(CancellationToken cancellationToken)
         {
             Wait(cancellationToken);
-            return Disposables.AnonymousDisposable.Create(Release);
+            return Disposables.Disposable.Create(Release);
         }
 
         /// <summary>

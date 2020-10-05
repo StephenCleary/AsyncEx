@@ -16,6 +16,7 @@ namespace Nito.AsyncEx
         /// <param name="action">The delegate to execute.</param>
         public static void Send(this SynchronizationContext @this, Action action)
         {
+            _ = @this ?? throw new ArgumentNullException(nameof(@this));
             @this.Send(state => ((Action) state)(), action);
         }
 
@@ -27,9 +28,10 @@ namespace Nito.AsyncEx
         /// <param name="action">The delegate to execute.</param>
         public static T Send<T>(this SynchronizationContext @this, Func<T> action)
         {
+            _ = @this ?? throw new ArgumentNullException(nameof(@this));
             var result = default(T);
             @this.Send(state => { result = ((Func<T>) state)(); }, action);
-            return result;
+            return result!;
         }
 
         /// <summary>
@@ -39,7 +41,8 @@ namespace Nito.AsyncEx
         /// <param name="action">The delegate to execute.</param>
         public static Task PostAsync(this SynchronizationContext @this, Action action)
         {
-            var tcs = TaskCompletionSourceExtensions.CreateAsyncTaskSource<object>();
+            _ = @this ?? throw new ArgumentNullException(nameof(@this));
+            var tcs = TaskCompletionSourceExtensions.CreateAsyncTaskSource<object?>();
             @this.Post(state =>
             {
                 try
@@ -51,7 +54,9 @@ namespace Nito.AsyncEx
                 {
                     tcs.TrySetCanceled(ex.CancellationToken);
                 }
+#pragma warning disable CA1031 // Do not catch general exception types
                 catch (Exception ex)
+#pragma warning restore CA1031 // Do not catch general exception types
                 {
                     tcs.TrySetException(ex);
                 }
@@ -67,6 +72,7 @@ namespace Nito.AsyncEx
         /// <param name="action">The delegate to execute.</param>
         public static Task<T> PostAsync<T>(this SynchronizationContext @this, Func<T> action)
         {
+            _ = @this ?? throw new ArgumentNullException(nameof(@this));
             var tcs = TaskCompletionSourceExtensions.CreateAsyncTaskSource<T>();
             @this.Post(state =>
             {
@@ -78,7 +84,9 @@ namespace Nito.AsyncEx
                 {
                     tcs.TrySetCanceled(ex.CancellationToken);
                 }
+#pragma warning disable CA1031 // Do not catch general exception types
                 catch (Exception ex)
+#pragma warning restore CA1031 // Do not catch general exception types
                 {
                     tcs.TrySetException(ex);
                 }
@@ -93,7 +101,8 @@ namespace Nito.AsyncEx
         /// <param name="action">The delegate to execute.</param>
         public static Task PostAsync(this SynchronizationContext @this, Func<Task> action)
         {
-            var tcs = TaskCompletionSourceExtensions.CreateAsyncTaskSource<object>();
+            _ = @this ?? throw new ArgumentNullException(nameof(@this));
+            var tcs = TaskCompletionSourceExtensions.CreateAsyncTaskSource<object?>();
             @this.Post(async state =>
             {
                 try
@@ -105,7 +114,9 @@ namespace Nito.AsyncEx
                 {
                     tcs.TrySetCanceled(ex.CancellationToken);
                 }
+#pragma warning disable CA1031 // Do not catch general exception types
                 catch (Exception ex)
+#pragma warning restore CA1031 // Do not catch general exception types
                 {
                     tcs.TrySetException(ex);
                 }
@@ -121,6 +132,7 @@ namespace Nito.AsyncEx
         /// <param name="action">The delegate to execute.</param>
         public static Task<T> PostAsync<T>(this SynchronizationContext @this, Func<Task<T>> action)
         {
+            _ = @this ?? throw new ArgumentNullException(nameof(@this));
             var tcs = TaskCompletionSourceExtensions.CreateAsyncTaskSource<T>();
             @this.Post(async state =>
             {
@@ -132,7 +144,9 @@ namespace Nito.AsyncEx
                 {
                     tcs.TrySetCanceled(ex.CancellationToken);
                 }
+#pragma warning disable CA1031 // Do not catch general exception types
                 catch (Exception ex)
+#pragma warning restore CA1031 // Do not catch general exception types
                 {
                     tcs.TrySetException(ex);
                 }

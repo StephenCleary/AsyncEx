@@ -1,19 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26403.3
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3322A27B-E7FF-49A9-8E91-429051BF7EF6}"
-	ProjectSection(SolutionItems) = preProject
-		appveyor.yml = appveyor.yml
-		Build.ps1 = Build.ps1
-		Coverage.ps1 = Coverage.ps1
-		global.json = global.json
-		nuspec\Nito.AsyncEx.nuspec = nuspec\Nito.AsyncEx.nuspec
-		README.md = README.md
-		Version.ps1 = Version.ps1
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FBBB0AFC-0473-47AC-A5F8-235524DF8A8A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nito.AsyncEx.Tasks", "src\Nito.AsyncEx.Tasks\Nito.AsyncEx.Tasks.csproj", "{3817C77D-0C9D-4B57-8C00-27C7BC398E61}"
@@ -37,6 +26,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsyncEx.Oop.UnitTests", "test\AsyncEx.Oop.UnitTests\AsyncEx.Oop.UnitTests.csproj", "{F85ECD63-74E0-49EA-910F-0A27A915FDA2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsyncEx.Tasks.UnitTests", "test\AsyncEx.Tasks.UnitTests\AsyncEx.Tasks.UnitTests.csproj", "{8B6341C7-AF1F-4713-B7C9-D097B2378142}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nito.AsyncEx", "src\Nito.AsyncEx\Nito.AsyncEx.csproj", "{EC1B4E56-E379-44BE-8662-77C1CB9E773A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -84,6 +75,10 @@ Global
 		{8B6341C7-AF1F-4713-B7C9-D097B2378142}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B6341C7-AF1F-4713-B7C9-D097B2378142}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B6341C7-AF1F-4713-B7C9-D097B2378142}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC1B4E56-E379-44BE-8662-77C1CB9E773A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC1B4E56-E379-44BE-8662-77C1CB9E773A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC1B4E56-E379-44BE-8662-77C1CB9E773A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC1B4E56-E379-44BE-8662-77C1CB9E773A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,6 +94,7 @@ Global
 		{8EF01C49-665F-481A-AF19-1335292BE59A} = {89C049C2-1211-4BB8-A2FA-D8ECB60676A1}
 		{F85ECD63-74E0-49EA-910F-0A27A915FDA2} = {89C049C2-1211-4BB8-A2FA-D8ECB60676A1}
 		{8B6341C7-AF1F-4713-B7C9-D097B2378142} = {89C049C2-1211-4BB8-A2FA-D8ECB60676A1}
+		{EC1B4E56-E379-44BE-8662-77C1CB9E773A} = {FBBB0AFC-0473-47AC-A5F8-235524DF8A8A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B4638CC6-F431-4430-8FD0-C51DF9E9B77F}

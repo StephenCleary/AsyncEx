@@ -39,7 +39,7 @@ namespace Nito.AsyncEx
             /// <summary>
             /// Dispatches an asynchronous message to the async context. If all tasks have been completed and the outstanding asynchronous operation count is zero, then this method has undefined behavior.
             /// </summary>
-            /// <param name="d">The <see cref="T:System.Threading.SendOrPostCallback"/> delegate to call. May not be <c>null</c>.</param>
+            /// <param name="d">The <see cref="SendOrPostCallback"/> delegate to call. May not be <c>null</c>.</param>
             /// <param name="state">The object passed to the delegate.</param>
             public override void Post(SendOrPostCallback d, object state)
             {
@@ -49,7 +49,7 @@ namespace Nito.AsyncEx
             /// <summary>
             /// Dispatches an asynchronous message to the async context, and waits for it to complete.
             /// </summary>
-            /// <param name="d">The <see cref="T:System.Threading.SendOrPostCallback"/> delegate to call. May not be <c>null</c>.</param>
+            /// <param name="d">The <see cref="SendOrPostCallback"/> delegate to call. May not be <c>null</c>.</param>
             /// <param name="state">The object passed to the delegate.</param>
             public override void Send(SendOrPostCallback d, object state)
             {
@@ -83,7 +83,7 @@ namespace Nito.AsyncEx
             /// <summary>
             /// Creates a copy of the synchronization context.
             /// </summary>
-            /// <returns>A new <see cref="T:System.Threading.SynchronizationContext"/> object.</returns>
+            /// <returns>A new <see cref="SynchronizationContext"/> object.</returns>
             public override SynchronizationContext CreateCopy()
             {
                 return new AsyncContextSynchronizationContext(_context);

@@ -52,9 +52,9 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="collection">The collection to wrap.</param>
         /// <param name="maxCount">The maximum element count. This must be greater than zero.</param>
-        public AsyncCollection(IProducerConsumerCollection<T> collection, int maxCount)
+        public AsyncCollection(IProducerConsumerCollection<T>? collection, int maxCount)
         {
-            collection = collection ?? new ConcurrentQueue<T>();
+            collection ??= new ConcurrentQueue<T>();
             if (maxCount <= 0)
                 throw new ArgumentOutOfRangeException(nameof(maxCount), "The maximum count must be greater than zero.");
             if (maxCount < collection.Count)
@@ -70,7 +70,7 @@ namespace Nito.AsyncEx
         /// Creates a new async-compatible producer/consumer collection wrapping the specified collection.
         /// </summary>
         /// <param name="collection">The collection to wrap.</param>
-        public AsyncCollection(IProducerConsumerCollection<T> collection)
+        public AsyncCollection(IProducerConsumerCollection<T>? collection)
             : this(collection, int.MaxValue)
         {
         }
@@ -157,7 +157,7 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="item">The item to add.</param>
         /// <param name="cancellationToken">A cancellation token that can be used to abort the add operation.</param>
-        public void Add(T item, CancellationToken cancellationToken) => DoAddAsync(item, cancellationToken, sync: true).WaitAndUnwrapException();
+        public void Add(T item, CancellationToken cancellationToken) => DoAddAsync(item, cancellationToken, sync: true).WaitAndUnwrapException(CancellationToken.None);
 
         /// <summary>
         /// Adds an item to the producer/consumer collection. Throws <see cref="InvalidOperationException"/> if the producer/consumer collection has completed adding or if the item was rejected by the underlying collection.

@@ -98,7 +98,9 @@ namespace Nito.AsyncEx
         public TaskFactory Factory => Context.Factory;
 
         [DebuggerNonUserCode]
+#pragma warning disable CA1812 // Avoid uninstantiated internal classes
         internal sealed class DebugView
+#pragma warning restore CA1812 // Avoid uninstantiated internal classes
         {
             private readonly AsyncContextThread _thread;
 

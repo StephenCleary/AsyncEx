@@ -32,7 +32,7 @@ namespace Nito.AsyncEx
         /// <summary>
         /// The underlying countdown event. May be <c>null</c> if no deferrals were ever requested.
         /// </summary>
-        private AsyncCountdownEvent _ce;
+        private AsyncCountdownEvent? _ce;
 
         /// <summary>
         /// Creates a new deferral manager.
@@ -62,6 +62,8 @@ namespace Nito.AsyncEx
         /// </summary>
         internal void DecrementCount()
         {
+            if (_ce == null)
+                throw new InvalidOperationException("You must call IncrementCount before calling DecrementCount.");
             _ce.Signal();
         }
 
