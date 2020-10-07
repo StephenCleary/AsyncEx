@@ -1,4 +1,5 @@
-# build.yml v1.3
+# build.yml v1.4
+# 1.4 - Avoid set-env.
 # 1.3 - Include tag workflow in this file.
 # 1.2 - Define DOTNET_SKIP_FIRST_TIME_EXPERIENCE/NUGET_XMLDOC_MODE.
 # 1.1 - Use actions/cache@v2.
@@ -52,7 +53,7 @@ jobs:
     - name: Get current version
       run: |
         dotnet tool install --global Nito.ProjProps
-        echo ::set-env name=NEWTAG::v$(projprops --name version --output-format SingleValueOnly --project src --project-search)
+        echo "NEWTAG=v$(projprops --name version --output-format SingleValueOnly --project src --project-search)" >> $GITHUB_ENV
 
     - name: Build
       run: |
