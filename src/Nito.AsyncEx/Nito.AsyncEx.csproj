@@ -3,13 +3,13 @@
   <PropertyGroup>
     <Title>Async and Task Helpers</Title>
     <Description>A helper library for the Task-Based Asynchronous Pattern (TAP).</Description>
-    <TargetFrameworks>netstandard1.3;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard1.3;netstandard2.0;net461</TargetFrameworks>
     <PackageTags>async;await;async-await;task;asynchronous;nito;nitro</PackageTags>
     <IsMetapackage>true</IsMetapackage>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Nito.Cancellation" Version="1.1.0" />
+    <PackageReference Include="Nito.Cancellation" Version="1.1.1" />
   </ItemGroup>
 
   <ItemGroup>
