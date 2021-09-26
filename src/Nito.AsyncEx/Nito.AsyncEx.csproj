@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Nito.Cancellation" Version="1.1.1" />
+    <PackageReference Include="Nito.Cancellation" Version="1.1.2" />
   </ItemGroup>
 
   <ItemGroup>

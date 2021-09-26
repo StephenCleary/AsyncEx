@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Nito.Disposables" Version="2.2.0" />
+    <PackageReference Include="Nito.Disposables" Version="2.2.1" />
   </ItemGroup>
 
 </Project>
