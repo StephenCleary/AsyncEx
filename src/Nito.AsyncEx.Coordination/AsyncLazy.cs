@@ -22,7 +22,7 @@ namespace Nito.AsyncEx
         ExecuteOnCallingThread = 0x1,
 
         /// <summary>
-        /// If the factory method fails, then re-run the factory method the next time instead of caching the failed task.
+        /// If the factory method fails, then throw the exception, but re-run the factory method the next time instead of caching the failed task.
         /// </summary>
         RetryOnFailure = 0x2,
     }
