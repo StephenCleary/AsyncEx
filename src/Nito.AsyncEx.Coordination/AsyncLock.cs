@@ -97,7 +97,7 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="cancellationToken">The cancellation token used to cancel the lock. If this is already set, then this method will attempt to take the lock immediately (succeeding if the lock is currently available).</param>
         /// <returns>A disposable that releases the lock when disposed.</returns>
-        private Task<IDisposable> RequestLockAsync(CancellationToken cancellationToken)
+        private ValueTask<IDisposable> RequestLockAsync(CancellationToken cancellationToken)
         {
             lock (_mutex)
             {
@@ -105,12 +105,14 @@ namespace Nito.AsyncEx
                 {
                     // If the lock is available, take it immediately.
                     _taken = true;
-                    return Task.FromResult<IDisposable>(new Key(this));
+#pragma warning disable CA2000
+                    return new ValueTask<IDisposable>(new Key(this));
+#pragma warning restore CA2000
                 }
                 else
                 {
                     // Wait for the lock to become available or cancellation.
-                    return _queue.Enqueue(_mutex, cancellationToken);
+                    return new ValueTask<IDisposable>(_queue.Enqueue(_mutex, cancellationToken));
                 }
             }
         }
@@ -120,16 +122,16 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="cancellationToken">The cancellation token used to cancel the lock. If this is already set, then this method will attempt to take the lock immediately (succeeding if the lock is currently available).</param>
         /// <returns>A disposable that releases the lock when disposed.</returns>
-        public AwaitableDisposable<IDisposable> LockAsync(CancellationToken cancellationToken)
+        public ValueTask<IDisposable> LockAsync(CancellationToken cancellationToken)
         {
-            return new AwaitableDisposable<IDisposable>(RequestLockAsync(cancellationToken));
+            return RequestLockAsync(cancellationToken);
         }
 
         /// <summary>
         /// Asynchronously acquires the lock. Returns a disposable that releases the lock when disposed.
         /// </summary>
         /// <returns>A disposable that releases the lock when disposed.</returns>
-        public AwaitableDisposable<IDisposable> LockAsync()
+        public ValueTask<IDisposable> LockAsync()
         {
             return LockAsync(CancellationToken.None);
         }
@@ -140,7 +142,9 @@ namespace Nito.AsyncEx
         /// <param name="cancellationToken">The cancellation token used to cancel the lock. If this is already set, then this method will attempt to take the lock immediately (succeeding if the lock is currently available).</param>
         public IDisposable Lock(CancellationToken cancellationToken)
         {
-            return RequestLockAsync(cancellationToken).WaitAndUnwrapException();
+            var task = RequestLockAsync(cancellationToken);
+
+            return task.IsCompleted ? task.Result : task.AsTask().Result;
         }
 
         /// <summary>

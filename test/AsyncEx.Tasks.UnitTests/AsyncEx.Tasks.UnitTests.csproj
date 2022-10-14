@@ -1,16 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">netcoreapp3.1;net461</TargetFrameworks>
-    <TargetFrameworks Condition="'$(OS)' != 'Windows_NT'">netcoreapp3.1</TargetFrameworks>
-  </PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\Nito.AsyncEx.Tasks\Nito.AsyncEx.Tasks.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Nito.AsyncEx.Tasks\Nito.AsyncEx.Tasks.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Nito.AsyncEx.Testing" Version="1.1.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Nito.AsyncEx.Testing" Version="1.1.0" />
+	</ItemGroup>
 
 </Project>

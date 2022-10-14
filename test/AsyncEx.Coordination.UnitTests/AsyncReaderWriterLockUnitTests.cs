@@ -227,7 +227,7 @@ namespace UnitTests
             {
                 var writeKeyTask = rwl.WriterLockAsync(cts.Token);
                 writerLockReady.SetResult(null);
-                await Assert.ThrowsAnyAsync<OperationCanceledException>(() => writeKeyTask);
+                await Assert.ThrowsAnyAsync<OperationCanceledException>(() => writeKeyTask.AsTask());
             });
             await writerLockReady.Task;
 
