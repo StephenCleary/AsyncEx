@@ -131,16 +131,16 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="cancellationToken">The cancellation token used to cancel the lock. If this is already set, then this method will attempt to take the lock immediately (succeeding if the lock is currently available).</param>
         /// <returns>A disposable that releases the lock when disposed.</returns>
-        public AwaitableDisposable<IDisposable> ReaderLockAsync(CancellationToken cancellationToken)
+        public ValueTask<IDisposable> ReaderLockAsync(CancellationToken cancellationToken)
         {
-            return new AwaitableDisposable<IDisposable>(RequestReaderLockAsync(cancellationToken));
+            return new ValueTask<IDisposable>(RequestReaderLockAsync(cancellationToken));
         }
 
         /// <summary>
         /// Asynchronously acquires the lock as a reader. Returns a disposable that releases the lock when disposed.
         /// </summary>
         /// <returns>A disposable that releases the lock when disposed.</returns>
-        public AwaitableDisposable<IDisposable> ReaderLockAsync()
+        public ValueTask<IDisposable> ReaderLockAsync()
         {
             return ReaderLockAsync(CancellationToken.None);
         }
@@ -198,16 +198,16 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="cancellationToken">The cancellation token used to cancel the lock. If this is already set, then this method will attempt to take the lock immediately (succeeding if the lock is currently available).</param>
         /// <returns>A disposable that releases the lock when disposed.</returns>
-        public AwaitableDisposable<IDisposable> WriterLockAsync(CancellationToken cancellationToken)
+        public ValueTask<IDisposable> WriterLockAsync(CancellationToken cancellationToken)
         {
-            return new AwaitableDisposable<IDisposable>(RequestWriterLockAsync(cancellationToken));
+            return new ValueTask<IDisposable>(RequestWriterLockAsync(cancellationToken));
         }
 
         /// <summary>
         /// Asynchronously acquires the lock as a writer. Returns a disposable that releases the lock when disposed.
         /// </summary>
         /// <returns>A disposable that releases the lock when disposed.</returns>
-        public AwaitableDisposable<IDisposable> WriterLockAsync()
+        public ValueTask<IDisposable> WriterLockAsync()
         {
             return WriterLockAsync(CancellationToken.None);
         }

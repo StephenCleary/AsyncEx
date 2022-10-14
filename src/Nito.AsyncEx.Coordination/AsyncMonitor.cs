@@ -53,7 +53,7 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="cancellationToken">The cancellation token used to cancel the enter. If this is already set, then this method will attempt to enter the monitor immediately (succeeding if the monitor is currently available).</param>
         /// <returns>A disposable that leaves the monitor when disposed.</returns>
-        public AwaitableDisposable<IDisposable> EnterAsync(CancellationToken cancellationToken)
+        public ValueTask<IDisposable> EnterAsync(CancellationToken cancellationToken)
         {
             return _asyncLock.LockAsync(cancellationToken);
         }
@@ -62,7 +62,7 @@ namespace Nito.AsyncEx
         /// Asynchronously enters the monitor. Returns a disposable that leaves the monitor when disposed.
         /// </summary>
         /// <returns>A disposable that leaves the monitor when disposed.</returns>
-        public AwaitableDisposable<IDisposable> EnterAsync()
+        public ValueTask<IDisposable> EnterAsync()
         {
             return EnterAsync(CancellationToken.None);
         }

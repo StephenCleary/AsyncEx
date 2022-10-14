@@ -1,13 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <Description>Common helper methods for tasks as used in asynchronous programming.</Description>
-    <TargetFrameworks>netstandard1.3;netstandard2.0;net461</TargetFrameworks>
-    <PackageTags>$(PackageTags);taskfactory;cancellationtoken;taskcompletionsource</PackageTags>
-  </PropertyGroup>
+	<PropertyGroup>
+		<Description>Common helper methods for tasks as used in asynchronous programming.</Description>
+		<PackageTags>$(PackageTags);taskfactory;cancellationtoken;taskcompletionsource</PackageTags>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Nito.Disposables" Version="2.2.1" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Nito.Disposables" Version="2.2.1" />
+	</ItemGroup>
 
 </Project>

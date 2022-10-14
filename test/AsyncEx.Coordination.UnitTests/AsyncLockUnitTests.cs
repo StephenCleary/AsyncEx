@@ -199,7 +199,7 @@ namespace UnitTests
             var mutex = new AsyncLock();
             var cts = new CancellationTokenSource();
 
-            AwaitableDisposable<IDisposable> cancelableLockTask;
+            ValueTask<IDisposable> cancelableLockTask;
             using (await mutex.LockAsync())
             {
                 cancelableLockTask = mutex.LockAsync(cts.Token);

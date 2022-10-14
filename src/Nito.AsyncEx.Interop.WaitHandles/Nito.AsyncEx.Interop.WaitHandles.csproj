@@ -1,17 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <Description>Task wrappers for WaitHandles.</Description>
-    <TargetFrameworks>netstandard1.3;netstandard2.0;net461</TargetFrameworks>
-    <PackageTags>$(PackageTags);waithandle</PackageTags>
-  </PropertyGroup>
+	<PropertyGroup>
+		<Description>Task wrappers for WaitHandles.</Description>
+		<PackageTags>$(PackageTags);waithandle</PackageTags>
+	</PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
-    <PackageReference Include="System.Threading.ThreadPool" Version="4.3.0" />
-  </ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
+		<PackageReference Include="System.Threading.ThreadPool" Version="4.3.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Nito.AsyncEx.Tasks\Nito.AsyncEx.Tasks.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Nito.AsyncEx.Tasks\Nito.AsyncEx.Tasks.csproj" />
+	</ItemGroup>
 
 </Project>

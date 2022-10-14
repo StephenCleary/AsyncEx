@@ -23,18 +23,18 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="this">The semaphore to lock.</param>
         /// <param name="cancellationToken">The cancellation token used to cancel the wait.</param>
-        public static AwaitableDisposable<IDisposable> LockAsync(this SemaphoreSlim @this, CancellationToken cancellationToken)
+        public static ValueTask<IDisposable> LockAsync(this SemaphoreSlim @this, CancellationToken cancellationToken)
         {
             _ = @this ?? throw new ArgumentNullException(nameof(@this));
 #pragma warning disable CA2000 // Dispose objects before losing scope
-            return new AwaitableDisposable<IDisposable>(DoLockAsync(@this, cancellationToken));
+            return new ValueTask<IDisposable>(DoLockAsync(@this, cancellationToken));
 #pragma warning restore CA2000 // Dispose objects before losing scope
         }
 
         /// <summary>
         /// Asynchronously waits on the semaphore, and returns a disposable that releases the semaphore when disposed, thus treating this semaphore as a "multi-lock".
         /// </summary>
-        public static AwaitableDisposable<IDisposable> LockAsync(this SemaphoreSlim @this) => @this.LockAsync(CancellationToken.None);
+        public static ValueTask<IDisposable> LockAsync(this SemaphoreSlim @this) => @this.LockAsync(CancellationToken.None);
 
         /// <summary>
         /// Synchronously waits on the semaphore, and returns a disposable that releases the semaphore when disposed, thus treating this semaphore as a "multi-lock".

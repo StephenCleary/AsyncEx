@@ -1,23 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <Title>Async and Task Helpers</Title>
-    <Description>A helper library for the Task-Based Asynchronous Pattern (TAP).</Description>
-    <TargetFrameworks>netstandard1.3;netstandard2.0;net461</TargetFrameworks>
-    <PackageTags>async;await;async-await;task;asynchronous;nito;nitro</PackageTags>
-    <IsMetapackage>true</IsMetapackage>
-  </PropertyGroup>
+	<PropertyGroup>
+		<Title>Async and Task Helpers</Title>
+		<Description>A helper library for the Task-Based Asynchronous Pattern (TAP).</Description>
+		<PackageTags>async;await;async-await;task;asynchronous;nito;nitro</PackageTags>
+		<IsMetapackage>true</IsMetapackage>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Nito.Cancellation" Version="1.1.2" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Nito.Cancellation" Version="1.1.2" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Nito.AsyncEx.Context\Nito.AsyncEx.Context.csproj" />
-    <ProjectReference Include="..\Nito.AsyncEx.Coordination\Nito.AsyncEx.Coordination.csproj" />
-    <ProjectReference Include="..\Nito.AsyncEx.Interop.WaitHandles\Nito.AsyncEx.Interop.WaitHandles.csproj" />
-    <ProjectReference Include="..\Nito.AsyncEx.Oop\Nito.AsyncEx.Oop.csproj" />
-    <ProjectReference Include="..\Nito.AsyncEx.Tasks\Nito.AsyncEx.Tasks.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Nito.AsyncEx.Context\Nito.AsyncEx.Context.csproj" />
+		<ProjectReference Include="..\Nito.AsyncEx.Coordination\Nito.AsyncEx.Coordination.csproj" />
+		<ProjectReference Include="..\Nito.AsyncEx.Interop.WaitHandles\Nito.AsyncEx.Interop.WaitHandles.csproj" />
+		<ProjectReference Include="..\Nito.AsyncEx.Oop\Nito.AsyncEx.Oop.csproj" />
+		<ProjectReference Include="..\Nito.AsyncEx.Tasks\Nito.AsyncEx.Tasks.csproj" />
+	</ItemGroup>
 
 </Project>
