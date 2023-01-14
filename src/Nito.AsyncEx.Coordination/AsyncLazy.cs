@@ -41,11 +41,6 @@ namespace Nito.AsyncEx
         private readonly object _mutex;
 
         /// <summary>
-        /// The factory method to call.
-        /// </summary>
-        private readonly Func<Task<T>> _factory;
-
-        /// <summary>
         /// The underlying lazy task.
         /// </summary>
         private Lazy<Task<T>> _instance;
@@ -77,14 +72,13 @@ namespace Nito.AsyncEx
         {
             if (factory == null)
                 throw new ArgumentNullException(nameof(factory));
-            _factory = factory;
-            if ((flags & AsyncLazyFlags.RetryOnFailure) == AsyncLazyFlags.RetryOnFailure)
-                _factory = RetryOnFailure(_factory);
             if ((flags & AsyncLazyFlags.ExecuteOnCallingThread) != AsyncLazyFlags.ExecuteOnCallingThread)
-                _factory = RunOnThreadPool(_factory);
+                factory = RunOnThreadPool(factory);
+            if ((flags & AsyncLazyFlags.RetryOnFailure) == AsyncLazyFlags.RetryOnFailure)
+                factory = RetryOnFailure(factory);
 
             _mutex = new object();
-            _instance = new Lazy<Task<T>>(_factory);
+            _instance = new Lazy<Task<T>>(factory);
         }
 
         /// <summary>
@@ -121,17 +115,18 @@ namespace Nito.AsyncEx
 
         private Func<Task<T>> RetryOnFailure(Func<Task<T>> factory)
         {
-            return async () =>
+            var originalFactory = factory;
+            return factory = async () =>
             {
                 try
                 {
-                    return await factory().ConfigureAwait(false);
+                    return await originalFactory().ConfigureAwait(false);
                 }
                 catch
                 {
                     lock (_mutex)
                     {
-                        _instance = new Lazy<Task<T>>(_factory);
+                        _instance = new Lazy<Task<T>>(factory);
                     }
                     throw;
                 }
