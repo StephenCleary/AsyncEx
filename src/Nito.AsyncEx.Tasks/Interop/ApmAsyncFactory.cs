@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Nito.AsyncEx.Synchronous;
 
@@ -18,6 +19,18 @@ namespace Nito.AsyncEx.Interop
         /// <returns>The asynchronous operation, to be returned by the Begin method of the APM pattern.</returns>
         public static IAsyncResult ToBegin(Task task, AsyncCallback callback, object state)
         {
+            if (task == null)
+            {
+                throw new ArgumentNullException(nameof(task));
+            }
+
+            if (task.IsCompleted)
+            {
+                // we need this so it throws in case of faulted task
+                task.GetAwaiter().GetResult();
+                return new CompletedAsyncResult(state);
+            }
+
             var tcs = new TaskCompletionSource<object?>(state, TaskCreationOptions.RunContinuationsAsynchronously);
             SynchronizationContextSwitcher.NoContext(() => CompleteAsync(task, callback, tcs));
             return tcs.Task;
@@ -54,7 +67,18 @@ namespace Nito.AsyncEx.Interop
         /// <returns>The result of the asynchronous operation, to be returned by the End method of the APM pattern.</returns>
         public static void ToEnd(IAsyncResult asyncResult)
         {
-            ((Task)asyncResult).WaitAndUnwrapException();
+            if (asyncResult is Task task)
+            {
+                task.GetAwaiter().GetResult();
+            }
+            else if (asyncResult is CompletedAsyncResult)
+            {
+                // Do nothing
+            }
+            else
+            {
+                throw new ArgumentException("Invalid asyncResult", nameof(asyncResult));
+            }
         }
 
         /// <summary>
@@ -66,6 +90,16 @@ namespace Nito.AsyncEx.Interop
         /// <returns>The asynchronous operation, to be returned by the Begin method of the APM pattern.</returns>
         public static IAsyncResult ToBegin<TResult>(Task<TResult> task, AsyncCallback callback, object state)
         {
+            if (task == null)
+            {
+                throw new ArgumentNullException(nameof(task));
+            }
+
+            if (task.IsCompleted)
+            {
+                return new CompletedAsyncResult<TResult>(task.GetAwaiter().GetResult(), state);
+            }
+
             var tcs = new TaskCompletionSource<TResult>(state, TaskCreationOptions.RunContinuationsAsynchronously);
             SynchronizationContextSwitcher.NoContext(() => CompleteAsync(task, callback, tcs));
             return tcs.Task;
@@ -101,7 +135,36 @@ namespace Nito.AsyncEx.Interop
         /// <returns>The result of the asynchronous operation, to be returned by the End method of the APM pattern.</returns>
         public static TResult ToEnd<TResult>(IAsyncResult asyncResult)
         {
-            return ((Task<TResult>)asyncResult).WaitAndUnwrapException();
+            return asyncResult switch
+            {
+                Task<TResult> task => task.GetAwaiter().GetResult(),
+                CompletedAsyncResult<TResult> completedAsyncResult => completedAsyncResult.Result,
+                _ => throw new ArgumentException("Invalid asyncResult", nameof(asyncResult))
+            };
+        }
+
+        internal class CompletedAsyncResult<T> : CompletedAsyncResult
+        {
+            public CompletedAsyncResult(T result, object? state = null)
+                : base(state)
+            {
+                Result = result;
+            }
+
+            public T Result { get; }
+        }
+
+        internal class CompletedAsyncResult : IAsyncResult
+        {
+            public CompletedAsyncResult(object? state = null)
+            {
+                AsyncState = state;
+            }
+
+            public bool IsCompleted { get; } = true;
+            public bool CompletedSynchronously { get; } = true;
+            public WaitHandle? AsyncWaitHandle { get; }
+            public object? AsyncState { get; }
         }
     }
 }
