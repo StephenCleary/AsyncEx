@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Nito.AsyncEx.Internals;
 using Nito.AsyncEx.Synchronous;
 
 // Original idea from Stephen Toub: http://blogs.msdn.com/b/pfxteam/archive/2012/02/12/10266988.aspx
@@ -42,55 +43,22 @@ namespace Nito.AsyncEx
     /// }
     /// </code>
     /// </example>
-    [DebuggerDisplay("Id = {Id}, Taken = {_taken}")]
+    [DebuggerDisplay("Id = {Id}, Taken = {_state.Taken}")]
     [DebuggerTypeProxy(typeof(DebugView))]
     public sealed class AsyncLock
     {
         /// <summary>
-        /// Whether the lock is taken by a task.
-        /// </summary>
-        private bool _taken;
-
-        /// <summary>
-        /// The queue of TCSs that other tasks are awaiting to acquire the lock.
-        /// </summary>
-        private readonly IAsyncWaitQueue<IDisposable> _queue;
-
-        /// <summary>
-        /// The semi-unique identifier for this instance. This is 0 if the id has not yet been created.
-        /// </summary>
-        private int _id;
-
-        /// <summary>
-        /// The object used for mutual exclusion.
-        /// </summary>
-        private readonly object _mutex;
-
-        /// <summary>
         /// Creates a new async-compatible mutual exclusion lock.
         /// </summary>
         public AsyncLock()
-            :this(null)
         {
-        }
-
-        /// <summary>
-        /// Creates a new async-compatible mutual exclusion lock using the specified wait queue.
-        /// </summary>
-        /// <param name="queue">The wait queue used to manage waiters. This may be <c>null</c> to use a default (FIFO) queue.</param>
-        internal AsyncLock(IAsyncWaitQueue<IDisposable>? queue)
-        {
-            _queue = queue ?? new DefaultAsyncWaitQueue<IDisposable>();
-            _mutex = new object();
+            _state = new(false, DefaultAsyncWaitQueue<IDisposable>.Empty);
         }
 
         /// <summary>
         /// Gets a semi-unique identifier for this asynchronous lock.
         /// </summary>
-        public int Id
-        {
-            get { return IdManager<AsyncLock>.GetId(ref _id); }
-        }
+        public int Id => IdManager<AsyncLock>.GetId(ref _id);
 
         /// <summary>
         /// Asynchronously acquires the lock. Returns a disposable that releases the lock when disposed.
@@ -99,28 +67,23 @@ namespace Nito.AsyncEx
         /// <returns>A disposable that releases the lock when disposed.</returns>
         private Task<IDisposable> RequestLockAsync(CancellationToken cancellationToken)
         {
-            lock (_mutex)
-            {
-                if (!_taken)
-                {
-                    // If the lock is available, take it immediately.
-                    _taken = true;
-                    return Task.FromResult<IDisposable>(new Key(this));
-                }
-                else
-                {
-                    // Wait for the lock to become available or cancellation.
-                    return _queue.Enqueue(_mutex, cancellationToken);
-                }
-            }
-        }
+            Task<IDisposable>? result = null;
+	        InterlockedState.Transform(ref _state, s => s switch
+	        {
+		        { Taken: true } => new State(true, s.Queue.Enqueue(ApplyCancel, cancellationToken, out result)),
+		        { Taken: false } => new State(true, s.Queue),
+	        });
+#pragma warning disable CA2000 // Dispose objects before losing scope
+			return result ?? Task.FromResult<IDisposable>(new Key(this));
+#pragma warning restore CA2000 // Dispose objects before losing scope
+		}
 
-        /// <summary>
-        /// Asynchronously acquires the lock. Returns a disposable that releases the lock when disposed.
-        /// </summary>
-        /// <param name="cancellationToken">The cancellation token used to cancel the lock. If this is already set, then this method will attempt to take the lock immediately (succeeding if the lock is currently available).</param>
-        /// <returns>A disposable that releases the lock when disposed.</returns>
-        public AwaitableDisposable<IDisposable> LockAsync(CancellationToken cancellationToken)
+		/// <summary>
+		/// Asynchronously acquires the lock. Returns a disposable that releases the lock when disposed.
+		/// </summary>
+		/// <param name="cancellationToken">The cancellation token used to cancel the lock. If this is already set, then this method will attempt to take the lock immediately (succeeding if the lock is currently available).</param>
+		/// <returns>A disposable that releases the lock when disposed.</returns>
+		public AwaitableDisposable<IDisposable> LockAsync(CancellationToken cancellationToken)
         {
             return new AwaitableDisposable<IDisposable>(RequestLockAsync(cancellationToken));
         }
@@ -156,21 +119,48 @@ namespace Nito.AsyncEx
         /// </summary>
         internal void ReleaseLock()
         {
-            lock (_mutex)
-            {
-                if (_queue.IsEmpty)
-                    _taken = false;
-                else
-#pragma warning disable CA2000 // Dispose objects before losing scope
-                    _queue.Dequeue(new Key(this));
-#pragma warning restore CA2000 // Dispose objects before losing scope
-            }
+	        Action? completion = null;
+	        InterlockedState.Transform(ref _state, s => s switch
+	        {
+		        { Queue.IsEmpty: true } => new State(false, s.Queue),
+		        _ => new State(true, s.Queue.Dequeue(out completion, new Key(this))),
+	        });
+            completion?.Invoke();
         }
 
+        private void ApplyCancel(Func<IAsyncWaitQueue<IDisposable>, IAsyncWaitQueue<IDisposable>> cancel) =>
+	        InterlockedState.Transform(ref _state, s => new State(s.Taken, cancel(s.Queue)));
+
+        private State _state;
+
         /// <summary>
-        /// The disposable which releases the lock.
+        /// The semi-unique identifier for this instance. This is 0 if the id has not yet been created.
         /// </summary>
-        private sealed class Key : Disposables.SingleDisposable<AsyncLock>
+        private int _id;
+
+        private sealed class State
+        {
+	        public State(bool taken, IAsyncWaitQueue<IDisposable> queue)
+	        {
+		        Taken = taken;
+		        Queue = queue;
+	        }
+
+	        /// <summary>
+	        /// Whether the lock is taken by a task.
+	        /// </summary>
+	        public bool Taken { get; }
+
+	        /// <summary>
+	        /// The queue of TCSs that other tasks are awaiting to acquire the lock.
+	        /// </summary>
+	        public IAsyncWaitQueue<IDisposable> Queue { get; }
+        }
+
+		/// <summary>
+		/// The disposable which releases the lock.
+		/// </summary>
+		private sealed class Key : Disposables.SingleDisposable<AsyncLock>
         {
             /// <summary>
             /// Creates the key for a lock.
@@ -198,11 +188,11 @@ namespace Nito.AsyncEx
                 _mutex = mutex;
             }
 
-            public int Id { get { return _mutex.Id; } }
+            public int Id => _mutex.Id;
 
-            public bool Taken { get { return _mutex._taken; } }
+            public bool Taken => _mutex._state.Taken;
 
-            public IAsyncWaitQueue<IDisposable> WaitQueue { get { return _mutex._queue; } }
+            public IAsyncWaitQueue<IDisposable> WaitQueue => _mutex._state.Queue;
         }
         // ReSharper restore UnusedMember.Local
     }

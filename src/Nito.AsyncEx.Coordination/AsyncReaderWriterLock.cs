@@ -1,4 +1,5 @@
-﻿using Nito.AsyncEx.Synchronous;
+﻿using Nito.AsyncEx.Internals;
+using Nito.AsyncEx.Synchronous;
 using System;
 using System.Diagnostics;
 using System.Threading;
@@ -15,45 +16,47 @@ namespace Nito.AsyncEx
     [DebuggerTypeProxy(typeof(DebugView))]
     public sealed class AsyncReaderWriterLock
     {
-        /// <summary>
-        /// The queue of TCSs that other tasks are awaiting to acquire the lock as writers.
-        /// </summary>
-        private readonly IAsyncWaitQueue<IDisposable> _writerQueue;
+	    private sealed class State
+	    {
+			public State(int locksHeld, IAsyncWaitQueue<IDisposable> writerQueue, IAsyncWaitQueue<IDisposable> readerQueue)
+			{
+				LocksHeld = locksHeld;
+				WriterQueue = writerQueue;
+				ReaderQueue = readerQueue;
+			}
 
-        /// <summary>
-        /// The queue of TCSs that other tasks are awaiting to acquire the lock as readers.
-        /// </summary>
-        private readonly IAsyncWaitQueue<IDisposable> _readerQueue;
+			/// <summary>
+			/// The queue of TCSs that other tasks are awaiting to acquire the lock as readers.
+			/// </summary>
+			public IAsyncWaitQueue<IDisposable> ReaderQueue { get; }
 
-        /// <summary>
-        /// The object used for mutual exclusion.
-        /// </summary>
-        private readonly object _mutex;
+			/// <summary>
+			/// The queue of TCSs that other tasks are awaiting to acquire the lock as writers.
+			/// </summary>
+			public IAsyncWaitQueue<IDisposable> WriterQueue { get; }
+
+			/// <summary>
+			/// Number of reader locks held; -1 if a writer lock is held; 0 if no locks are held.
+			/// </summary>
+			public int LocksHeld { get; }
+	    }
+
+	    private State _state;
 
         /// <summary>
         /// The semi-unique identifier for this instance. This is 0 if the id has not yet been created.
         /// </summary>
         private int _id;
 
-        /// <summary>
-        /// Number of reader locks held; -1 if a writer lock is held; 0 if no locks are held.
-        /// </summary>
-        private int _locksHeld;
-
         [DebuggerNonUserCode]
-        internal State GetStateForDebugger
+        internal LockState GetStateForDebugger => _state.LocksHeld switch
         {
-            get
-            {
-                if (_locksHeld == 0)
-                    return State.Unlocked;
-                if (_locksHeld == -1)
-                    return State.WriteLocked;
-                return State.ReadLocked;
-            }
-        }
+	        0 => LockState.Unlocked,
+	        -1 => LockState.WriteLocked,
+	        _ => LockState.ReadLocked
+        };
 
-        internal enum State
+        internal enum LockState
         {
             Unlocked,
             ReadLocked,
@@ -61,45 +64,32 @@ namespace Nito.AsyncEx
         }
 
         [DebuggerNonUserCode]
-        internal int GetReaderCountForDebugger { get { return (_locksHeld > 0 ? _locksHeld : 0); } }
-
-        /// <summary>
-        /// Creates a new async-compatible reader/writer lock.
-        /// </summary>
-        /// <param name="writerQueue">The wait queue used to manage waiters for writer locks. This may be <c>null</c> to use a default (FIFO) queue.</param>
-        /// <param name="readerQueue">The wait queue used to manage waiters for reader locks. This may be <c>null</c> to use a default (FIFO) queue.</param>
-        internal AsyncReaderWriterLock(IAsyncWaitQueue<IDisposable>? writerQueue, IAsyncWaitQueue<IDisposable>? readerQueue)
-        {
-            _writerQueue = writerQueue ?? new DefaultAsyncWaitQueue<IDisposable>();
-            _readerQueue = readerQueue ?? new DefaultAsyncWaitQueue<IDisposable>();
-            _mutex = new object();
-        }
+        internal int GetReaderCountForDebugger => _state.LocksHeld > 0 ? _state.LocksHeld : 0;
 
         /// <summary>
         /// Creates a new async-compatible reader/writer lock.
         /// </summary>
         public AsyncReaderWriterLock()
-            : this(null, null)
         {
+	        _state = new(0, DefaultAsyncWaitQueue<IDisposable>.Empty, DefaultAsyncWaitQueue<IDisposable>.Empty);
         }
 
         /// <summary>
         /// Gets a semi-unique identifier for this asynchronous lock.
         /// </summary>
-        public int Id
-        {
-            get { return IdManager<AsyncReaderWriterLock>.GetId(ref _id); }
-        }
+        public int Id => IdManager<AsyncReaderWriterLock>.GetId(ref _id);
 
         /// <summary>
-        /// Applies a continuation to the task that will call <see cref="ReleaseWaiters"/> if the task is canceled. This method may not be called while holding the sync lock.
+        /// Applies a continuation to the task that will call <see cref="ReleaseWaiters"/> if the task is canceled.
         /// </summary>
         /// <param name="task">The task to observe for cancellation.</param>
         private void ReleaseWaitersWhenCanceled(Task task)
         {
             task.ContinueWith(t =>
             {
-                lock (_mutex) { ReleaseWaiters(); }
+	            Action? completion = null;
+	            InterlockedState.Transform(ref _state, s => ReleaseWaiters(s, out completion));
+                completion?.Invoke();
             }, CancellationToken.None, TaskContinuationOptions.OnlyOnCanceled | TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
         }
 
@@ -110,28 +100,24 @@ namespace Nito.AsyncEx
         /// <returns>A disposable that releases the lock when disposed.</returns>
         private Task<IDisposable> RequestReaderLockAsync(CancellationToken cancellationToken)
         {
-            lock (_mutex)
+	        Task<IDisposable>? task = null;
+            InterlockedState.Transform(ref _state, s => s switch
             {
-                // If the lock is available or in read mode and there are no waiting writers, upgradeable readers, or upgrading readers, take it immediately.
-                if (_locksHeld >= 0 && _writerQueue.IsEmpty)
-                {
-                    ++_locksHeld;
-                    return Task.FromResult<IDisposable>(new ReaderKey(this));
-                }
-                else
-                {
-                    // Wait for the lock to become available or cancellation.
-                    return _readerQueue.Enqueue(_mutex, cancellationToken);
-                }
-            }
+	            // If the lock is available or in read mode and there are no waiting writers, upgradeable readers, or upgrading readers, take it immediately.
+	            { LocksHeld: >= 0 } and { WriterQueue.IsEmpty: true } => new State(s.LocksHeld + 1, s.WriterQueue, s.ReaderQueue),
+                _ => new State(s.LocksHeld, s.WriterQueue, s.ReaderQueue.Enqueue(ApplyReadCancel, cancellationToken, out task)),
+            });
+#pragma warning disable CA2000
+            return task ?? Task.FromResult<IDisposable>(new ReaderKey(this));
+#pragma warning restore CA2000
         }
 
-        /// <summary>
-        /// Asynchronously acquires the lock as a reader. Returns a disposable that releases the lock when disposed.
-        /// </summary>
-        /// <param name="cancellationToken">The cancellation token used to cancel the lock. If this is already set, then this method will attempt to take the lock immediately (succeeding if the lock is currently available).</param>
-        /// <returns>A disposable that releases the lock when disposed.</returns>
-        public AwaitableDisposable<IDisposable> ReaderLockAsync(CancellationToken cancellationToken)
+		/// <summary>
+		/// Asynchronously acquires the lock as a reader. Returns a disposable that releases the lock when disposed.
+		/// </summary>
+		/// <param name="cancellationToken">The cancellation token used to cancel the lock. If this is already set, then this method will attempt to take the lock immediately (succeeding if the lock is currently available).</param>
+		/// <returns>A disposable that releases the lock when disposed.</returns>
+		public AwaitableDisposable<IDisposable> ReaderLockAsync(CancellationToken cancellationToken)
         {
             return new AwaitableDisposable<IDisposable>(RequestReaderLockAsync(cancellationToken));
         }
@@ -171,26 +157,18 @@ namespace Nito.AsyncEx
         /// <returns>A disposable that releases the lock when disposed.</returns>
         private Task<IDisposable> RequestWriterLockAsync(CancellationToken cancellationToken)
         {
-            Task<IDisposable> ret;
-            lock (_mutex)
+	        Task<IDisposable>? task = null;
+            InterlockedState.Transform(ref _state, s => s switch
             {
                 // If the lock is available, take it immediately.
-                if (_locksHeld == 0)
-                {
-                    _locksHeld = -1;
-#pragma warning disable CA2000 // Dispose objects before losing scope
-                    ret = Task.FromResult<IDisposable>(new WriterKey(this));
-#pragma warning restore CA2000 // Dispose objects before losing scope
-                }
-                else
-                {
-                    // Wait for the lock to become available or cancellation.
-                    ret = _writerQueue.Enqueue(_mutex, cancellationToken);
-                }
-            }
-
-            ReleaseWaitersWhenCanceled(ret);
-            return ret;
+                { LocksHeld: 0 } => new State(-1, s.WriterQueue, s.ReaderQueue),
+				_ => new State(s.LocksHeld, s.WriterQueue.Enqueue(ApplyWriteCancel, cancellationToken, out task), s.ReaderQueue),
+			});
+#pragma warning disable CA2000
+            task ??= Task.FromResult<IDisposable>(new WriterKey(this));
+#pragma warning restore CA2000
+            ReleaseWaitersWhenCanceled(task);
+            return task;
         }
 
         /// <summary>
@@ -232,35 +210,36 @@ namespace Nito.AsyncEx
         }
 
         /// <summary>
-        /// Grants lock(s) to waiting tasks. This method assumes the sync lock is already held.
+        /// Grants lock(s) to waiting tasks.
         /// </summary>
-        private void ReleaseWaiters()
+        private State ReleaseWaiters(State s, out Action? completion)
         {
-            if (_locksHeld == -1)
-                return;
+	        completion = null;
+	        if (s.LocksHeld == -1)
+		        return s;
 
-            // Give priority to writers, then readers.
-            if (!_writerQueue.IsEmpty)
-            {
-                if (_locksHeld == 0)
-                {
-                    _locksHeld = -1;
+			// Give priority to writers, then readers.
+	        if (!s.WriterQueue.IsEmpty)
+	        {
+		        if (s.LocksHeld == 0)
 #pragma warning disable CA2000 // Dispose objects before losing scope
-                    _writerQueue.Dequeue(new WriterKey(this));
+					return new(-1, s.WriterQueue.Dequeue(out completion, new WriterKey(this)), s.ReaderQueue);
 #pragma warning restore CA2000 // Dispose objects before losing scope
-                    return;
-                }
-            }
-            else
-            {
-                while (!_readerQueue.IsEmpty)
-                {
+				return s;
+	        }
+
+	        var locksHeld = s.LocksHeld;
+	        var readerQueue = s.ReaderQueue;
+	        while (!readerQueue.IsEmpty)
+	        {
 #pragma warning disable CA2000 // Dispose objects before losing scope
-                    _readerQueue.Dequeue(new ReaderKey(this));
+				readerQueue = readerQueue.Dequeue(out var localCompletion, new ReaderKey(this));
 #pragma warning restore CA2000 // Dispose objects before losing scope
-                    ++_locksHeld;
-                }
-            }
+				completion += localCompletion;
+                ++locksHeld;
+	        }
+
+	        return new(locksHeld, s.WriterQueue, readerQueue);
         }
 
         /// <summary>
@@ -268,11 +247,9 @@ namespace Nito.AsyncEx
         /// </summary>
         internal void ReleaseReaderLock()
         {
-            lock (_mutex)
-            {
-                --_locksHeld;
-                ReleaseWaiters();
-            }
+            Action? completion = null;
+	        InterlockedState.Transform(ref _state, s => ReleaseWaiters(new(s.LocksHeld - 1, s.WriterQueue, s.ReaderQueue), out completion));
+            completion?.Invoke();
         }
 
         /// <summary>
@@ -280,17 +257,21 @@ namespace Nito.AsyncEx
         /// </summary>
         internal void ReleaseWriterLock()
         {
-            lock (_mutex)
-            {
-                _locksHeld = 0;
-                ReleaseWaiters();
-            }
+	        Action? completion = null;
+            InterlockedState.Transform(ref _state, s => ReleaseWaiters(new State(0, s.WriterQueue, s.ReaderQueue), out completion));
+            completion?.Invoke();
         }
 
-        /// <summary>
-        /// The disposable which releases the reader lock.
-        /// </summary>
-        private sealed class ReaderKey : Disposables.SingleDisposable<AsyncReaderWriterLock>
+        private void ApplyReadCancel(Func<IAsyncWaitQueue<IDisposable>, IAsyncWaitQueue<IDisposable>> cancel) =>
+	        InterlockedState.Transform(ref _state, s => new State(s.LocksHeld, s.WriterQueue, cancel(s.ReaderQueue)));
+
+        private void ApplyWriteCancel(Func<IAsyncWaitQueue<IDisposable>, IAsyncWaitQueue<IDisposable>> cancel) =>
+	        InterlockedState.Transform(ref _state, s => new State(s.LocksHeld, cancel(s.WriterQueue), s.ReaderQueue));
+
+		/// <summary>
+		/// The disposable which releases the reader lock.
+		/// </summary>
+		private sealed class ReaderKey : Disposables.SingleDisposable<AsyncReaderWriterLock>
         {
             /// <summary>
             /// Creates the key for a lock.
@@ -340,13 +321,13 @@ namespace Nito.AsyncEx
 
             public int Id { get { return _rwl.Id; } }
 
-            public State State { get { return _rwl.GetStateForDebugger; } }
+            public LockState State { get { return _rwl.GetStateForDebugger; } }
 
             public int ReaderCount { get { return _rwl.GetReaderCountForDebugger; } }
 
-            public IAsyncWaitQueue<IDisposable> ReaderWaitQueue { get { return _rwl._readerQueue; } }
+            public IAsyncWaitQueue<IDisposable> ReaderWaitQueue { get { return _rwl._state.ReaderQueue; } }
 
-            public IAsyncWaitQueue<IDisposable> WriterWaitQueue { get { return _rwl._writerQueue; } }
+            public IAsyncWaitQueue<IDisposable> WriterWaitQueue { get { return _rwl._state.WriterQueue; } }
         }
         // ReSharper restore UnusedMember.Local
     }

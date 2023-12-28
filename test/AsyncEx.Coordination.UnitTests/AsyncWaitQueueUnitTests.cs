@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using Nito.AsyncEx;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using Nito.AsyncEx.Testing;
+using Nito.AsyncEx.Internals;
 
 namespace UnitTests
 {
@@ -13,43 +13,45 @@ namespace UnitTests
         [Fact]
         public void IsEmpty_WhenEmpty_IsTrue()
         {
-            var queue = new DefaultAsyncWaitQueue<object>() as IAsyncWaitQueue<object>;
+            var queue = DefaultAsyncWaitQueue<object>.Empty as IAsyncWaitQueue<object>;
             Assert.True(queue.IsEmpty);
         }
 
         [Fact]
         public void IsEmpty_WithOneItem_IsFalse()
         {
-            var queue = new DefaultAsyncWaitQueue<object>() as IAsyncWaitQueue<object>;
-            queue.Enqueue();
+            var queue = DefaultAsyncWaitQueue<object>.Empty as IAsyncWaitQueue<object>;
+            queue = queue.Enqueue(out _);
             Assert.False(queue.IsEmpty);
         }
 
         [Fact]
         public void IsEmpty_WithTwoItems_IsFalse()
         {
-            var queue = new DefaultAsyncWaitQueue<object>() as IAsyncWaitQueue<object>;
-            queue.Enqueue();
-            queue.Enqueue();
+            var queue = DefaultAsyncWaitQueue<object>.Empty as IAsyncWaitQueue<object>;
+            queue = queue.Enqueue(out _);
+            queue = queue.Enqueue(out _);
             Assert.False(queue.IsEmpty);
         }
 
         [Fact]
         public void Dequeue_SynchronouslyCompletesTask()
         {
-            var queue = new DefaultAsyncWaitQueue<object>() as IAsyncWaitQueue<object>;
-            var task = queue.Enqueue();
-            queue.Dequeue();
+            var queue = DefaultAsyncWaitQueue<object>.Empty as IAsyncWaitQueue<object>;
+            queue = queue.Enqueue(out var task);
+            queue = queue.Dequeue(out var completion);
+            completion?.Invoke();
             Assert.True(task.IsCompleted);
         }
 
         [Fact]
         public async Task Dequeue_WithTwoItems_OnlyCompletesFirstItem()
         {
-            var queue = new DefaultAsyncWaitQueue<object>() as IAsyncWaitQueue<object>;
-            var task1 = queue.Enqueue();
-            var task2 = queue.Enqueue();
-            queue.Dequeue();
+            var queue = DefaultAsyncWaitQueue<object>.Empty as IAsyncWaitQueue<object>;
+            queue = queue.Enqueue(out var task1);
+            queue = queue.Enqueue(out var task2);
+            queue = queue.Dequeue(out var completion);
+            completion?.Invoke();
             Assert.True(task1.IsCompleted);
             await AsyncAssert.NeverCompletesAsync(task2);
         }
@@ -57,29 +59,32 @@ namespace UnitTests
         [Fact]
         public void Dequeue_WithResult_SynchronouslyCompletesWithResult()
         {
-            var queue = new DefaultAsyncWaitQueue<object>() as IAsyncWaitQueue<object>;
+            var queue = DefaultAsyncWaitQueue<object>.Empty as IAsyncWaitQueue<object>;
             var result = new object();
-            var task = queue.Enqueue();
-            queue.Dequeue(result);
+            queue = queue.Enqueue(out var task);
+            queue = queue.Dequeue(out var completion, result);
+            completion?.Invoke();
             Assert.Same(result, task.Result);
         }
 
         [Fact]
         public void Dequeue_WithoutResult_SynchronouslyCompletesWithDefaultResult()
         {
-            var queue = new DefaultAsyncWaitQueue<object>() as IAsyncWaitQueue<object>;
-            var task = queue.Enqueue();
-            queue.Dequeue();
+            var queue = DefaultAsyncWaitQueue<object>.Empty as IAsyncWaitQueue<object>;
+            queue = queue.Enqueue(out var task);
+            queue = queue.Dequeue(out var completion);
+            completion?.Invoke();
             Assert.Equal(default(object), task.Result);
         }
 
         [Fact]
         public void DequeueAll_SynchronouslyCompletesAllTasks()
         {
-            var queue = new DefaultAsyncWaitQueue<object>() as IAsyncWaitQueue<object>;
-            var task1 = queue.Enqueue();
-            var task2 = queue.Enqueue();
-            queue.DequeueAll();
+            var queue = DefaultAsyncWaitQueue<object>.Empty as IAsyncWaitQueue<object>;
+            queue = queue.Enqueue(out var task1);
+            queue = queue.Enqueue(out var task2);
+            queue = queue.DequeueAll(out var completion);
+            completion?.Invoke();
             Assert.True(task1.IsCompleted);
             Assert.True(task2.IsCompleted);
         }
@@ -87,10 +92,11 @@ namespace UnitTests
         [Fact]
         public void DequeueAll_WithoutResult_SynchronouslyCompletesAllTasksWithDefaultResult()
         {
-            var queue = new DefaultAsyncWaitQueue<object>() as IAsyncWaitQueue<object>;
-            var task1 = queue.Enqueue();
-            var task2 = queue.Enqueue();
-            queue.DequeueAll();
+            var queue = DefaultAsyncWaitQueue<object>.Empty as IAsyncWaitQueue<object>;
+            queue = queue.Enqueue(out var task1);
+            queue = queue.Enqueue(out var task2);
+            queue = queue.DequeueAll(out var completion);
+            completion?.Invoke();
             Assert.Equal(default(object), task1.Result);
             Assert.Equal(default(object), task2.Result);
         }
@@ -98,11 +104,12 @@ namespace UnitTests
         [Fact]
         public void DequeueAll_WithResult_CompletesAllTasksWithResult()
         {
-            var queue = new DefaultAsyncWaitQueue<object>() as IAsyncWaitQueue<object>;
+            var queue = DefaultAsyncWaitQueue<object>.Empty as IAsyncWaitQueue<object>;
             var result = new object();
-            var task1 = queue.Enqueue();
-            var task2 = queue.Enqueue();
-            queue.DequeueAll(result);
+            queue = queue.Enqueue(out var task1);
+            queue = queue.Enqueue(out var task2);
+            queue = queue.DequeueAll(out var completion, result);
+            completion?.Invoke();
             Assert.Same(result, task1.Result);
             Assert.Same(result, task2.Result);
         }
@@ -110,38 +117,43 @@ namespace UnitTests
         [Fact]
         public void TryCancel_EntryFound_SynchronouslyCancelsTask()
         {
-            var queue = new DefaultAsyncWaitQueue<object>() as IAsyncWaitQueue<object>;
-            var task = queue.Enqueue();
-            queue.TryCancel(task, new CancellationToken(true));
+            var queue = DefaultAsyncWaitQueue<object>.Empty as IAsyncWaitQueue<object>;
+            queue = queue.Enqueue(out var task);
+            var canceledQueue = queue.TryCancel(out var completion, task, new CancellationToken(true));
+            completion?.Invoke();
             Assert.True(task.IsCanceled);
         }
 
         [Fact]
         public void TryCancel_EntryFound_RemovesTaskFromQueue()
         {
-            var queue = new DefaultAsyncWaitQueue<object>() as IAsyncWaitQueue<object>;
-            var task = queue.Enqueue();
-            queue.TryCancel(task, new CancellationToken(true));
-            Assert.True(queue.IsEmpty);
+            var queue = DefaultAsyncWaitQueue<object>.Empty as IAsyncWaitQueue<object>;
+            queue = queue.Enqueue(out var task);
+            var canceledQueue = queue.TryCancel(out var completion, task, new CancellationToken(true));
+            completion?.Invoke();
+            Assert.True(canceledQueue!.IsEmpty);
         }
 
         [Fact]
         public void TryCancel_EntryNotFound_DoesNotRemoveTaskFromQueue()
         {
-            var queue = new DefaultAsyncWaitQueue<object>() as IAsyncWaitQueue<object>;
-            var task = queue.Enqueue();
-            queue.Enqueue();
-            queue.Dequeue();
-            queue.TryCancel(task, new CancellationToken(true));
+            var queue = DefaultAsyncWaitQueue<object>.Empty as IAsyncWaitQueue<object>;
+            queue = queue.Enqueue(out var task);
+            queue = queue.Enqueue(out _);
+            queue = queue.Dequeue(out var continuation);
+            continuation?.Invoke();
+            var canceledQueue = queue.TryCancel(out continuation, task, new CancellationToken(true));
+            continuation?.Invoke();
+            Assert.Null(canceledQueue);
             Assert.False(queue.IsEmpty);
         }
 
         [Fact]
         public async Task Cancelled_WhenInQueue_CancelsTask()
         {
-            var queue = new DefaultAsyncWaitQueue<object>() as IAsyncWaitQueue<object>;
+            var queue = DefaultAsyncWaitQueue<object>.Empty as IAsyncWaitQueue<object>;
             var cts = new CancellationTokenSource();
-            var task = queue.Enqueue(new object(), cts.Token);
+            queue = queue.Enqueue(cancel => queue = cancel(queue), cts.Token, out var task);
             cts.Cancel();
             await AsyncAssert.ThrowsAsync<OperationCanceledException>(task);
         }
@@ -149,9 +161,9 @@ namespace UnitTests
         [Fact]
         public async Task Cancelled_WhenInQueue_RemovesTaskFromQueue()
         {
-            var queue = new DefaultAsyncWaitQueue<object>() as IAsyncWaitQueue<object>;
+            var queue = DefaultAsyncWaitQueue<object>.Empty as IAsyncWaitQueue<object>;
             var cts = new CancellationTokenSource();
-            var task = queue.Enqueue(new object(), cts.Token);
+            queue = queue.Enqueue(cancel => queue = cancel(queue), cts.Token, out var task);
             cts.Cancel();
             await AsyncAssert.ThrowsAsync<OperationCanceledException>(task);
             Assert.True(queue.IsEmpty);
@@ -160,11 +172,12 @@ namespace UnitTests
         [Fact]
         public void Cancelled_WhenNotInQueue_DoesNotRemoveTaskFromQueue()
         {
-            var queue = new DefaultAsyncWaitQueue<object>() as IAsyncWaitQueue<object>;
+            var queue = DefaultAsyncWaitQueue<object>.Empty as IAsyncWaitQueue<object>;
             var cts = new CancellationTokenSource();
-            var task = queue.Enqueue(new object(), cts.Token);
-            var _ = queue.Enqueue();
-            queue.Dequeue();
+            queue = queue.Enqueue(cancel => queue = cancel(queue), cts.Token, out var task);
+            queue = queue.Enqueue(out _);
+            queue = queue.Dequeue(out var continuation);
+            continuation?.Invoke();
             cts.Cancel();
             Assert.False(queue.IsEmpty);
         }
@@ -172,20 +185,20 @@ namespace UnitTests
         [Fact]
         public void Cancelled_BeforeEnqueue_SynchronouslyCancelsTask()
         {
-            var queue = new DefaultAsyncWaitQueue<object>() as IAsyncWaitQueue<object>;
+            var queue = DefaultAsyncWaitQueue<object>.Empty as IAsyncWaitQueue<object>;
             var cts = new CancellationTokenSource();
             cts.Cancel();
-            var task = queue.Enqueue(new object(), cts.Token);
+            queue = queue.Enqueue(cancel => queue = cancel(queue), cts.Token, out var task);
             Assert.True(task.IsCanceled);
         }
 
         [Fact]
         public void Cancelled_BeforeEnqueue_RemovesTaskFromQueue()
         {
-            var queue = new DefaultAsyncWaitQueue<object>() as IAsyncWaitQueue<object>;
+            var queue = DefaultAsyncWaitQueue<object>.Empty as IAsyncWaitQueue<object>;
             var cts = new CancellationTokenSource();
             cts.Cancel();
-            var task = queue.Enqueue(new object(), cts.Token);
+            queue = queue.Enqueue(cancel => queue = cancel(queue), cts.Token, out var task);
             Assert.True(queue.IsEmpty);
         }
     }

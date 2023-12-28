@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Nito.AsyncEx.Internals;
 using Nito.AsyncEx.Synchronous;
 
 namespace Nito.AsyncEx
@@ -14,64 +15,32 @@ namespace Nito.AsyncEx
     public sealed class AsyncConditionVariable
     {
         /// <summary>
-        /// The lock associated with this condition variable.
-        /// </summary>
-        private readonly AsyncLock _asyncLock;
-
-        /// <summary>
-        /// The queue of waiting tasks.
-        /// </summary>
-        private readonly IAsyncWaitQueue<object> _queue;
-
-        /// <summary>
-        /// The semi-unique identifier for this instance. This is 0 if the id has not yet been created.
-        /// </summary>
-        private int _id;
-
-        /// <summary>
-        /// The object used for mutual exclusion.
-        /// </summary>
-        private readonly object _mutex;
-
-        /// <summary>
-        /// Creates an async-compatible condition variable associated with an async-compatible lock.
-        /// </summary>
-        /// <param name="asyncLock">The lock associated with this condition variable.</param>
-        /// <param name="queue">The wait queue used to manage waiters. This may be <c>null</c> to use a default (FIFO) queue.</param>
-        internal AsyncConditionVariable(AsyncLock asyncLock, IAsyncWaitQueue<object>? queue)
-        {
-            _asyncLock = asyncLock;
-            _queue = queue ?? new DefaultAsyncWaitQueue<object>();
-            _mutex = new object();
-        }
-
-        /// <summary>
         /// Creates an async-compatible condition variable associated with an async-compatible lock.
         /// </summary>
         /// <param name="asyncLock">The lock associated with this condition variable.</param>
         public AsyncConditionVariable(AsyncLock asyncLock)
-            : this(asyncLock, null)
         {
+	        _asyncLock = asyncLock;
+	        _queue = DefaultAsyncWaitQueue<object>.Empty;
         }
 
-        /// <summary>
-        /// Gets a semi-unique identifier for this asynchronous condition variable.
-        /// </summary>
-        public int Id
-        {
-            get { return IdManager<AsyncConditionVariable>.GetId(ref _id); }
-        }
+		/// <summary>
+		/// Gets a semi-unique identifier for this asynchronous condition variable.
+		/// </summary>
+		public int Id => IdManager<AsyncConditionVariable>.GetId(ref _id);
 
-        /// <summary>
+		/// <summary>
         /// Sends a signal to a single task waiting on this condition variable. The associated lock MUST be held when calling this method, and it will still be held when this method returns.
         /// </summary>
         public void Notify()
-        {
-            lock (_mutex)
-            {
-                if (!_queue.IsEmpty)
-                    _queue.Dequeue();
-            }
+		{
+			Action? completion = null;
+			InterlockedState.Transform(ref _queue, q => q switch
+			{
+				{ IsEmpty: false } => q.Dequeue(out completion),
+				_ => q,
+			});
+            completion?.Invoke();
         }
 
         /// <summary>
@@ -79,10 +48,9 @@ namespace Nito.AsyncEx
         /// </summary>
         public void NotifyAll()
         {
-            lock (_mutex)
-            {
-                _queue.DequeueAll();
-            }
+	        Action? completion = null;
+            InterlockedState.Transform(ref _queue, q => q.DequeueAll(out completion));
+            completion?.Invoke();
         }
 
         /// <summary>
@@ -91,39 +59,39 @@ namespace Nito.AsyncEx
         /// <param name="cancellationToken">The cancellation signal used to cancel this wait.</param>
         public Task WaitAsync(CancellationToken cancellationToken)
         {
-            Task task;
-            lock (_mutex)
+	        Task<object> task = null!;
+
+			// Begin waiting for either a signal or cancellation.
+			InterlockedState.Transform(ref _queue, q => q.Enqueue(ApplyCancel, cancellationToken, out task));
+
+			// Attach to the signal or cancellation.
+			var ret = WaitAndRetakeLockAsync(task, _asyncLock);
+
+			// Release the lock while we are waiting.
+			_asyncLock.ReleaseLock();
+
+			return ret;
+
+            static async Task WaitAndRetakeLockAsync(Task task, AsyncLock asyncLock)
             {
-                // Begin waiting for either a signal or cancellation.
-                task = _queue.Enqueue(_mutex, cancellationToken);
-
-                // Attach to the signal or cancellation.
-                var ret = WaitAndRetakeLockAsync(task, _asyncLock);
-
-                // Release the lock while we are waiting.
-                _asyncLock.ReleaseLock();
-
-                return ret;
+	            try
+	            {
+		            await task.ConfigureAwait(false);
+	            }
+	            finally
+	            {
+		            // Re-take the lock.
+#pragma warning disable CA2016
+		            await asyncLock.LockAsync().ConfigureAwait(false);
+#pragma warning restore CA2016
+	            }
             }
         }
 
-        private static async Task WaitAndRetakeLockAsync(Task task, AsyncLock asyncLock)
-        {
-            try
-            {
-                await task.ConfigureAwait(false);
-            }
-            finally
-            {
-                // Re-take the lock.
-                await asyncLock.LockAsync().ConfigureAwait(false);
-            }
-        }
-
-        /// <summary>
-        /// Asynchronously waits for a signal on this condition variable. The associated lock MUST be held when calling this method, and it will still be held when the returned task completes.
-        /// </summary>
-        public Task WaitAsync()
+		/// <summary>
+		/// Asynchronously waits for a signal on this condition variable. The associated lock MUST be held when calling this method, and it will still be held when the returned task completes.
+		/// </summary>
+		public Task WaitAsync()
         {
             return WaitAsync(CancellationToken.None);
         }
@@ -145,8 +113,25 @@ namespace Nito.AsyncEx
             Wait(CancellationToken.None);
         }
 
-        // ReSharper disable UnusedMember.Local
-        [DebuggerNonUserCode]
+        private void ApplyCancel(Func<IAsyncWaitQueue<object>, IAsyncWaitQueue<object>> cancel) => InterlockedState.Transform(ref _queue, cancel);
+
+        /// <summary>
+        /// The lock associated with this condition variable.
+        /// </summary>
+        private readonly AsyncLock _asyncLock;
+
+        /// <summary>
+        /// The queue of waiting tasks.
+        /// </summary>
+        private IAsyncWaitQueue<object> _queue;
+
+        /// <summary>
+        /// The semi-unique identifier for this instance. This is 0 if the id has not yet been created.
+        /// </summary>
+        private int _id;
+
+		// ReSharper disable UnusedMember.Local
+		[DebuggerNonUserCode]
         private sealed class DebugView
         {
             private readonly AsyncConditionVariable _cv;
@@ -156,11 +141,11 @@ namespace Nito.AsyncEx
                 _cv = cv;
             }
 
-            public int Id { get { return _cv.Id; } }
+            public int Id => _cv.Id;
 
-            public AsyncLock AsyncLock { get { return _cv._asyncLock; } }
+            public AsyncLock AsyncLock => _cv._asyncLock;
 
-            public IAsyncWaitQueue<object> WaitQueue { get { return _cv._queue; } }
+            public IAsyncWaitQueue<object> WaitQueue => _cv._queue;
         }
         // ReSharper restore UnusedMember.Local
     }

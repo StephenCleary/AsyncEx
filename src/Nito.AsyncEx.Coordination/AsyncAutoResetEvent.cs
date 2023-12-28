@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Nito.AsyncEx.Internals;
 using Nito.AsyncEx.Synchronous;
 
 // Original idea by Stephen Toub: http://blogs.msdn.com/b/pfxteam/archive/2012/02/11/10266923.aspx
@@ -11,74 +12,36 @@ namespace Nito.AsyncEx
     /// <summary>
     /// An async-compatible auto-reset event.
     /// </summary>
-    [DebuggerDisplay("Id = {Id}, IsSet = {_set}")]
+    [DebuggerDisplay("Id = {Id}, IsSet = {_state.IsSet}")]
     [DebuggerTypeProxy(typeof(DebugView))]
     public sealed class AsyncAutoResetEvent
     {
-        /// <summary>
-        /// The queue of TCSs that other tasks are awaiting.
-        /// </summary>
-        private readonly IAsyncWaitQueue<object> _queue;
-
-        /// <summary>
-        /// The current state of the event.
-        /// </summary>
-        private bool _set;
-
-        /// <summary>
-        /// The semi-unique identifier for this instance. This is 0 if the id has not yet been created.
-        /// </summary>
-        private int _id;
-
-        /// <summary>
-        /// The object used for mutual exclusion.
-        /// </summary>
-        private readonly object _mutex;
-
-        /// <summary>
-        /// Creates an async-compatible auto-reset event.
-        /// </summary>
-        /// <param name="set">Whether the auto-reset event is initially set or unset.</param>
-        /// <param name="queue">The wait queue used to manage waiters. This may be <c>null</c> to use a default (FIFO) queue.</param>
-        internal AsyncAutoResetEvent(bool set, IAsyncWaitQueue<object>? queue)
-        {
-            _queue = queue ?? new DefaultAsyncWaitQueue<object>();
-            _set = set;
-            _mutex = new object();
-        }
-
         /// <summary>
         /// Creates an async-compatible auto-reset event.
         /// </summary>
         /// <param name="set">Whether the auto-reset event is initially set or unset.</param>
         public AsyncAutoResetEvent(bool set)
-            : this(set, null)
         {
+            _state = new(set, DefaultAsyncWaitQueue<object>.Empty);
         }
 
-        /// <summary>
-        /// Creates an async-compatible auto-reset event that is initially unset.
-        /// </summary>
-        public AsyncAutoResetEvent()
-          : this(false, null)
+		/// <summary>
+		/// Creates an async-compatible auto-reset event that is initially unset.
+		/// </summary>
+		public AsyncAutoResetEvent()
+          : this(false)
         {
         }
 
         /// <summary>
         /// Gets a semi-unique identifier for this asynchronous auto-reset event.
         /// </summary>
-        public int Id
-        {
-            get { return IdManager<AsyncAutoResetEvent>.GetId(ref _id); }
-        }
+        public int Id => IdManager<AsyncAutoResetEvent>.GetId(ref _id);
 
         /// <summary>
         /// Whether this event is currently set. This member is seldom used; code using this member has a high possibility of race conditions.
         /// </summary>
-        public bool IsSet
-        {
-            get { lock (_mutex) return _set; }
-        }
+        public bool IsSet => InterlockedState.Read(ref _state).IsSet;
 
         /// <summary>
         /// Asynchronously waits for this event to be set. If the event is set, this method will auto-reset it and return immediately, even if the cancellation token is already signalled. If the wait is canceled, then it will not auto-reset this event.
@@ -86,21 +49,13 @@ namespace Nito.AsyncEx
         /// <param name="cancellationToken">The cancellation token used to cancel this wait.</param>
         public Task WaitAsync(CancellationToken cancellationToken)
         {
-            Task ret;
-            lock (_mutex)
-            {
-                if (_set)
-                {
-                    _set = false;
-                    ret = TaskConstants.Completed;
-                }
-                else
-                {
-                    ret = _queue.Enqueue(_mutex, cancellationToken);
-                }
-            }
-
-            return ret;
+	        Task<object>? result = null;
+	        InterlockedState.Transform(ref _state, s => s switch
+	        {
+		        { IsSet: true } => new State(false, s.Queue),
+                _ => new State(false, s.Queue.Enqueue(ApplyCancel, cancellationToken, out result)),
+	        });
+            return result ?? Task.CompletedTask;
         }
 
         /// <summary>
@@ -136,17 +91,46 @@ namespace Nito.AsyncEx
         public void Set()
 #pragma warning restore CA1200 // Avoid using cref tags with a prefix
         {
-            lock (_mutex)
-            {
-                if (_queue.IsEmpty)
-                    _set = true;
-                else
-                    _queue.Dequeue();
-            }
+	        Action? completion = null;
+	        InterlockedState.Transform(ref _state, s => s switch
+	        {
+		        { Queue.IsEmpty: true } => new State(true, s.Queue),
+                _ => new State(false, s.Queue.Dequeue(out completion)),
+	        });
+	        completion?.Invoke();
         }
 
-        // ReSharper disable UnusedMember.Local
-        [DebuggerNonUserCode]
+        private void ApplyCancel(Func<IAsyncWaitQueue<object>, IAsyncWaitQueue<object>> cancel) =>
+	        InterlockedState.Transform(ref _state, s => new State(s.IsSet, cancel(s.Queue)));
+
+		/// <summary>
+		/// The semi-unique identifier for this instance. This is 0 if the id has not yet been created.
+		/// </summary>
+		private int _id;
+
+        private State _state;
+
+        private sealed class State
+        {
+	        public State(bool isSet, IAsyncWaitQueue<object> queue)
+	        {
+		        IsSet = isSet;
+		        Queue = queue;
+	        }
+
+	        /// <summary>
+	        /// The current state of the event.
+	        /// </summary>
+	        public bool IsSet { get; }
+
+	        /// <summary>
+	        /// The queue of TCSs that other tasks are awaiting.
+	        /// </summary>
+	        public IAsyncWaitQueue<object> Queue { get; }
+        }
+
+		// ReSharper disable UnusedMember.Local
+		[DebuggerNonUserCode]
         private sealed class DebugView
         {
             private readonly AsyncAutoResetEvent _are;
@@ -158,9 +142,9 @@ namespace Nito.AsyncEx
 
             public int Id { get { return _are.Id; } }
 
-            public bool IsSet { get { return _are._set; } }
+            public bool IsSet { get { return _are._state.IsSet; } }
 
-            public IAsyncWaitQueue<object> WaitQueue { get { return _are._queue; } }
+            public IAsyncWaitQueue<object> WaitQueue { get { return _are._state.Queue; } }
         }
         // ReSharper restore UnusedMember.Local
     }
