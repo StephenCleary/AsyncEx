@@ -36,7 +36,7 @@ namespace Nito.AsyncEx
         /// Asynchronously waits for a slot in the semaphore to be available.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token used to cancel the wait. If this is already set, then this method will attempt to take the slot immediately (succeeding if a slot is currently available).</param>
-        public Task WaitAsync(CancellationToken cancellationToken)
+        internal Task InternalWaitAsync(CancellationToken cancellationToken)
         {
 	        Task<object>? result = null;
 	        InterlockedState.Transform(ref _state, s => s switch
@@ -46,6 +46,12 @@ namespace Nito.AsyncEx
 	        });
 	        return result ?? TaskConstants.Completed;
         }
+
+        /// <summary>
+        /// Asynchronously waits for a slot in the semaphore to be available.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token used to cancel the wait. If this is already set, then this method will attempt to take the slot immediately (succeeding if a slot is currently available).</param>
+        public Task WaitAsync(CancellationToken cancellationToken) => AsyncUtility.ForceAsync(InternalWaitAsync(cancellationToken));
 
 		/// <summary>
 		/// Asynchronously waits for a slot in the semaphore to be available.
@@ -61,7 +67,7 @@ namespace Nito.AsyncEx
         /// <param name="cancellationToken">The cancellation token used to cancel the wait. If this is already set, then this method will attempt to take the slot immediately (succeeding if a slot is currently available).</param>
         public void Wait(CancellationToken cancellationToken)
         {
-            WaitAsync(cancellationToken).WaitAndUnwrapException(CancellationToken.None);
+            InternalWaitAsync(cancellationToken).WaitAndUnwrapException(CancellationToken.None);
         }
 
         /// <summary>

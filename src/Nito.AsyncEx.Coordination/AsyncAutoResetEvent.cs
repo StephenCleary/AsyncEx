@@ -47,16 +47,22 @@ namespace Nito.AsyncEx
         /// Asynchronously waits for this event to be set. If the event is set, this method will auto-reset it and return immediately, even if the cancellation token is already signalled. If the wait is canceled, then it will not auto-reset this event.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token used to cancel this wait.</param>
-        public Task WaitAsync(CancellationToken cancellationToken)
+        internal Task InternalWaitAsync(CancellationToken cancellationToken)
         {
 	        Task<object>? result = null;
 	        InterlockedState.Transform(ref _state, s => s switch
 	        {
 		        { IsSet: true } => new State(false, s.Queue),
-                _ => new State(false, s.Queue.Enqueue(ApplyCancel, cancellationToken, out result)),
+		        _ => new State(false, s.Queue.Enqueue(ApplyCancel, cancellationToken, out result)),
 	        });
-            return result ?? Task.CompletedTask;
+	        return result ?? Task.CompletedTask;
         }
+
+		/// <summary>
+		/// Asynchronously waits for this event to be set. If the event is set, this method will auto-reset it and return immediately, even if the cancellation token is already signalled. If the wait is canceled, then it will not auto-reset this event.
+		/// </summary>
+		/// <param name="cancellationToken">The cancellation token used to cancel this wait.</param>
+		public Task WaitAsync(CancellationToken cancellationToken) => AsyncUtility.ForceAsync(InternalWaitAsync(cancellationToken));
 
         /// <summary>
         /// Asynchronously waits for this event to be set. If the event is set, this method will auto-reset it and return immediately.
@@ -72,7 +78,7 @@ namespace Nito.AsyncEx
         /// <param name="cancellationToken">The cancellation token used to cancel this wait.</param>
         public void Wait(CancellationToken cancellationToken)
         {
-            WaitAsync(cancellationToken).WaitAndUnwrapException(CancellationToken.None);
+	        InternalWaitAsync(cancellationToken).WaitAndUnwrapException(CancellationToken.None);
         }
 
         /// <summary>
@@ -140,11 +146,11 @@ namespace Nito.AsyncEx
                 _are = are;
             }
 
-            public int Id { get { return _are.Id; } }
+            public int Id => _are.Id;
 
-            public bool IsSet { get { return _are._state.IsSet; } }
+            public bool IsSet => _are._state.IsSet;
 
-            public IAsyncWaitQueue<object> WaitQueue { get { return _are._state.Queue; } }
+            public IAsyncWaitQueue<object> WaitQueue => _are._state.Queue;
         }
         // ReSharper restore UnusedMember.Local
     }

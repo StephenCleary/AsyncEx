@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Nito.Collections.Deque" Version="1.1.1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Nito.AsyncEx.Tasks\Nito.AsyncEx.Tasks.csproj" />
   </ItemGroup>
 

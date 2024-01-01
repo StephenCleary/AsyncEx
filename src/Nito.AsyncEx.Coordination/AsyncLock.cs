@@ -65,7 +65,7 @@ namespace Nito.AsyncEx
         /// </summary>
         /// <param name="cancellationToken">The cancellation token used to cancel the lock. If this is already set, then this method will attempt to take the lock immediately (succeeding if the lock is currently available).</param>
         /// <returns>A disposable that releases the lock when disposed.</returns>
-        private Task<IDisposable> RequestLockAsync(CancellationToken cancellationToken)
+        internal Task<IDisposable> InternalLockAsync(CancellationToken cancellationToken)
         {
             Task<IDisposable>? result = null;
 	        InterlockedState.Transform(ref _state, s => s switch
@@ -85,7 +85,7 @@ namespace Nito.AsyncEx
 		/// <returns>A disposable that releases the lock when disposed.</returns>
 		public AwaitableDisposable<IDisposable> LockAsync(CancellationToken cancellationToken)
         {
-            return new AwaitableDisposable<IDisposable>(RequestLockAsync(cancellationToken));
+            return new AwaitableDisposable<IDisposable>(AsyncUtility.ForceAsync(InternalLockAsync(cancellationToken)));
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Nito.AsyncEx
         /// <param name="cancellationToken">The cancellation token used to cancel the lock. If this is already set, then this method will attempt to take the lock immediately (succeeding if the lock is currently available).</param>
         public IDisposable Lock(CancellationToken cancellationToken)
         {
-            return RequestLockAsync(cancellationToken).WaitAndUnwrapException();
+            return InternalLockAsync(cancellationToken).WaitAndUnwrapException();
         }
 
         /// <summary>

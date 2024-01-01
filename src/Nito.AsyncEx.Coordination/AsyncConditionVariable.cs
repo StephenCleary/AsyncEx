@@ -57,7 +57,7 @@ namespace Nito.AsyncEx
         /// Asynchronously waits for a signal on this condition variable. The associated lock MUST be held when calling this method, and it will still be held when this method returns, even if the method is cancelled.
         /// </summary>
         /// <param name="cancellationToken">The cancellation signal used to cancel this wait.</param>
-        public Task WaitAsync(CancellationToken cancellationToken)
+        internal Task InternalWaitAsync(CancellationToken cancellationToken)
         {
 	        Task<object> task = null!;
 
@@ -88,6 +88,12 @@ namespace Nito.AsyncEx
             }
         }
 
+        /// <summary>
+        /// Asynchronously waits for a signal on this condition variable. The associated lock MUST be held when calling this method, and it will still be held when this method returns, even if the method is cancelled.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation signal used to cancel this wait.</param>
+        public Task WaitAsync(CancellationToken cancellationToken) => AsyncUtility.ForceAsync(InternalWaitAsync(cancellationToken));
+
 		/// <summary>
 		/// Asynchronously waits for a signal on this condition variable. The associated lock MUST be held when calling this method, and it will still be held when the returned task completes.
 		/// </summary>
@@ -102,7 +108,7 @@ namespace Nito.AsyncEx
         /// <param name="cancellationToken">The cancellation signal used to cancel this wait.</param>
         public void Wait(CancellationToken cancellationToken)
         {
-            WaitAsync(cancellationToken).WaitAndUnwrapException(CancellationToken.None);
+	        InternalWaitAsync(cancellationToken).WaitAndUnwrapException(CancellationToken.None);
         }
 
         /// <summary>
